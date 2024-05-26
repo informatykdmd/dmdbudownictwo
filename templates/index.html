@@ -601,30 +601,39 @@
                         </div>
                     </div>
                 </div>
-                
+                {% for member in fourListTeam %}
                 <!--Team Block-->
                 <div class="team-block col-lg-3 col-md-6 col-sm-6 col-xs-12">
                     <div class="inner-box">
                         <div class="image">
 
-                            <img src="https://dmddomy.pl/images/team/tm-01-460x460-dariusz_dobrosielski.png" alt="">
+                            <img src="{{member['EMPLOYEE_PHOTO']}}" alt="">
 
                             <div class="overlay-box">
-                                <div class="designation-2">Dariusz Dobrosielski</div>
+                                <div class="designation-2">{{member['EMPLOYEE_NAME']}}</div>
                                 <ul class="social-icon-two">
-                                    <li><a href="#"><span class="fa fa-phone"></span></a></li>
+                                    {% if member['PHONE'] %}
+                                        <li><a href="#"><span class="fa fa-phone"></span></a></li>
+                                    {% endif %}
+
+                                    {% if member['EMAIL'] %}
                                     <li><a href="#"><span class="fa fa-envelope"></span></a></li>
+                                    {% endif %}
+
+                                    {% if member['FACEBOOK'] %}
                                     <li><a href="#"><span class="fa fa-facebook-f"></span></a></li>
-                                    <li><a href="#"><span class="fa fa-twitter"></span></a></li>
-                                    <li><a href="#"><span class="fa fa-instagram"></span></a></li>
+                                    {% endif %}
+
+                                    {% if member['LINKEDIN'] %}
                                     <li><a href="#"><span class="fa fa-linkedin"></span></a></li>
+                                    {% endif %}
                                 </ul>
-                                <div class="designation">Właściciel</div>
+                                <div class="designation">{{member['EMPLOYEE_ROLE']}}</div>
                             </div>
                         </div>
                     </div>
                 </div>
-                
+                {% endfor %}
             </div>
         </div>
     </section>
