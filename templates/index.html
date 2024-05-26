@@ -555,19 +555,19 @@
                                 <div class="designation-2">{{member['EMPLOYEE_NAME']}}</div>
                                 <ul class="social-icon-two">
                                     {% if member['PHONE'] %}
-                                        <li><a href="#"><span class="fa fa-phone"></span></a></li>
+                                        <li><a href="tel:{{member['PHONE']}}"><span class="fa fa-phone"></span></a></li>
                                     {% endif %}
 
                                     {% if member['EMAIL'] %}
-                                    <li><a href="#"><span class="fa fa-envelope"></span></a></li>
+                                    <li><a href="mailto:{{member['EMAIL']}}"><span class="fa fa-envelope"></span></a></li>
                                     {% endif %}
 
                                     {% if member['FACEBOOK'] %}
-                                    <li><a href="#"><span class="fa fa-facebook-f"></span></a></li>
+                                    <li><a href="{{member['FACEBOOK']}}" target="_blank"><span class="fa fa-facebook-f"></span></a></li>
                                     {% endif %}
 
                                     {% if member['LINKEDIN'] %}
-                                    <li><a href="#"><span class="fa fa-linkedin"></span></a></li>
+                                    <li><a href="{{member['LINKEDIN']}}" target="_blank"><span class="fa fa-linkedin"></span></a></li>
                                     {% endif %}
                                 </ul>
                                 <div class="designation">{{member['EMPLOYEE_ROLE']}}</div>
