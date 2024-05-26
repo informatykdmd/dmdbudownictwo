@@ -75,7 +75,7 @@ def generator_teamDB(lang='pl'):
             'STATUS': int(data[10])
         }
         # dostosowane dla dmd inwestycje
-        if data[4] == 'dmd inwestycje':
+        if data[4] == 'dmd budownictwo':
             teamData.append(theme)
     return teamData
 
