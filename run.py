@@ -412,7 +412,8 @@ def blogs():
 @app.route('/blog-one', methods=['GET'])
 def blogOne():
     session['page'] = 'blogOne'
-
+    pageTitle = 'Blog'
+    
     if 'post' in request.args:
         post_id = request.args.get('post')
         try: post_id_int = int(post_id)
@@ -447,7 +448,7 @@ def blogOne():
 
     return render_template(
         f'blog.html',
-        
+        pageTitle=pageTitle,
         choiced=choiced,
         pre_next=pre_next,
         cat_dict=cat_dict,
