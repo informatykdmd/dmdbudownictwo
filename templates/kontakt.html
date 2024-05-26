@@ -1,0 +1,91 @@
+{% extends 'base.html' %}
+{% block MainSlider %}{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-4" style="margin-bottom: 2em;">
+            <h5>DMD BUDOWNICTWO</h5>
+            <a href="mailto:biuro@dmdbudownictwo.pl">biuro@dmdbudownictwo.pl</a>
+        </div>
+        <div class="col-md-4" style="margin-bottom: 2em;">
+            <h5>DMD DOMY</h5>
+            <a href="mailto:biuro@dmddomy.pl">biuro@dmddomy.pl</a>
+        </div>
+        <div class="col-md-4" style="margin-bottom: 2em;">
+            <h5>DMD ELITEHOME</h5>
+            <a href="mailto:biuro@dmdelitehome.pl">biuro@dmdelitehome.pl</a>
+        </div>
+        <div class="col-md-4" style="margin-bottom: 2em;">
+            <h5>DMD INSTALACJE</h5>
+            <a href="mailto:biuro@dmdinstalacje.pl">biuro@dmdinstalacje.pl</a>
+        </div>
+        <div class="col-md-4" style="margin-bottom: 2em;">
+            <h5>DMD INWESTYCJE</h5>
+            <a href="mailto:biuro@dmdinwestycje.pl">biuro@dmdinwestycje.pl</a>
+        </div>
+        <div class="col-md-4" style="margin-bottom: 2em;">
+            <h5>DMD DEVELOPMENT</h5>
+            <a href="mailto:biuro@dmddevelopment.pl">biuro@dmddevelopment.pl</a>
+        </div>
+        
+    </div>
+</div>
+    <!--Contact Section-->
+    <section class="contact-section">
+        <div class="auto-container">
+            
+            <h2><span class="theme_color">Pozostańmy</span> w kontakcie</h2>
+            <div class="text">
+                Możesz porozmawiać z naszym przedstawicielem online w każdej chwili. Prosimy o wypełnienie poniższego formularza kontaktowego. <br> Prosimy o cierpliwość, odpowiemy najszybciej jak to możliwe. Nasza infolinia jest dostępna 24/7.
+            </div>
+            <div class="row clearfix">
+                <div class="form-column col-lg-9 col-md-8 col-sm-12 col-xs-12">
+                    <div class="inner-column">
+                        
+                        <!--Contact Form-->
+                        <div class="contact-form style-two">
+                            <form method="post" action="email.php" id="contact-form">
+                                <div class="row clearfix">
+                                    <div class="form-group col-md-6 col-sm-6 co-xs-12">
+                                        <input type="text" name="name" value="" placeholder="Imię" required>
+                                    </div>
+                                    <div class="form-group col-md-6 col-sm-6 co-xs-12">
+                                        <input type="email" name="email" value="" placeholder="E-mail" required>
+                                    </div>
+                                    <div class="form-group col-md-12 col-sm-12 co-xs-12">
+                                        <input type="text" name="subject" value="" placeholder="Temat zapytania" required>
+                                    </div>
+                                    <!-- <div class="form-group col-md-6 col-sm-6 co-xs-12">
+                                        <input type="text" name="phone" value="" placeholder="Telefon" required>
+                                    </div> -->
+                                    <div class="form-group col-md-12 col-sm-12 co-xs-12">
+                                        <textarea name="message" placeholder="Twoja Wiadomość"></textarea>
+                                    </div>
+                                    <div class="form-group col-md-12 col-sm-12 co-xs-12">
+                                        <button type="submit" class="theme-btn btn-style-one">Wyślij Wiadomość</button>
+                                    </div>
+                                </div>
+                                <p class="form-message"></p>
+                            </form>
+                        </div>
+                        <!--End Contact Form-->
+                        
+                    </div>
+                </div>
+                <div class="info-column col-lg-3 col-md-4 col-sm-12 col-xs-12">
+                    
+                    <ul class="list-style-two">
+                        <li><span class="icon flaticon-home-1"></span><strong>ul. Dworkowa 51,</strong>05-082 Stare Babice, Polska</li>
+                        <li><span class="icon flaticon-envelope-1"></span><strong>Wyślij na E-mail</strong><a href="mailto:biuro@dmdbudownictwo.pl">biuro@dmdbudownictwo.pl</a></li>
+                        <li><span class="icon flaticon-technology-2"></span><strong>Masz pytania, zadzwoń</strong><a href="tel:+48736545454">+48 736 54 54 54</a></li>
+                        <li><span class="icon flaticon-clock-1"></span><strong>Pracujemy</strong>Pon-Pt: 9:00 - 17:00</li>
+                    </ul>
+                    
+                </div>
+            </div>
+        </div>
+    </section>
+    <!--End Contact Section-->
+{% endblock %}
+

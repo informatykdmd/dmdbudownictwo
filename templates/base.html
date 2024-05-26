@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="author" content="IE=edge">
+<link href="static/css/bootstrap.css" rel="stylesheet">
+<link href="static/plugins/revolution/css/settings.css" rel="stylesheet" type="text/css"><!-- REVOLUTION SETTINGS STYLES -->
+<link href="static/plugins/revolution/css/layers.css" rel="stylesheet" type="text/css"><!-- REVOLUTION LAYERS STYLES -->
+<link href="static/plugins/revolution/css/navigation.css" rel="stylesheet" type="text/css"><!-- REVOLUTION NAVIGATION STYLES -->
+<link href="static/css/style.css" rel="stylesheet">
+<link href="static/css/responsive.css" rel="stylesheet">
+
+
+
+
+<!--Color Switcher Mockup-->
+<link href="static/css/color-switcher-design.css" rel="stylesheet">
+
+<!--Color Themes-->
+<link id="theme-color-file" href="static/css/color-themes/default-theme.css" rel="stylesheet">
+
+<link rel="shortcut icon" href="static/images/favicon.png" type="image/x-icon">
+<link rel="icon" href="static/images/favicon.png" type="image/x-icon">
+
+
+<title>DMD BUDOWNICTWO - {{pageTitle}}</title>
+
+<!--[if lt IE 9]><script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.js"></script><![endif]-->
+<!--[if lt IE 9]><script src="static/js/respond.js"></script><![endif]-->
+    {% block head_scripts %}
+        <!-- Tu będą skrypty specyficzne dla poszczególnych stron -->
+    {% endblock %}
+</head>
+
+<body>
+
+    <div class="page-wrapper">
+        
+        <!-- Preloader -->
+        <div class="preloader"></div>
+        {% include 'header_base.html' %}
+        
+        {% block MainSlider %}
+        <!-- Tutaj bedzie baner -->
+        {% endblock %}
+
+        {% block content %}
+        <!-- Tutaj będzie treść strony -->
+        {% endblock %}
+
+        {% include 'footer_base.html' %}
+        
+        
+    </div>
+    <!--End pagewrapper-->
+
+    <!--Scroll to top-->
+    <div class="scroll-to-top scroll-to-target" data-target="html"><span class="icon fa fa-angle-double-up"></span></div>
+
+    <script src="static/js/jquery.js"></script> 
+    <!--Revolution Slider-->
+    <script src="static/plugins/revolution/js/jquery.themepunch.revolution.min.js"></script>
+    <script src="static/plugins/revolution/js/jquery.themepunch.tools.min.js"></script>
+    <script src="static/plugins/revolution/js/extensions/revolution.extension.actions.min.js"></script>
+    <script src="static/plugins/revolution/js/extensions/revolution.extension.carousel.min.js"></script>
+    <script src="static/plugins/revolution/js/extensions/revolution.extension.kenburn.min.js"></script>
+    <script src="static/plugins/revolution/js/extensions/revolution.extension.layeranimation.min.js"></script>
+    <script src="static/plugins/revolution/js/extensions/revolution.extension.migration.min.js"></script>
+    <script src="static/plugins/revolution/js/extensions/revolution.extension.navigation.min.js"></script>
+    <script src="static/plugins/revolution/js/extensions/revolution.extension.parallax.min.js"></script>
+    <script src="static/plugins/revolution/js/extensions/revolution.extension.slideanims.min.js"></script>
+    <script src="static/plugins/revolution/js/extensions/revolution.extension.video.min.js"></script>
+    <script src="static/js/main-slider-script.js"></script>
+
+    <script src="static/js/bootstrap.min.js"></script>
+    <script src="static/js/jquery.mCustomScrollbar.concat.min.js"></script>
+    <script src="static/js/jquery.fancybox.js"></script>
+    <script src="static/js/owl.js"></script>
+    <script src="static/js/validate.js"></script>
+    <script src="static/js/mixitup.js"></script>
+    <script src="static/js/appear.js"></script>
+    <script src="static/js/wow.js"></script>
+    <script src="static/js/jquery-ui.js"></script>
+    <script src="static/js/script.js"></script>
+
+    <!--Color Switcher-->
+    <!-- <script src="static/js/color-settings.js"></script> -->
+    {% block end_of_body %}{% endblock %}
+    {% block bottom_scripts %}{% endblock %}
+</body>
+
+</html>

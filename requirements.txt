@@ -1,0 +1,9 @@
+Flask==3.0.2
+Flask-WTF==1.2.1
+Flask-Paginate==2023.10.24
+Werkzeug==3.0.1
+packaging==24.0
+mysql-connector-python==8.3.0
+googletrans==4.0.0-rc1
+gunicorn==21.2.0
+# pip install -r requirements.txt
