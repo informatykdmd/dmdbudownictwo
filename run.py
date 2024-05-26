@@ -446,7 +446,7 @@ def blogOne():
     
 
     return render_template(
-        f'blogOne.html',
+        f'blog.html',
         
         choiced=choiced,
         pre_next=pre_next,
