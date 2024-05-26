@@ -102,20 +102,20 @@
                         </div>
                         <div class="col-md-9 col-sm-12 col-xs-12">
                             <div class="subscribe-form">
-                                <form method="post" action="mail.php">
+                                <form id="newsletter_form" >
                                     <div class="row form-group">
                                         <div class="col-lg-4">
-                                            <input type="text" name="imie" value="" placeholder="imię" required>
+                                            <input type="text" id="newsletterNameField" name="Imie" value="" placeholder="Imię" required>
                                         </div>
                                         <div class="col-lg-8">
-                                            <input type="email" name="email" value="" placeholder="email" required>
-                                            <button type="submit" class="theme-btn">
+                                            <input type="email" id="newsletterEmailField" name="Email" value="" placeholder="E-mail" required>
+                                            <button type="submit" id="send_newsletter" class="theme-btn">
                                                 <span class="flaticon-right-arrow-2"></span>
                                             </button>
                                         </div>
                                         
                                     </div>
-                                    
+                                    <div style="margin-top: 1em;" id="komunikat_z_serwera_newsletter"></div>
                                 </form>
                             </div>
                         </div>
