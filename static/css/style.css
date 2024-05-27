@@ -6036,7 +6036,7 @@ img{
 	position:relative;
 	color:#666666;
 	font-size:14px;
-	line-height:1.9em;
+	/* line-height:1.9em; */
 	margin-bottom:30px;
 }
 
