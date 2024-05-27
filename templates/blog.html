@@ -189,7 +189,9 @@
                         </div>
                         <ul class="cat-list">
                             {% for cat, count in cat_dict.items() %}
-                            <li><a href="/find-by-category?category={{cat}}">{{cat}} ({{count}})</a></li>
+                                {% if count > 1 %}
+                                    <li><a href="/find-by-category?category={{cat}}">{{cat}} ({{count}})</a></li>
+                                {% endif %}
                             {% endfor %}
                             <!-- <li><a href="#">Building Interior Renovation</a></li>
                             <li><a href="#">Hardwood Flooring</a></li>
