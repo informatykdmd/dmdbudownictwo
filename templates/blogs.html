@@ -24,12 +24,12 @@
 <!--Sidebar Page Container-->
 <div class="sidebar-page-container">
     <div class="container">
-        <div class="row">
+        <div>
             
             <!--Content Side  content-side -->
             <div>
 
-                <div >
+                <div class="row">
                     {% for res in posts %}
 
                     <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12" style="margin-bottom: 1em;">
@@ -46,8 +46,11 @@
                                             <li><a href="#"><span class="icon fa fa-calendar"></span> {{res['category']}}</a></li>
                                         </ul>
                                     </div>
-                                    <div style="font-size: 18px; font-weight: 600;"><a href="/blog-one?post={{res['id']}}">{{res['title']}}</a></div>
-                                    <div class="text">{{res['highlight']}}</div>
+                                    
+                                    <div class="text">
+                                        <div style="font-size: 18px; font-weight: 600;"><a href="/blog-one?post={{res['id']}}">{{res['title']}}</a></div>
+                                        {{res['highlight']}}
+                                    </div>
                                     <a href="/blog-one?post={{res['id']}}" class="theme-btn btn-style-six">Czytaj więcej <span class="fa fa-angle-double-right"></span></a>
                                 </div>
                             </div>
