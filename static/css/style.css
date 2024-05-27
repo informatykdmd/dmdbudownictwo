@@ -6010,7 +6010,7 @@ img{
 }
 
 .news-block-three .inner-box .lower-content .post-meta li a .fa{
-	position:relative;
+	/* position:relative; */
 	margin-right:8px;
 }
 
@@ -6033,15 +6033,15 @@ img{
 }
 
 .news-block-three .inner-box .lower-content .text{
-	position:relative;
+	/* position:relative; */
 	color:#666666;
 	font-size:14px;
-	/* line-height:1.9em; */
+	line-height:1.9em;
 	margin-bottom:30px;
 }
 
 .news-block-three .inner-box .lower-content .text p{
-	position:relative;
+	/* position:relative; */
 	color:#666666;
 	font-size:14px;
 	line-height:1.9em;
