@@ -85,6 +85,9 @@
                     
                     <!--Comments Area-->
                     <div class="comments-area">
+                        <div class="sec-title">
+                            <h2><span class="theme_color">O</span> Autorze</h2>
+                        </div>
                         <!--Comment Box-->
                         <div class="comment-box">
                             <div class="comment">
@@ -171,9 +174,9 @@
                     
                     <!-- Search -->
                     <div class="sidebar-widget search-box">
-                        <form method="post" action="contact.html">
+                        <form method="POST" action="{{ url_for('searchBlog') }}" enctype="multipart/form-data">
                             <div class="form-group">
-                                <input type="search" name="search-field" value="" placeholder="Search here..." required>
+                                <input type="search" name="query" value="" placeholder="Przeszukaj blog" required>
                                 <button type="submit"><span class="icon fa fa-search"></span></button>
                             </div>
                         </form>
@@ -182,29 +185,31 @@
                     <!-- category -->
                     <div class="sidebar-widget category-widget">
                         <div class="sidebar-title">
-                            <h2><span class="theme_color">Best </span>Categories</h2>
+                            <h2><span class="theme_color">Najlepsze </span>Kategorie</h2>
                         </div>
                         <ul class="cat-list">
-                            <li><a href="#">Builing Construction</a></li>
-                            <li><a href="#">Building Interior Renovation</a></li>
+                            {% for cat, count in cat_dict.items() %}
+                            <li><a href="/find-by-category?category={{cat}}">{{cat}} ({{count}})</a></li>
+                            {% endfor %}
+                            <!-- <li><a href="#">Building Interior Renovation</a></li>
                             <li><a href="#">Hardwood Flooring</a></li>
                             <li><a href="#">Roof Repairing</a></li>
                             <li><a href="#">Architecture Consulting</a></li>
-                            <li><a href="#">Interior Design Package</a></li>
+                            <li><a href="#">Interior Design Package</a></li> -->
                         </ul>
                     </div>
                     
                     <!-- Popular Posts -->
                     <div class="sidebar-widget popular-posts">
-                        <div class="sidebar-title"><h2>Recent news</h2></div>
-
+                        <div class="sidebar-title"><h2>Zobacz również</h2></div>
+                        {% for rPost in recentPosts %}
                         <article class="post">
-                            <figure class="post-thumb"><img src="images/resource/post-thumb-1.jpg" alt=""><a href="blog-detail.html" class="overlay-box"><span class="icon fa fa-link"></span></a></figure>
-                            <div class="text"><a href="blog-detail.html">Construction Honored With DBC Builderst</a></div>
-                            <div class="post-info">18 Dec 2017</div>
+                            <figure class="post-thumb"><img src="{{rPost['mainFoto']}}" alt=""><a href="/blog-one?post={{rPost['id']}}" class="overlay-box"><span class="icon fa fa-link"></span></a></figure>
+                            <div class="text"><a href="/blog-one?post={{rPost['id']}}">{{rPost['title']}}</a></div>
+                            <div class="post-info">{{rPost['data']}}</div>
                         </article>
-
-                        <article class="post">
+                        {% endfor %}
+                        <!-- <article class="post">
                             <figure class="post-thumb"><img src="images/resource/post-thumb-2.jpg" alt=""><a href="blog-detail.html" class="overlay-box"><span class="icon fa fa-link"></span></a></figure>
                             <div class="text"><a href="blog-detail.html">How Important Is Light In The Living Room?</a></div>
                             <div class="post-info">18 Nov 2017</div>
@@ -214,31 +219,21 @@
                             <figure class="post-thumb"><img src="images/resource/post-thumb-3.jpg" alt=""><a href="blog-detail.html" class="overlay-box"><span class="icon fa fa-link"></span></a></figure>
                             <div class="text"><a href="blog-detail.html">How To Build Attractive Construction Plan</a></div>
                             <div class="post-info">20 Oct 2017</div>
-                        </article>
+                        </article> -->
                         
                     </div>
                     
-                    <!-- Archive -->
-                    <div class="sidebar-widget archive-widget">
-                        <div class="sidebar-title">
-                            <h2><span class="theme_color">Our </span>Archives</h2>
-                        </div>
-                        <ul class="cat-list">
-                            <li><a href="#">January 09, 2017</a></li>
-                            <li><a href="#">March 30, 2017</a></li>
-                            <li><a href="#">June 25, 2017</a></li>
-                        </ul>
-                    </div>
+                    
                     
                     <!--Solution Box-->
-                    <div class="solution-box" style="background-image:url(images/resource/image-2.jpg)">
+                    <!-- <div class="solution-box" style="background-image:url(images/resource/image-2.jpg)">
                         <div class="inner">
                             <div class="title">Quick Contact</div>
                             <h2>Get Solution</h2>
                             <div class="text">Contact us at the Constration office nearest to you or submit a business inquiry online.</div>
                             <a class="solution-btn theme-btn" href="contact.html">Contact Us</a>
                         </div>
-                    </div>
+                    </div> -->
                     
                 </aside>
             </div>
