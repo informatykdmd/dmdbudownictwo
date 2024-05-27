@@ -264,6 +264,7 @@ def generator_daneDBList_one_post_id(id_post, lang='pl'):
         daneList.append(theme)
     return daneList
 
+@app.template_filter('smart_truncate')
 def smart_truncate(content, length=200):
     if len(content) <= length:
         return content
