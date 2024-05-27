@@ -500,19 +500,19 @@ def findByCategory():
 
     found = len(searchResults)
 
-    take_id_rec_pos = generator_daneDBList_RecentPosts(0)
-    recentPosts = []
-    for idp in take_id_rec_pos:
-        t_post = generator_daneDBList_one_post_id(idp)[0]
-        theme = {
-            'id': t_post['id'],
-            'title': t_post['title'],
-            'mainFoto': t_post['mainFoto'],
-            'category': t_post['category'],
-            'author': t_post['author'],
-            'data': t_post['data']
-        }
-        recentPosts.append(theme)
+    # take_id_rec_pos = generator_daneDBList_RecentPosts(0)
+    # recentPosts = []
+    # for idp in take_id_rec_pos:
+    #     t_post = generator_daneDBList_one_post_id(idp)[0]
+    #     theme = {
+    #         'id': t_post['id'],
+    #         'title': t_post['title'],
+    #         'mainFoto': t_post['mainFoto'],
+    #         'category': t_post['category'],
+    #         'author': t_post['author'],
+    #         'data': t_post['data']
+    #     }
+    #     recentPosts.append(theme)
 
     # Ustawienia paginacji
     page, per_page, offset = get_page_args(page_parameter='page', per_page_parameter='per_page')
@@ -526,11 +526,9 @@ def findByCategory():
     return render_template(
         "searchBlog.html",
         pageTitle=pageTitle,
-        
         posts=posts,
         found=found,
-        pagination=pagination,
-        recentPosts=recentPosts
+        pagination=pagination
         )
 
 
@@ -578,19 +576,19 @@ def searchBlog():
 
     found = len(searchResults)
 
-    take_id_rec_pos = generator_daneDBList_RecentPosts(0)
-    recentPosts = []
-    for idp in take_id_rec_pos:
-        t_post = generator_daneDBList_one_post_id(idp)[0]
-        theme = {
-            'id': t_post['id'],
-            'title': t_post['title'],
-            'mainFoto': t_post['mainFoto'],
-            'category': t_post['category'],
-            'author': t_post['author'],
-            'data': t_post['data']
-        }
-        recentPosts.append(theme)
+    # take_id_rec_pos = generator_daneDBList_RecentPosts(0)
+    # recentPosts = []
+    # for idp in take_id_rec_pos:
+    #     t_post = generator_daneDBList_one_post_id(idp)[0]
+    #     theme = {
+    #         'id': t_post['id'],
+    #         'title': t_post['title'],
+    #         'mainFoto': t_post['mainFoto'],
+    #         'category': t_post['category'],
+    #         'author': t_post['author'],
+    #         'data': t_post['data']
+    #     }
+    #     recentPosts.append(theme)
 
     # Ustawienia paginacji
     page, per_page, offset = get_page_args(page_parameter='page', per_page_parameter='per_page')
@@ -604,11 +602,9 @@ def searchBlog():
     return render_template(
         "searchBlog.html",
         pageTitle=pageTitle,
-        
         posts=posts,
         found=found,
-        pagination=pagination,
-        recentPosts=recentPosts
+        pagination=pagination
         )
 
 @app.route('/send-mess-pl', methods=['POST'])
