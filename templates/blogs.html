@@ -5,9 +5,9 @@
 <!--Sidebar Page Container-->
 <div class="sidebar-page-container">
     <div class="container">
-        <div>
+        <div class="row clearfix">
 
-            <div>
+            <div class="sidebar-side col-lg-8 col-md-8 col-sm-12 col-xs-12">
 
                 <div class="row">
                     {% for res in posts %}
@@ -81,7 +81,47 @@
                     
                 
             </div>
-            
+            <!--Sidebar Side-->
+            <div class="sidebar-side col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                <aside class="sidebar default-sidebar">
+                    
+                    <!-- Search -->
+                    <div class="sidebar-widget search-box">
+                        <form method="POST" action="{{ url_for('searchBlog') }}" enctype="multipart/form-data">
+                            <div class="form-group">
+                                <input type="search" name="query" value="" placeholder="Przeszukaj blog" required>
+                                <button type="submit"><span class="icon fa fa-search"></span></button>
+                            </div>
+                        </form>
+                    </div>
+                    
+                    <!-- category -->
+                    <div class="sidebar-widget category-widget">
+                        <div class="sidebar-title">
+                            <h2><span class="theme_color">Najlepsze </span>Kategorie</h2>
+                        </div>
+                        <ul class="cat-list">
+                            {% for cat, count in cat_dict.items() %}
+                                {% if count > 1 %}
+                                    <li><a href="/find-by-category?category={{cat}}">{{cat}} ({{count}})</a></li>
+                                {% endif %}
+                            {% endfor %}
+                        </ul>
+                    </div>
+                    
+                    <!-- Popular Posts -->
+                    <div class="sidebar-widget popular-posts">
+                        <div class="sidebar-title"><h2>Zobacz również</h2></div>
+                        {% for rPost in recentPosts %}
+                        <article class="post">
+                            <figure class="post-thumb"><img src="{{rPost['contentFoto']}}" alt=""><a href="/blog-one?post={{rPost['id']}}" class="overlay-box"><span class="icon fa fa-link"></span></a></figure>
+                            <div class="text"><a href="/blog-one?post={{rPost['id']}}">{{rPost['title']}}</a></div>
+                            <div class="post-info">{{rPost['data']}}</div>
+                        </article>
+                        {% endfor %}                        
+                    </div>  
+                </aside>
+            </div>
 
             
         </div>

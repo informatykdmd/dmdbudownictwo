@@ -403,10 +403,28 @@ def blogs():
     # Pobierz tylko odpowiednią ilość postów na aktualnej stronie
     posts = blog_post[offset: offset + per_page]
 
+    cats = generator_daneDBList_cetegory()
+    cat_dict = cats[1]
+    take_id_rec_pos = generator_daneDBList_RecentPosts(post_id_int)
+    recentPosts = []
+    for idp in take_id_rec_pos:
+        t_post = generator_daneDBList_one_post_id(idp)[0]
+        theme = {
+            'id': t_post['id'],
+            'title': t_post['title'],
+            'mainFoto': t_post['mainFoto'],
+            'contentFoto': t_post['contentFoto'],
+            'category': t_post['category'],
+            'author': t_post['author'],
+            'data': t_post['data']
+        }
+        recentPosts.append(theme)
+
     return render_template(
         f'blogs.html',
         pageTitle=pageTitle,
-        
+        cat_dict=cat_dict,
+        recentPosts=recentPosts,
         pagination=pagination,
         posts=posts
         )
