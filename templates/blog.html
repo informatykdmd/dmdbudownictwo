@@ -84,19 +84,8 @@
                     </div>
                     
                     <!--Comments Area-->
-                    <div class="comments-area">
-                        <!--Comment Box-->
-                        <div class="row">
-                            <div class="col-2">
-                                <img src="{{choiced['author_avatar']}}" alt="">
-                            </div>
-                            <div class="col-10">
-                                <div class="comment-info clearfix"><strong>{{choiced['author']}}</strong></div>
-                                <div class="text">{{choiced['author_about']}}</div>
-                            </div>
-
-                        </div>
-                        <!-- <div class="comment-box">
+                    
+                        <div class="comment-box">
                             <div class="comment">
                                 <div class="content">
                                     <div class="author-thumb"><img src="{{choiced['author_avatar']}}" alt=""></div>
@@ -107,7 +96,7 @@
                                     </div>
                                 </div>
                             </div>
-                        </div> -->
+                        </div>
                         {% if choiced['len'] > 0 %}
                             <div class="sec-title">
                                 <h2><span class="theme_color">{{choiced['len']}}</span> Komentarzy</h2>

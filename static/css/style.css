@@ -6232,11 +6232,11 @@ img{
 }
 
 .sidebar-page-container .comments-area .comment-box .author-thumb{
-	/* position:absolute; */
+	position:absolute;
 	left:0px;
 	top:0px;
 	width:120px;
-	/* z-index:1; */
+	z-index:1;
 	overflow:hidden;
 	margin-bottom:20px;
 }
