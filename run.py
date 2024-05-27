@@ -405,7 +405,7 @@ def blogs():
 
     cats = generator_daneDBList_cetegory()
     cat_dict = cats[1]
-    take_id_rec_pos = generator_daneDBList_RecentPosts(post_id_int)
+    take_id_rec_pos = generator_daneDBList_RecentPosts(0)
     recentPosts = []
     for idp in take_id_rec_pos:
         t_post = generator_daneDBList_one_post_id(idp)[0]
