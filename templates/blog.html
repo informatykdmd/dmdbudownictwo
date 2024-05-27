@@ -110,14 +110,19 @@
                                     <div class="content">
                                         {% if comm['avatar'] != '' %}
                                         <div class="author-thumb"><img src="{{comm['avatar']}}" alt=""></div>
-                                        {% else %}
-                                        <div></div>
-                                        {% endif %}
                                         <div class="comment-inner">
                                             <div class="comment-info clearfix"><strong>{{comm['user']}}</strong><div class="comment-time">{{comm['data-time']}}</div></div>
                                             <div class="text">{{comm['message']}}</div>
                                             <!-- <a class="comment-reply" href="#">Reply</a> -->
                                         </div>
+                                        {% else %}
+                                        <div>
+                                            <div class="comment-info clearfix"><strong>{{comm['user']}}</strong><div class="comment-time">{{comm['data-time']}}</div></div>
+                                            <div class="text">{{comm['message']}}</div>
+                                            <!-- <a class="comment-reply" href="#">Reply</a> -->
+                                        </div>
+                                        {% endif %}
+                                        
                                     </div>
                                 </div>
                             </div>
