@@ -9,6 +9,7 @@ import random
 from markupsafe import Markup
 
 app = Flask(__name__)
+app.config['PER_PAGE'] = 6
 app.config['SECRET_KEY'] = secrets.token_hex(16)
 
 def getLangText(text):
