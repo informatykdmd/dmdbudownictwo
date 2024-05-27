@@ -1,24 +1,5 @@
 {% extends 'base.html' %}
-{% block MainSlider %}
-    <!--Page Title-->
-    <!-- <section class="page-title" style="background-image:url(static/images/background/8.jpg)">
-        <div class="auto-container">
-            <div class="clearfix">
-                <div class="pull-left">
-                    <h2>Laminate Flooring</h2>
-                </div>
-                <div class="pull-right">
-                    <ul class="page-breadcrumb">
-                        <li><a href="/">DMD</a></li>
-                        <li>Laminate Flooring</li>
-                    </ul>
-                </div>
-            </div>
-            <div class="contact-number"><a href="tel:+48736545454"><span class="icon flaticon-phone-call"></span>Zadzwoń: +48 736 54 54 54</a></div>
-        </div>
-    </section> -->
-    <!--End Page Title-->
-{% endblock %}
+{% block MainSlider %}{% endblock %}
 
 {% block content %}
 <!--Sidebar Page Container-->
@@ -48,8 +29,8 @@
                                     </div>
                                     
                                     <div class="text">
-                                        <div style="font-size: 18px; font-weight: 600;">
-                                            <a href="/blog-one?post={{res['id']}}" style="color: #072c3b;">
+                                        <div class="custom-link">
+                                            <a href="/blog-one?post={{res['id']}}"> 
                                                 {{res['title']}}
                                             </a>
                                         </div>
@@ -66,15 +47,15 @@
                     
                     
                     
-                    <!--Styled Pagination-->
-                    <ul class="styled-pagination text-center">
-                        <li class="prev"><a href="#"><span class="fa fa-angle-double-left"></span> Prev</a></li>
-                        <li><a href="#">1</a></li>
-                        <li><a href="#" class="active">2</a></li>
-                        <li><a href="#">3</a></li>
-                        <li class="next"><a href="#">Next <span class="fa fa-angle-double-right"></span></a></li>
-                    </ul>                
-                    <!--End Styled Pagination-->
+                <!--Styled Pagination-->
+                <ul class="styled-pagination text-center">
+                    <li class="prev"><a href="#"><span class="fa fa-angle-double-left"></span> Prev</a></li>
+                    <li><a href="#">1</a></li>
+                    <li><a href="#" class="active">2</a></li>
+                    <li><a href="#">3</a></li>
+                    <li class="next"><a href="#">Next <span class="fa fa-angle-double-right"></span></a></li>
+                </ul>                
+                <!--End Styled Pagination-->
                     
                 
             </div>

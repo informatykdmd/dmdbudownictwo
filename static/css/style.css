@@ -8222,6 +8222,17 @@ img{
 
 .keep-size {
 	max-height: 35px !important;
+}
 
+.custom-link {
+	font-size: 18px; 
+	font-weight: 600;
+}
 
+.custom-link a{
+	color: #3b0707;
+	text-decoration: none;
+}
+.custom-link a:hover {
+	color: #ff0101;
 }
