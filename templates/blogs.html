@@ -29,10 +29,10 @@
             <!--Content Side  content-side -->
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 
-                <!-- <div class="row">
+                <div class="row">
                     {% for res in posts %}
 
-                    <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                    <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12" style="height: 100%; min-height: max-content;">
                         <div class="news-block-three">
                             <div class="inner-box">
                                 <div class="image">
@@ -54,40 +54,8 @@
                         </div>
                     </div>
                     {% endfor %}
-                </div> -->
-                <div class="row">
-                    {% for res in posts %}
-                    <!--News Block DMD Style-->
-                    <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                        <div class="news-block-two">
-                            <div class="inner-box">
-                                <div class="clearfix">
-                                    <div class="image-column col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                        <div class="image">
-                                            <img src="{{res['mainFoto']}}" alt="">
-                                            <div class="post-date">{{res['data']}}</div>
-                                            <a href="/blog-one?post={{res['id']}}" class="overlay-box">
-                                                <span class="icon fa fa-link"></span>
-                                            </a>
-                                        </div>
-                                    </div>
-                                    <div class="content-column col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                        <div class="content-box">
-                                            <h3><a href="/blog-one?post={{res['id']}}">{{res['title']}}</a></h3>
-                                            <div class="text">{{res['highlight']}}</div>
-                                            <ul class="options clearfix">
-                                                <li><a href="/blog-one?post={{res['id']}}"><span class="icon fa fa-user"></span>&ensp; {{res['author']}}</a></li>
-                                                <li><a href="/blog-one?post={{res['id']}}">Czytaj więcej <span class="icon fa fa-angle-double-right"></span></a></li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    {% endfor %}
-                    
                 </div>
+                
                     
                     
                     
