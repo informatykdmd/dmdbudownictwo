@@ -6232,9 +6232,9 @@ img{
 }
 
 .sidebar-page-container .comments-area .comment-box .author-thumb{
-	position:absolute;
-	left:0px;
-	top:0px;
+	/* position:absolute; */
+	/* left:0px; */
+	/* top:0px; */
 	width:120px;
 	/* z-index:1; */
 	/* overflow:hidden; */
@@ -6243,7 +6243,7 @@ img{
 
 .sidebar-page-container .comments-area .comment-box .author-thumb img{
 	width:120px;
-	display:block;
+	/* display:block; */
 }
 
 .sidebar-page-container .comments-area .comment-info{
