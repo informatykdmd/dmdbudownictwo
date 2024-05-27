@@ -43,47 +43,7 @@
                     </div>
                     {% endfor %}
                 </div>
-                <!-- Pagination -->
-                {% if pagination.total_pages > 1 %}
-                <div class="pagination section">
-                    {% if pagination.has_prev %}
-                        <button class="btn" onclick="location.href='{{ url_for(request.endpoint, page=pagination.page - 1) }}';">
-                            <i class="fa fa-angle-left"></i>
-                        </button>
-                    {% else %}
-                        <button class="btn" disabled>
-                            <i class="fa fa-angle-left"></i>
-                        </button>
-                    {% endif %}
-                    {% for page in pagination.pages %}
-                    <div class="pages">
-                        {% if page %}
-                            {% if page != pagination.page %}
-                                <a class="page" href="{{ url_for(request.endpoint, page=page) }}">
-                                    {{ page }}
-                                </a>
-                            {% else %}
-                                <a class="page active">
-                                    {{ page }}
-                                </a>
-                            {% endif %}
-                        {% else %}
-                            ...
-                        {% endif %}
-                    </div>
-                    {% endfor %}
-                    {% if pagination.has_next %}
-                        <button class="btn" onclick="location.href='{{ url_for(request.endpoint, page=pagination.page + 1) }}';">
-                            <i class="fa fa-angle-right text-normal"></i>
-                        </button>
-                    {% else %}
-                        <button class="btn" disabled >
-                            <i class="fa fa-angle-right text-normal"></i>
-                        </button>
-                    {% endif %}
-                </div>
-                {% endif %}
-                <!-- Pagination -->
+                
                 <!--Styled Pagination-->
                 {% if pagination.total_pages > 1 %}
                     <ul class="styled-pagination text-center">
