@@ -426,7 +426,7 @@ def blogOne():
     choiced = generator_daneDBList_one_post_id(post_id_int)[0]
     choiced['len'] = len(choiced['comments'])
     pageTitle = choiced['title']
-    
+
     pre_next = {
         'prev': generator_daneDBList_prev_next(post_id_int)['prev'],  
         'next': generator_daneDBList_prev_next(post_id_int)['next']
@@ -442,6 +442,7 @@ def blogOne():
             'id': t_post['id'],
             'title': t_post['title'],
             'mainFoto': t_post['mainFoto'],
+            'contentFoto': t_post['contentFoto'],
             'category': t_post['category'],
             'author': t_post['author'],
             'data': t_post['data']
