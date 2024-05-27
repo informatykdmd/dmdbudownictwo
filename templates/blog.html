@@ -1,23 +1,5 @@
 {% extends 'base.html' %}
 {% block MainSlider %}
-    <!--Page Title-->
-    <section class="page-title" style="background-image:url(static/images/background/8.jpg)">
-        <div class="auto-container">
-            <div class="clearfix">
-                <div class="pull-left">
-                    <h2>Laminate Flooring</h2>
-                </div>
-                <div class="pull-right">
-                    <ul class="page-breadcrumb">
-                        <li><a href="/">DMD</a></li>
-                        <li>Laminate Flooring</li>
-                    </ul>
-                </div>
-            </div>
-            <div class="contact-number"><a href="tel:+48736545454"><span class="icon flaticon-phone-call"></span>Zadzwoń: +48 736 54 54 54</a></div>
-        </div>
-    </section>
-    <!--End Page Title-->
 {% endblock %}
 
 {% block content %}
@@ -50,14 +32,15 @@
                                     <blockquote>
                                         {{choiced['highlight']}}
                                     </blockquote>
+                                    <div><img src="{{choiced['contentFoto']}}" alt="{{choiced['title']}}"></div>
                                     <ul>
                                         {% for point in choiced['additionalList'] %}
-                                        <li>
+                                        <li style="margin-top: 15px;">
                                             {{point}}
                                         </li>
                                         {% endfor %}
                                     </ul>
-                                    <h4>TAGI:</h4>
+                                    <h4 style="margin-top: 25px;">TAGI:</h4>
                                     <ul  class="social-icon-four">
                                         {% for tag in choiced['tags'] %}
                                         <li><a href="#">{{tag}}</a></li>
