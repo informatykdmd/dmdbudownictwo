@@ -6236,8 +6236,8 @@ img{
 	left:0px;
 	top:0px;
 	width:120px;
-	z-index:1;
-	overflow:hidden;
+	/* z-index:1; */
+	/* overflow:hidden; */
 	margin-bottom:20px;
 }
 
