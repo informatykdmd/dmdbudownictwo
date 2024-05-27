@@ -86,43 +86,7 @@
                     <!--Comments Area-->
                     <div class="comments-area">
                         <!--Comment Box-->
-
-                        <!-- align-items-center -->
-                <div class="post-author d-flex "  id="comments_link">
-                    <div class="author-image d-none d-sm-none d-xs-none d-md-none d-lg-block">
-                        <img src="{{choiced['author_avatar']}}" class="flex-shrink-0" alt="">
-                    </div>
-                    <div class="author-image d-block d-lg-none">
-                      <img src="{{choiced['author_avatar']}}" class="flex-shrink-0" style="width: 50px; height: 50px;" alt="">
-                  </div>
-                    <div class="blog-author-align-top">
-                        <h4>{{choiced['author']}}</h4>
-                        <div class="horizontal-list">
-                          {% if choiced['author_facebook'] != '' %}
-                          <li>
-                              <a class="bi bi-facebook" href="{{choiced['author_facebook']}}" target="_blank"></a>
-                          </li>
-                          {% endif %}
-                          {% if choiced['author_instagram'] != '' %}
-                          <li>
-                              <a class="biu bi-instagram" href="{{choiced['author_instagram']}}" target="_blank"></a>
-                          </li>
-                          {% endif %}
-                          {% if choiced['author_twitter'] != '' %}
-                          <li>
-                              <a class="bi bi-twitter" href="{{choiced['author_twitter']}}" target="_blank"></a>
-                          </li>
-                          {% endif %}
-  
-                        </div>
-                        <p>
-                          {{choiced['author_about']}}
-                        </p>
-                    </div>
-                  </div>
-                  <!-- End author -->
-
-                        <!-- <div class="comment-box">
+                        <div class="comment-box">
                             <div class="comment">
                                 <div class="content">
                                     <div class="row">
@@ -134,7 +98,7 @@
                                     </div>
                                 </div>
                             </div>
-                        </div> -->
+                        </div>
                         {% if choiced['len'] > 0 %}
                             <div class="sec-title">
                                 <h2><span class="theme_color">{{choiced['len']}}</span> Komentarzy</h2>
