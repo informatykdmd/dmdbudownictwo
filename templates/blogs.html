@@ -40,13 +40,15 @@
                                     <div class="post-date">{{res['data']}}</div>
                                 </div>
                                 <div class="lower-content">
-                                    <ul class="post-meta">
-                                        <li><a href="#"><span class="icon fa fa-user"></span> {{res['author']}}</a></li>
-                                        <li><a href="#"><span class="icon fa fa-calendar"></span> {{res['category']}}</a></li>
-                                    </ul>
-                                    <h3><a href="/blog-one?post={{res['id']}}">{{res['title']}}</a></h3>
+                                    <div>
+                                        <ul class="post-meta">
+                                            <li><a href="#"><span class="icon fa fa-user"></span> {{res['author']}}</a></li>
+                                            <li><a href="#"><span class="icon fa fa-calendar"></span> {{res['category']}}</a></li>
+                                        </ul>
+                                    </div>
+                                    <div><h3><a href="/blog-one?post={{res['id']}}">{{res['title']}}</a></h3></div>
                                     <div class="text">{{res['highlight']}}</div>
-                                    <!-- <a href="/blog-one?post={{res['id']}}" class="theme-btn btn-style-six">Czytaj więcej <span class="fa fa-angle-double-right"></span></a> -->
+                                    <a href="/blog-one?post={{res['id']}}" class="theme-btn btn-style-six">Czytaj więcej <span class="fa fa-angle-double-right"></span></a>
                                 </div>
                             </div>
                         </div>
