@@ -28,32 +28,31 @@
             
             <!--Content Side-->
             <div class="content-side col-lg-12 col-md-12 col-sm-12 col-xs-12">
-               
-                    
-                    <div class="row">
-                        {% for res in posts %}
-                        <!--News Block DMD Style-->
-                        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                            <div class="news-block-three">
-                                <div class="inner-box">
-                                    <div class="image">
-                                        <a href="/blog-one?post={{res['id']}}"><img src="{{res['mainFoto']}}" alt=""></a>
-                                        <div class="post-date">{{res['data']}}</div>
-                                    </div>
-                                    <div class="lower-content">
-                                        <ul class="post-meta">
-                                            <li><a href="#"><span class="icon fa fa-user"></span> {{res['author']}}</a></li>
-                                            <li><a href="#"><span class="icon fa fa-calendar"></span> {{res['category']}}</a></li>
-                                        </ul>
-                                        <h3><a href="/blog-one?post={{res['id']}}">{{res['title']}}</a></h3>
-                                        <div class="text">{{res['highlight']}}</div>
-                                        <a href="/blog-one?post={{res['id']}}" class="theme-btn btn-style-six">Czytaj więcej <span class="fa fa-angle-double-right"></span></a>
-                                    </div>
+                
+                <div class="row">
+                    {% for res in posts %}
+                    <!--News Block DMD Style-->
+                    <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                        <div class="news-block-three">
+                            <div class="inner-box">
+                                <div class="image">
+                                    <a href="/blog-one?post={{res['id']}}"><img src="{{res['mainFoto']}}" alt=""></a>
+                                    <div class="post-date">{{res['data']}}</div>
+                                </div>
+                                <div class="lower-content">
+                                    <ul class="post-meta">
+                                        <li><a href="#"><span class="icon fa fa-user"></span> {{res['author']}}</a></li>
+                                        <li><a href="#"><span class="icon fa fa-calendar"></span> {{res['category']}}</a></li>
+                                    </ul>
+                                    <h3><a href="/blog-one?post={{res['id']}}">{{res['title']}}</a></h3>
+                                    <!-- <div class="text">{{res['highlight']}}</div> -->
+                                    <a href="/blog-one?post={{res['id']}}" class="theme-btn btn-style-six">Czytaj więcej <span class="fa fa-angle-double-right"></span></a>
                                 </div>
                             </div>
                         </div>
-                        {% endfor %}
                     </div>
+                    {% endfor %}
+                </div>
                     
                     
                     
