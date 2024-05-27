@@ -414,7 +414,7 @@ def blogs():
 @app.route('/blog-one', methods=['GET'])
 def blogOne():
     session['page'] = 'blogOne'
-    pageTitle = 'Blog'
+    
     
     if 'post' in request.args:
         post_id = request.args.get('post')
@@ -425,7 +425,8 @@ def blogOne():
     
     choiced = generator_daneDBList_one_post_id(post_id_int)[0]
     choiced['len'] = len(choiced['comments'])
-
+    pageTitle = choiced['title']
+    
     pre_next = {
         'prev': generator_daneDBList_prev_next(post_id_int)['prev'],  
         'next': generator_daneDBList_prev_next(post_id_int)['next']

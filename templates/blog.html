@@ -34,38 +34,70 @@
                     <div class="news-block-three">
                         <div class="inner-box">
                             <div class="image">
-                                <img src="images/resource/news-6.jpg" alt="">
-                                <div class="post-date">FEB 13</div>
+                                <img src="{{choiced['mainFoto']}}" alt="{{choiced['title']}}">
+                                <div class="post-date">{{choiced['data']}}</div>
                             </div>
                             <div class="lower-content">
                                 <ul class="post-meta">
-                                    <li><a href="#"><span class="icon fa fa-user"></span>By Admin</a></li>
-                                    <li><a href="#"><span class="icon fa fa-comment-o"></span>04  Comments </a></li>
+                                    <li><a href="#"><span class="icon fa fa-user"></span>{{choiced['author']}}</a></li>
+                                    <li><a href="#"><span class="icon fa fa-comment-o"></span>{{choiced['len']}}  Komentarzy </a></li>
                                 </ul>
-                                <h3>Pre-Con Collaboration For Accurate Time And Cost Estimating</h3>
+                                <h3>{{choiced['title']}}</h3>
                                 <div class="text">
-                                    <p>Your sustainable design goals will be outlined and occupancy objectives will be discussed. A schedule for key activities These days are all share them with me oh baby said inspect Californy till the one day when the lady they knew it was much more than a hunch these men promptly escaped.</p>
-                                    <p>That is the way we all be came the Brady Bunch these to days are all Happy and Free these days you wanna be where everybody knows your name fish do not fry in the artist kitchen and beans do not burn on the grill took a whole lotta trying just to get up that hill.</p>
-                                    <blockquote>Brady Bunch that's the way we all be came the Brady Bunch these to days are all Happy and Free these days you wanna be where everybody knows your name fish rill took a whole lotta trying just to get up that hill. </blockquote>
-                                    <p>The need no welfare states starship enterprise the Brady Bunch that's the way we all be came the Brady Bunch these days are all Happy and Free these days you wanna be where everybody knows your name fish do not fry in the kitchen and beans do not burn on the grill took a whole lotta trying just to get upset.</p>
-                                    <p>There are all Happy and Free these days you wanna be where everybody knows your name fish do not fry in the kitchen and beans do not burn on the grill took a whole lotta trying just to get up that hill.</p>
+                                    <p>
+                                        {{choiced['introduction']}}
+                                    </p>
+                                    <blockquote>
+                                        {{choiced['highlight']}}
+                                    </blockquote>
+                                    <ul>
+                                        {% for point in choiced['additionalList'] %}
+                                        <li>
+                                            {{point}}
+                                        </li>
+                                        {% endfor %}
+                                    </ul>
+                                    <h4>TAGI:</h4>
+                                    <ul  class="social-icon-four">
+                                        {% for tag in choiced['tags'] %}
+                                        <li><a href="#">{{tag}}</a></li>
+                                        {% endfor %}
+                                      </ul>
                                 </div>
                                 <!--post-share-options-->
                                 <div class="post-share-options clearfix">
                                     <div class="pull-left">
                                         <ul class="social-icon-four">
                                             <li class="share">Share Now:</li>
-                                            <li><a href="#"><span class="fa fa-facebook-f"></span></a></li>
+                                            <li>
+                                                <a 
+                                                    class="icon fa fa-facebook" 
+                                                    href="https://www.facebook.com/sharer/sharer.php?u=https://www.dmdbudownictwo.pl/blog-one-pl?post={{choiced['id']}}&title={{choiced['title']}}&description={{choiced['highlight']}}&picture=https://dmdbudownictwo.pl/static/images/logo_dmd_budownictwo.png"
+                                                    target="_blank">
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a 
+                                                    class="icon fa fa-twitter" 
+                                                    href="https://twitter.com/intent/tweet?text={{choiced['highlight']}}&url=https://www.dmdbudownictwo.pl/blog-one-pl?post={{choiced['id']}}" 
+                                                    target="_blank">
+                                                </a>
+                                            </li>
+                                            <!-- <li><a href="#"><span class="fa fa-facebook-f"></span></a></li>
                                             <li><a href="#"><span class="fa fa-twitter"></span></a></li>
                                             <li><a href="#"><span class="fa fa-google-plus"></span></a></li>
                                             <li><a href="#"><span class="fa fa-pinterest-p"></span></a></li>
-                                            <li><a href="#"><span class="fa fa-dribbble"></span></a></li>
+                                            <li><a href="#"><span class="fa fa-dribbble"></span></a></li> -->
                                         </ul>
                                     </div>
                                     <div class="pull-right posts">
                                         <ul>
-                                            <li class="prev"><a href="#"><span class="fa fa-angle-double-left"></span> Prev</a></li>
-                                            <li><a href="#">Next <span class="fa fa-angle-double-right"></span></a></li>
+                                            {% if pre_next['prev'] != None %}
+                                            <li class="prev"><a href="/blog-one?post={{pre_next['prev']}}"><span class="fa fa-angle-double-left"></span> Poprzedni</a></li>
+                                            {% endif %}
+                                            {% if pre_next['next'] != None %}
+                                            <li><a href="/blog-one?post={{pre_next['next']}}">Następny <span class="fa fa-angle-double-right"></span></a></li>
+                                            {% endif %}
                                         </ul>
                                     </div>
                                 </div>
