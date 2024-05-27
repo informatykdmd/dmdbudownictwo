@@ -1,4 +1,4 @@
-from flask import Flask, render_template, redirect, url_for, jsonify, session, request
+from flask import Flask, render_template, redirect, url_for, jsonify, session, request, send_from_directory
 from flask_paginate import Pagination, get_page_args
 import mysqlDB as msq
 import secrets
@@ -263,6 +263,31 @@ def generator_daneDBList_one_post_id(id_post, lang='pl'):
         }
         daneList.append(theme)
     return daneList
+
+############################
+##      ######           ###
+##      ######           ###
+##     ####              ###
+##     ####              ###
+##    ####               ###
+##    ####               ###
+##   ####                ###
+##   ####                ###
+#####                    ###
+#####                    ###
+##   ####                ###
+##   ####                ###
+##    ####               ###
+##    ####               ###
+##     ####              ###
+##     ####              ###
+##      ######           ###
+##      ######           ###
+############################
+
+@app.route('/.well-known/pki-validation/certum.txt')
+def download_file():
+    return send_from_directory(app.root_path, 'certum.txt')
 
 @app.template_filter('smart_truncate')
 def smart_truncate(content, length=400):
