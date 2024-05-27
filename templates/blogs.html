@@ -26,9 +26,9 @@
     <div class="auto-container">
         <div class="row clearfix">
             
-            <!--Content Side-->
-            <div class="content-side col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                
+            <!--Content Side  content-side -->
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+
                 <div class="row">
                     {% for res in posts %}
                     <!--News Block DMD Style-->
@@ -45,7 +45,7 @@
                                         <li><a href="#"><span class="icon fa fa-calendar"></span> {{res['category']}}</a></li>
                                     </ul>
                                     <h3><a href="/blog-one?post={{res['id']}}">{{res['title']}}</a></h3>
-                                    <!-- <div class="text">{{res['highlight']}}</div> -->
+                                    <div class="text">{{res['highlight']}}</div>
                                     <a href="/blog-one?post={{res['id']}}" class="theme-btn btn-style-six">Czytaj więcej <span class="fa fa-angle-double-right"></span></a>
                                 </div>
                             </div>
