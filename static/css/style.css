@@ -6232,7 +6232,7 @@ img{
 }
 
 .sidebar-page-container .comments-area .comment-box .author-thumb{
-	position:absolute;
+	/* position:absolute; */
 	left:0px;
 	top:0px;
 	width:120px;
