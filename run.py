@@ -500,20 +500,6 @@ def findByCategory():
 
     found = len(searchResults)
 
-    # take_id_rec_pos = generator_daneDBList_RecentPosts(0)
-    # recentPosts = []
-    # for idp in take_id_rec_pos:
-    #     t_post = generator_daneDBList_one_post_id(idp)[0]
-    #     theme = {
-    #         'id': t_post['id'],
-    #         'title': t_post['title'],
-    #         'mainFoto': t_post['mainFoto'],
-    #         'category': t_post['category'],
-    #         'author': t_post['author'],
-    #         'data': t_post['data']
-    #     }
-    #     recentPosts.append(theme)
-
     # Ustawienia paginacji
     page, per_page, offset = get_page_args(page_parameter='page', per_page_parameter='per_page')
     total = len(searchResults)
@@ -568,27 +554,13 @@ def searchBlog():
             'title': t_post['title'],
             'mainFoto': t_post['mainFoto'],
             'introduction': smart_truncate(t_post['introduction'], 200),
-            # 'category': t_post['category'],
+            'category': t_post['category'],
             'author': t_post['author'],
             'data': t_post['data']
         }
         searchResults.append(theme)
 
     found = len(searchResults)
-
-    # take_id_rec_pos = generator_daneDBList_RecentPosts(0)
-    # recentPosts = []
-    # for idp in take_id_rec_pos:
-    #     t_post = generator_daneDBList_one_post_id(idp)[0]
-    #     theme = {
-    #         'id': t_post['id'],
-    #         'title': t_post['title'],
-    #         'mainFoto': t_post['mainFoto'],
-    #         'category': t_post['category'],
-    #         'author': t_post['author'],
-    #         'data': t_post['data']
-    #     }
-    #     recentPosts.append(theme)
 
     # Ustawienia paginacji
     page, per_page, offset = get_page_args(page_parameter='page', per_page_parameter='per_page')
