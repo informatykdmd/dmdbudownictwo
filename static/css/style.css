@@ -6199,6 +6199,11 @@ img{
 	padding-left:150px;
 }
 
+.sidebar-page-container .comments-area .comment .content-2{
+	position:relative;
+	padding-left:20px;
+}
+
 .sidebar-page-container .comments-area .comment .comment-inner{
 	position:relative;
 	padding:0px;

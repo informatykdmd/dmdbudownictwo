@@ -109,7 +109,6 @@
                                 <div class="comment">
                                     {% if comm['avatar'] %}
                                         <div class="content">
-                                            
                                             <div class="author-thumb"><img src="{{comm['avatar']}}" alt=""></div>
                                             <div class="comment-inner">
                                                 <div class="comment-info clearfix"><strong>{{comm['user']}}</strong><div class="comment-time">{{comm['data-time']}}</div></div>
@@ -118,7 +117,7 @@
                                             </div>
                                         </div>
                                     {% else %}
-                                        <div>
+                                        <div class="content-2">
                                             <div class="comment-info clearfix"><strong>{{comm['user']}}</strong><div class="comment-time">{{comm['data-time']}}</div></div>
                                             <div class="text">{{comm['message']}}</div>
                                             <!-- <a class="comment-reply" href="#">Reply</a> -->
