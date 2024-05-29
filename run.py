@@ -763,15 +763,23 @@ def addComm():
         
     return redirect(url_for('blogs'))
 
-@app.route('/subpage')
+@app.route('/subpage', methods=['GET'])
 def subpage():
     session['page'] = 'subpage'
-    pageTitle = 'SUB PAGE'
+    pageTitle = 'subpage'
+
+    if 'target' in request.args:
+        if request.args['target'] in ['polityka', 'zasady', 'pomoc']:
+            targetPage = request.args['target']
+        else: targetPage = "pomoc"
+    else:
+        targetPage = "pomoc"
 
     return render_template(
-        f'subpage.html',
+        f'{targetPage}.html',
         pageTitle=pageTitle
         )
+
 
 
 if __name__ == '__main__':
