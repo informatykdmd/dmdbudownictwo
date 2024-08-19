@@ -5,12 +5,15 @@ import secrets
 from datetime import datetime
 from googletrans import Translator
 import random
+from flask_session import Session
 
 from markupsafe import Markup
 
 app = Flask(__name__)
 app.config['PER_PAGE'] = 6
 app.config['SECRET_KEY'] = secrets.token_hex(16)
+app.config['SESSION_TYPE'] = 'filesystem'  # Możesz wybrać inny backend, np. 'redis', 'sqlalchemy', itp.
+Session(app)
 
 def getLangText(text):
     """Funkcja do tłumaczenia tekstu z polskiego na angielski"""
