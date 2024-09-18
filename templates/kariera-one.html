@@ -56,9 +56,11 @@
                                     <p>
                                         Prosimy o przesyłanie swojego CV na poniższy adres email: 
                                         <strong id="email">{{choiced['contact_email']}}</strong> 
-                                        <a href="javascript:void(0)" onclick="copyEmail()"><i class="fa fa-copy"></i></a>
+                                        <a href="javascript:void(0)" onclick="copyEmail()" class="copy-icon">
+                                            <i class="fa fa-copy"></i>
+                                        </a>
+                                        <span id="copy-message" class="tooltip-text">Email został skopiowany</span>
                                     </p>
-                                    <div id="copy-message" style="display:none; color: green; font-weight: bold;">Email został skopiowany</div>
                                     <p>
                                         W wiadomości e-mail prosimy o zawarcie następujących informacji:
                                     </p>
@@ -125,15 +127,32 @@
         //     });
         // }
 
+        // function copyEmail() {
+        //     const email = document.getElementById('email').textContent;
+        //     navigator.clipboard.writeText(email).then(() => {
+        //         const message = document.getElementById('copy-message');
+        //         message.style.display = 'block';  // Pokaż komunikat
+
+        //         // Ukryj komunikat po 3 sekundach
+        //         setTimeout(() => {
+        //             message.style.display = 'none';
+        //         }, 3000);
+        //     }).catch(err => {
+        //         console.error('Błąd podczas kopiowania: ', err);
+        //     });
+        // }
+
         function copyEmail() {
             const email = document.getElementById('email').textContent;
             navigator.clipboard.writeText(email).then(() => {
-                const message = document.getElementById('copy-message');
-                message.style.display = 'block';  // Pokaż komunikat
+                const tooltip = document.getElementById('copy-message');
+                tooltip.style.visibility = 'visible';  // Pokaż tooltip
+                tooltip.style.opacity = '1';  // Pokaż tooltip z animacją
 
-                // Ukryj komunikat po 3 sekundach
+                // Ukryj tooltip po 3 sekundach
                 setTimeout(() => {
-                    message.style.display = 'none';
+                    tooltip.style.visibility = 'hidden';
+                    tooltip.style.opacity = '0';  // Zresetuj animację
                 }, 3000);
             }).catch(err => {
                 console.error('Błąd podczas kopiowania: ', err);

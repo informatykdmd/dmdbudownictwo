@@ -8246,3 +8246,40 @@ img{
 .custom-link a:hover {
 	color: #ff0101;
 }
+
+/* Stylizacja tooltipa */
+.tooltip-text {
+    visibility: hidden;
+    background-color: #9b9b9b;
+    color: #fff;
+    text-align: center;
+    border-radius: 4px;
+    padding: 5px;
+    position: absolute;
+    z-index: 1;
+    bottom: 125%; /* Umieszcza tooltip nad ikonką */
+    left: 50%;
+    transform: translateX(-50%);
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.copy-icon {
+    position: relative;
+    display: inline-block;
+}
+
+.copy-icon:hover .tooltip-text {
+    visibility: visible;
+}
+
+.tooltip-text::after {
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: #9b9b9b transparent transparent transparent;
+}
