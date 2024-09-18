@@ -55,11 +55,7 @@
                                 <div class="text">
                                     <p>
                                         Prosimy o przesyłanie swojego CV na poniższy adres email: 
-                                        <a class="solution-btn theme-btn" href="mailto:{{choiced['contact_email']}}?subject=Aplikacja%20na%20stanowisko&body=Pełne%20imię%20i%20nazwisko:%0D%0ANumer%20telefonu%20kontaktowego:%0D%0AKrótki%20opis%20doświadczenia%20zawodowego:%0D%0APreferowana%20data%20rozpoczęcia%20pracy:%0D%0AWymagany%20załącznik:%20aktualne%20CV%20w%20formacie%20.PDF">
-                                            <strong id="email">{{choiced['contact_email']}}</strong> 
-                                        </a>
-
-                                        <!-- <strong id="email">{{choiced['contact_email']}}</strong>  -->
+                                        <strong id="email">{{choiced['contact_email']}}</strong> 
                                         <a href="javascript:void(0)" onclick="copyEmail()"><i class="fa fa-copy"></i></a>
                                     </p>
                                     
@@ -76,7 +72,7 @@
                                     <p>Uprzejmie prosimy o dołączenie klauzuli o zgodzie na przetwarzanie danych osobowych.</p>
 
                                 </div>
-                                <!-- <a class="solution-btn theme-btn" href="mailto:praca@dmdbudownictwo.pl">Wyślij CV</a> -->
+
                                 <a class="solution-btn theme-btn" href="mailto:{{choiced['contact_email']}}?subject=Aplikacja%20na%20stanowisko&body=Pełne%20imię%20i%20nazwisko:%0D%0ANumer%20telefonu%20kontaktowego:%0D%0AKrótki%20opis%20doświadczenia%20zawodowego:%0D%0APreferowana%20data%20rozpoczęcia%20pracy:%0D%0AWymagany%20załącznik:%20aktualne%20CV%20w%20formacie%20.PDF">Wyślij CV</a>
 
                             </div>
