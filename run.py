@@ -196,7 +196,7 @@ def generator_job_offer(id_offer):
             'title': offer[1],
             'description': offer[2],
             'requirements_description': offer[3],
-            'requirements': offer[4],
+            'requirements': str(offer[4]).split(','),
             'benefits': offer[5],
             'location': offer[6],
             'contact_email': offer[7],
