@@ -188,6 +188,27 @@ def generator_jobs():
         daneList.append(theme)
     return daneList
 
+def generator_job_offer(id_offer):
+    offer = take_data_where_ID('*', 'job_offers', 'id', id_offer)[0]
+
+    theme = {
+            'id': offer[0],
+            'title': offer[1],
+            'description': offer[2],
+            'requirements_description': offer[3],
+            'requirements': offer[4],
+            'benefits': offer[5],
+            'location': offer[6],
+            'contact_email': offer[7],
+            'employment_type': offer[8],
+            'salary': offer[9],
+            'start_date': offer[10],
+            'data': format_date(offer[11]),
+            'brand': offer[12]
+
+        }
+    return theme
+
 def generator_daneDBList_prev_next(main_id):
     # Załóżmy, że msq.connect_to_database() zwraca listę tuple'i reprezentujących posty, np. [(1, 'Content1'), (2, 'Content2'), ...]
     took_allPost = msq.connect_to_database('SELECT ID FROM blog_posts ORDER BY ID DESC;')
@@ -455,14 +476,24 @@ def kariera():
         )
 
 
-@app.route('/kariera-one')
+@app.route('/kariera-one', methods=['GET'])
 def karieraOne():
     session['page'] = 'kariera'
     pageTitle = 'Kariera'
 
+    if 'job' in request.args:
+        job_id = request.args.get('job')
+        try: job_id_int = int(job_id)
+        except ValueError: return redirect(url_for('kariera'))
+    else:
+        return redirect(url_for(f'kariera'))
+    
+    choiced = generator_job_offer(job_id_int)
+
     return render_template(
         f'kariera-one.html',
-        pageTitle=pageTitle
+        pageTitle=pageTitle,
+        choiced=choiced
         )
 
 @app.route('/my-zespol')
