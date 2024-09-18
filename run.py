@@ -181,7 +181,7 @@ def generator_jobs():
             'employment_type': rec[8],
             'salary': rec[9],
             'start_date': rec[10],
-            'date_posted': format_date( rec[11]),
+            'data': format_date(rec[11]),
             'brand': rec[12]
 
         }
