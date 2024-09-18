@@ -453,7 +453,7 @@ def kariera():
     session['page'] = 'kariera'
     pageTitle = 'Kariera'
 
-    jobs_took = generator_jobs()
+    jobs_took = [] #generator_jobs()
 
     found = len(jobs_took)
     job_count_message = format_job_count(found)
