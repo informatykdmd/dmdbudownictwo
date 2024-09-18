@@ -98,9 +98,15 @@
                                 {% endif %}
                                 
                                 {% if pageTitle=='Realizacje' %}
-                                <li class="current"><a href="/realizacje">Realizacje</a></li>
+                                    <li class="current"><a href="/realizacje">Realizacje</a></li>
                                 {% else %}
-                                <li><a href="/realizacje">Realizacje</a></li>
+                                    <li><a href="/realizacje">Realizacje</a></li>
+                                {% endif %}
+
+                                {% if pageTitle=='Kariera' %}
+                                    <li class="current"><a href="/kariera">Kariera</a></li>
+                                {% else %}
+                                    <li><a href="/kariera">Kariera</a></li>
                                 {% endif %}
                                 
                                 {% if pageTitle=='Blog' %}

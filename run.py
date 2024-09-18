@@ -393,6 +393,27 @@ def kontakt():
         pageTitle=pageTitle
         )
 
+@app.route('/kariera')
+def kariera():
+    session['page'] = 'kariera'
+    pageTitle = 'Kariera'
+
+    return render_template(
+        f'kariera.html',
+        pageTitle=pageTitle
+        )
+
+
+@app.route('/kariera-one')
+def karieraOne():
+    session['page'] = 'kariera'
+    pageTitle = 'Kariera'
+
+    return render_template(
+        f'kariera-one.html',
+        pageTitle=pageTitle
+        )
+
 @app.route('/my-zespol')
 def myZespol():
     session['page'] = 'myZespol'
