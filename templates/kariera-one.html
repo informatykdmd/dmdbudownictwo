@@ -58,7 +58,7 @@
                                         <strong id="email">{{choiced['contact_email']}}</strong> 
                                         <a href="javascript:void(0)" onclick="copyEmail()"><i class="fa fa-copy"></i></a>
                                     </p>
-                                    
+                                    <div id="copy-message" style="display:none; color: green; font-weight: bold;">Email został skopiowany</div>
                                     <p>
                                         W wiadomości e-mail prosimy o zawarcie następujących informacji:
                                     </p>
@@ -116,10 +116,25 @@
     </section>
     <!--End Project Single Section-->
     <script>
+        // function copyEmail() {
+        //     const email = document.getElementById('email').textContent;
+        //     navigator.clipboard.writeText(email).then(() => {
+        //         alert("Adres email został skopiowany do schowka.");
+        //     }).catch(err => {
+        //         console.error('Błąd podczas kopiowania: ', err);
+        //     });
+        // }
+
         function copyEmail() {
             const email = document.getElementById('email').textContent;
             navigator.clipboard.writeText(email).then(() => {
-                alert("Adres email został skopiowany do schowka.");
+                const message = document.getElementById('copy-message');
+                message.style.display = 'block';  // Pokaż komunikat
+
+                // Ukryj komunikat po 3 sekundach
+                setTimeout(() => {
+                    message.style.display = 'none';
+                }, 3000);
             }).catch(err => {
                 console.error('Błąd podczas kopiowania: ', err);
             });
