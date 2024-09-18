@@ -99,7 +99,7 @@
                             
                             <!--Styled Pagination-->
                             {% if pagination.total_pages > 1 %}
-                                <ul class="styled-pagination text-center">
+                                <ul class="styled-pagination text-left">
                                     {% if pagination.has_prev %}
                                         <li class="prev">
                                             <a href='{{ url_for(request.endpoint, page=pagination.page - 1) }}'>
