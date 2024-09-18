@@ -8257,7 +8257,7 @@ img{
     padding: 5px;
     position: absolute;
     z-index: 1;
-    bottom: 125%; /* Umieszcza tooltip nad ikonką */
+    bottom: 105%; /* Umieszcza tooltip nad ikonką */
     left: 50%;
     transform: translateX(-50%);
     opacity: 0;
