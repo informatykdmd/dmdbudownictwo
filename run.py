@@ -425,7 +425,7 @@ def kariera():
     found = len(jobs_took)
     job_count_message = format_job_count(
         # found
-        21
+        22
         )
     
 
