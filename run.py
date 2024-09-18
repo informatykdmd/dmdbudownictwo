@@ -398,9 +398,35 @@ def kariera():
     session['page'] = 'kariera'
     pageTitle = 'Kariera'
 
+    jobs_took = [
+        {
+            "id": 1,
+            "title": "Inżynier Budowy",
+            "location": "Warszawa",
+            "employment_type": "Pełny etat",
+            "data": "2024-09-18",
+            "description": "Nadzór nad realizacją projektów budowlanych.",
+            "brand": "DMD Budownictwo"
+        },
+
+    ]
+
+    found = len(jobs_took)
+
+    # Ustawienia paginacji
+    page, per_page, offset = get_page_args(page_parameter='page', per_page_parameter='per_page')
+    total = len(jobs_took)
+    pagination = Pagination(page=page, per_page=per_page, total=total, css_framework='bootstrap4')
+
+    # Pobierz tylko odpowiednią ilość postów na aktualnej stronie
+    jobs = jobs_took[offset: offset + per_page]
+
     return render_template(
         f'kariera.html',
-        pageTitle=pageTitle
+        pageTitle=pageTitle,
+        found=found,
+        jobs=jobs,
+        pagination=pagination
         )
 
 
