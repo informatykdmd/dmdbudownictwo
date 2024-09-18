@@ -164,6 +164,30 @@ def generator_daneDBList_short(lang='pl'):
         daneList.append(theme)
     return daneList
 
+def generator_jobs():
+    daneList = []
+    took_allRecords = msq.connect_to_database(f'SELECT * FROM job_offers ORDER BY ID DESC;') 
+    for rec in took_allRecords:
+
+        theme = {
+            'id': rec[0],
+            'title': rec[1],
+            'description': rec[2],
+            'requirements_description': rec[3],
+            'requirements': rec[4],
+            'benefits': rec[5],
+            'location': rec[6],
+            'contact_email': rec[7],
+            'employment_type': rec[8],
+            'salary': rec[9],
+            'start_date': rec[10],
+            'date_posted': format_date( rec[11]),
+            'brand': rec[12]
+
+        }
+        daneList.append(theme)
+    return daneList
+
 def generator_daneDBList_prev_next(main_id):
     # Załóżmy, że msq.connect_to_database() zwraca listę tuple'i reprezentujących posty, np. [(1, 'Content1'), (2, 'Content2'), ...]
     took_allPost = msq.connect_to_database('SELECT ID FROM blog_posts ORDER BY ID DESC;')
@@ -408,20 +432,7 @@ def kariera():
     session['page'] = 'kariera'
     pageTitle = 'Kariera'
 
-    jobs_took = [
-        # {
-        #     "id": 1,
-        #     "title": "Inżynier Budowy",
-        #     "location": "Warszawa",
-        #     "employment_type": "Pełny etat",
-        #     "data": "2024-09-18",
-        #     "description": "Nadzór nad realizacją projektów budowlanych.",
-        #     "brand": "DMD Budownictwo"
-        # },
-        
-        
-
-    ]
+    jobs_took = generator_jobs()
 
     found = len(jobs_took)
     job_count_message = format_job_count(found)
