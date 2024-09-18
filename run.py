@@ -489,6 +489,15 @@ def karieraOne():
         return redirect(url_for(f'kariera'))
     
     choiced = generator_job_offer(job_id_int)
+    def format_header(title):
+        # Rozdziel tytuł na pierwsze słowo i resztę
+        words = title.split(' ', 1)  # Rozdziela tylko na 2 części
+        if len(words) > 1:
+            return f'<span class="theme_color">{words[0]}</span> {words[1]}'
+        else:
+            return f'<span class="theme_color">{words[0]}</span>'
+        
+    choiced['title_split'] = format_header(choiced['title'])
 
     return render_template(
         f'kariera-one.html',
