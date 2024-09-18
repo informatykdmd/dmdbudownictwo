@@ -140,7 +140,7 @@
                         <div>
                             <!-- Tutaj możesz dodać np. tekst informujący o braku ofert -->
                             <p class="white-text font-size-small">Obecnie nie mamy dostępnych ofert pracy.</p>
-                            <img src=(static/images/resource/kariera-0.jpg) alt="Brak dostępnych ofert pracy"/>
+                            <img src="{{ url_for('static', filename='images/resource/kariera-0.jpg') }}" alt="Brak dostępnych ofert pracy"/>
                         </div>
                         
                         {% endif %}
