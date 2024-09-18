@@ -88,29 +88,27 @@
                             <h2>{{ choiced['title_split']|safe }}</h2>
                         </div>
                         <div class="text">
-                        	<p>Well we’re movin’ on up to the east side. To a deluxe apartment in the sky. The weather started getting rough – the tiny ship was tossed. If not for the courage of the fearless crew the Minnow would be lost. the Minnow would be lost. We’re gonna do it. On your mark get set and go now. Got a dream and we just know now we’re gonna make our dream come true. I have always wanted to have a neighbor just like you. I’ve always wanted to live in a neighborhood with you.</p>
-                            <h3>Project Challenge</h3>
-                            <p>It’s time to put on makeup. It’s time to dress up right. It’s time to raise the curtain on the Muppet Show tonight. The mate was a mighty sailin’ man the Skipper brave and sure.</p>
+                            <h3>Opis Stanowiska</h3>
+                        	<p>{{choiced['description']}}</p>
+                            <h3>Wymagania</h3>
+                            <p>{{choiced['requirements_description']}}</p>
                             <div class="row clearfix">
-                            	<div class="column col-md-6 col-sm-6 col-xs-12">
+                            	<div class="column col-md-12 col-sm-12 col-xs-12">
+
                                 	<ul class="list-style-five">
-                                    	<li>Five passengers set sail that day for a three hour</li>
-                                        <li>Family that’s the way we all became the brady</li>
-                                        <li>The powerless in a world of criminals operate</li>
-                                    </ul>
-                                </div>
-                                <div class="column col-md-6 col-sm-6 col-xs-12">
-                                	<ul class="list-style-five">
-                                    	<li>Till the one day when the lady met this fellow</li>
-                                        <li>Champion the cause of the innocent career</li>
-                                        <li>Now were up in the big leagues getting’ turn</li>
+                                        {% for point in {{choiced['requirements']}} %}
+                                    	    <li>{{point}}</li>
+                                        {% end for%}
                                     </ul>
                                 </div>
                             </div>
-                            <h3>What We Did</h3>
-                            <p>Then along come two they got nothin’ but their jeans. Texas tea. Knight Rider: A shadowy flight into the dangerous world of a man who does not exist. The first mate and his Skipper too will do their very best to make the others comfortable in their tropic island nest.</p>
-                            <h3>RESULT</h3>
-                            <div class="text">That’s just a little bit more than the law will allow. We’re gonna do it. On your mark get set and go now. Got a dream and we just know now we’re gonna make our dream come true. Makin their way the only way they know how. That’s just a little bit more than the law will allow.</div>
+                            {% if choiced['requirements'] %}
+                            <h3>Benefity</h3>
+                            <p>{{choiced['requirements']}}</p>
+                            {% endif %}
+                            <p>
+                                <a class="solution-btn theme-btn" href="mailto:{{choiced['contact_email']}}?subject=Aplikacja%20na%20stanowisko&body=Pełne%20imię%20i%20nazwisko:%0D%0ANumer%20telefonu%20kontaktowego:%0D%0AKrótki%20opis%20doświadczenia%20zawodowego:%0D%0APreferowana%20data%20rozpoczęcia%20pracy:%0D%0AWymagany%20załącznik:%20aktualne%20CV%20w%20formacie%20.PDF">Wyślij CV</a>
+                            </p>
                         </div>
                     </div>
                 </div>
