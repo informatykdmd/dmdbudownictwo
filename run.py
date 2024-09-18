@@ -267,6 +267,16 @@ def generator_daneDBList_one_post_id(id_post, lang='pl'):
         daneList.append(theme)
     return daneList
 
+def format_job_count(count):
+    if count == 1:
+        return f"Obecnie oferujemy {count} ofertę pracy."
+    elif 2 <= count <= 4:
+        return f"Obecnie oferujemy {count} oferty pracy."
+    elif (count % 10 == 2 or count % 10 == 3 or count % 10 == 4) and not (12 <= count % 100 <= 14):
+        return f"Obecnie oferujemy {count} oferty pracy."
+    else:
+        return f"Obecnie oferujemy {count} ofert pracy."
+
 ############################
 ##      ######           ###
 ##      ######           ###
@@ -412,6 +422,7 @@ def kariera():
     ]
 
     found = len(jobs_took)
+    job_count_message = format_job_count(found)
 
     # Ustawienia paginacji
     page, per_page, offset = get_page_args(page_parameter='page', per_page_parameter='per_page')
@@ -424,7 +435,7 @@ def kariera():
     return render_template(
         f'kariera.html',
         pageTitle=pageTitle,
-        found=found,
+        job_count_message=job_count_message,
         jobs=jobs,
         pagination=pagination
         )
