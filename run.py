@@ -418,6 +418,42 @@ def kariera():
             "description": "Nadzór nad realizacją projektów budowlanych.",
             "brand": "DMD Budownictwo"
         },
+        {
+            "id": 1,
+            "title": "Inżynier Budowy",
+            "location": "Warszawa",
+            "employment_type": "Pełny etat",
+            "data": "2024-09-18",
+            "description": "Nadzór nad realizacją projektów budowlanych.",
+            "brand": "DMD Budownictwo"
+        },
+        {
+            "id": 1,
+            "title": "Inżynier Budowy",
+            "location": "Warszawa",
+            "employment_type": "Pełny etat",
+            "data": "2024-09-18",
+            "description": "Nadzór nad realizacją projektów budowlanych.",
+            "brand": "DMD Budownictwo"
+        },
+        {
+            "id": 1,
+            "title": "Inżynier Budowy",
+            "location": "Warszawa",
+            "employment_type": "Pełny etat",
+            "data": "2024-09-18",
+            "description": "Nadzór nad realizacją projektów budowlanych.",
+            "brand": "DMD Budownictwo"
+        },
+        {
+            "id": 1,
+            "title": "Inżynier Budowy",
+            "location": "Warszawa",
+            "employment_type": "Pełny etat",
+            "data": "2024-09-18",
+            "description": "Nadzór nad realizacją projektów budowlanych.",
+            "brand": "DMD Budownictwo"
+        },
 
     ]
 
