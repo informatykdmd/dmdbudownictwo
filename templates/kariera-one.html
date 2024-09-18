@@ -92,20 +92,23 @@
                         	<p>{{choiced['description']}}</p>
                             <h3>Wymagania</h3>
                             <p>{{choiced['requirements_description']}}</p>
-                            <div class="row clearfix">
-                            	<div class="column col-md-12 col-sm-12 col-xs-12">
-
-                                	<ul class="list-style-five"> 
-                                        <!-- list separowana , -->
-                                        {% for point in choiced['requirements'] %}
-                                    	    <li>{{point}}</li>
-                                        {% endfor %}
-                                    </ul>
-                                </div>
-                            </div>
+                            {% if choiced['requirements'] %}
+                                <ul class="list-style-five"> 
+                                    <!-- list separowana , -->
+                                    {% for point in choiced['requirements'] %}
+                                        <li>{{point}}</li>
+                                    {% endfor %}
+                                </ul>
+                            {% endif %}
                             {% if choiced['benefits'] %}
-                            <h3>Benefity</h3>
-                            <p>{{choiced['benefits']}}</p>
+                                <h3>Benefity</h3>
+                                <ul class="list-style-five"> 
+                                    <!-- list separowana , -->
+                                    {% for point in choiced['benefits'] %}
+                                        <li>{{point}}</li>
+                                    {% endfor %}
+                                </ul>
+
                             {% endif %}
                             <p>
                                 <a class="solution-btn theme-btn" href="mailto:{{choiced['contact_email']}}?subject=Aplikacja%20na%20stanowisko&body=Pełne%20imię%20i%20nazwisko:%0D%0ANumer%20telefonu%20kontaktowego:%0D%0AKrótki%20opis%20doświadczenia%20zawodowego:%0D%0APreferowana%20data%20rozpoczęcia%20pracy:%0D%0AWymagany%20załącznik:%20aktualne%20CV%20w%20formacie%20.PDF">Wyślij CV</a>
