@@ -56,20 +56,9 @@
                                     <p>
                                         Prosimy o przesyłanie swojego CV na poniższy adres email: 
                                         <strong id="email">praca@dmdbudownictwo.pl</strong> 
-                                        <button onclick="copyEmail()" class="copy-btn">
-                                            <i class="fa fa-copy"></i> Kopiuj
-                                        </button>
+                                        
                                     </p>
-                                    <script>
-                                        function copyEmail() {
-                                            const email = document.getElementById('email').textContent;
-                                            navigator.clipboard.writeText(email).then(() => {
-                                                alert("Adres email został skopiowany do schowka.");
-                                            }).catch(err => {
-                                                console.error('Błąd podczas kopiowania: ', err);
-                                            });
-                                        }
-                                    </script>
+                                    
                                     <p>
                                         W wiadomości e-mail prosimy o zawarcie następujących informacji:
                                     </p>
@@ -83,7 +72,10 @@
                                     <p>Uprzejmie prosimy o dołączenie klauzuli o zgodzie na przetwarzanie danych osobowych.</p>
 
                                 </div>
-                                <a class="solution-btn theme-btn" href="/kontakt">Skontaktuj Się</a>
+                                <button onclick="copyEmail()" class="solution-btn theme-btn copy-btn">
+                                    <i class="fa fa-copy"></i> Kopiuj Email
+                                </button>
+                                <a class="solution-btn theme-btn" href="/kontakt">Napisz Wiadomość</a>
                             </div>
                         </div>
                         
@@ -124,6 +116,16 @@
         </div>
     </section>
     <!--End Project Single Section-->
+    <script>
+        function copyEmail() {
+            const email = document.getElementById('email').textContent;
+            navigator.clipboard.writeText(email).then(() => {
+                alert("Adres email został skopiowany do schowka.");
+            }).catch(err => {
+                console.error('Błąd podczas kopiowania: ', err);
+            });
+        }
+    </script>
 
 {% endblock %}
 
