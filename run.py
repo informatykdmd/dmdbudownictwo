@@ -418,47 +418,16 @@ def kariera():
             "description": "Nadzór nad realizacją projektów budowlanych.",
             "brand": "DMD Budownictwo"
         },
-        {
-            "id": 1,
-            "title": "Inżynier Budowy",
-            "location": "Warszawa",
-            "employment_type": "Pełny etat",
-            "data": "2024-09-18",
-            "description": "Nadzór nad realizacją projektów budowlanych.",
-            "brand": "DMD Budownictwo"
-        },
-        {
-            "id": 1,
-            "title": "Inżynier Budowy",
-            "location": "Warszawa",
-            "employment_type": "Pełny etat",
-            "data": "2024-09-18",
-            "description": "Nadzór nad realizacją projektów budowlanych.",
-            "brand": "DMD Budownictwo"
-        },
-        # {
-        #     "id": 1,
-        #     "title": "Inżynier Budowy",
-        #     "location": "Warszawa",
-        #     "employment_type": "Pełny etat",
-        #     "data": "2024-09-18",
-        #     "description": "Nadzór nad realizacją projektów budowlanych.",
-        #     "brand": "DMD Budownictwo"
-        # },
-        # {
-        #     "id": 1,
-        #     "title": "Inżynier Budowy",
-        #     "location": "Warszawa",
-        #     "employment_type": "Pełny etat",
-        #     "data": "2024-09-18",
-        #     "description": "Nadzór nad realizacją projektów budowlanych.",
-        #     "brand": "DMD Budownictwo"
-        # },
+        
 
     ]
 
     found = len(jobs_took)
-    job_count_message = format_job_count(found)
+    job_count_message = format_job_count(
+        # found
+        1
+        )
+    
 
     # Ustawienia paginacji
     page, per_page, offset = get_page_args(page_parameter='page', per_page_parameter='per_page')
