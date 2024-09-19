@@ -55,6 +55,26 @@ def take_data_where_ID(key, table, id_name, ID):
     dump_key = msq.connect_to_database(f'SELECT {key} FROM {table} WHERE {id_name} = {ID};')
     return dump_key
 
+def take_data_where_ID_AND_somethig(key, table, id_name, ID, nameSomething, valSomething):
+    if isinstance(ID, str):
+        ID = f"'{ID}'"
+    if isinstance(valSomething, str):
+        valSomething = f"'{valSomething}'"
+    dump_key = msq.connect_to_database(f'SELECT {key} FROM {table} WHERE {id_name} = {ID} AND {nameSomething} = {valSomething};')
+    return dump_key
+
+def take_data_where_ID_AND_somethig_AND_Something(key, table, id_name, ID, nameSomething, valSomething, nameSomethingOther, valSomethingOther):
+    if isinstance(ID, str):
+        ID = f"'{ID}'"
+    if isinstance(valSomething, str):
+        valSomething = f"'{valSomething}'"
+    if isinstance(valSomethingOther, str):
+        valSomethingOther = f"'{valSomethingOther}'"
+    dump_key = msq.connect_to_database(f'SELECT {key} FROM {table} WHERE {id_name} = {ID} AND {nameSomething} = {valSomething} AND {nameSomethingOther} = {valSomethingOther};')
+    return dump_key
+
+
+
 def take_data_table(key, table):
     dump_key = msq.connect_to_database(f'SELECT {key} FROM {table};')
     return dump_key
@@ -166,7 +186,7 @@ def generator_daneDBList_short(lang='pl'):
 
 def generator_jobs():
     daneList = []
-    took_allRecords = msq.connect_to_database(f'SELECT * FROM job_offers ORDER BY ID DESC;') 
+    took_allRecords = msq.connect_to_database(f'SELECT * FROM job_offers WHERE status=1 ORDER BY ID DESC;') 
     for rec in took_allRecords:
 
         theme = {
@@ -182,14 +202,15 @@ def generator_jobs():
             'salary': rec[9],
             'start_date': rec[10],
             'data': format_date(rec[11]),
-            'brand': rec[12]
-
+            'brand': rec[12],
+            'status': rec[13]
         }
         daneList.append(theme)
     return daneList
 
 def generator_job_offer(id_offer):
-    offer = take_data_where_ID('*', 'job_offers', 'id', id_offer)[0]
+    take_data_where_ID_AND_somethig
+    offer = take_data_where_ID_AND_somethig('*', 'job_offers', 'id', id_offer, 'status', 1)[0]
 
     theme = {
             'id': offer[0],
@@ -204,8 +225,8 @@ def generator_job_offer(id_offer):
             'salary': offer[9],
             'start_date': offer[10],
             'data': format_date(offer[11]),
-            'brand': offer[12]
-
+            'brand': offer[12],
+            'status': offer[13]
         }
     return theme
 
