@@ -186,7 +186,10 @@ def generator_daneDBList_short(lang='pl'):
 
 def generator_jobs():
     daneList = []
-    took_allRecords = msq.connect_to_database(f'SELECT * FROM job_offers WHERE status=1 ORDER BY ID DESC;') 
+    
+    try: took_allRecords = msq.connect_to_database(f'SELECT * FROM job_offers WHERE status=1 ORDER BY ID DESC;') 
+    except: return []
+    
     for rec in took_allRecords:
 
         theme = {
@@ -209,7 +212,8 @@ def generator_jobs():
     return daneList
 
 def generator_job_offer(id_offer):
-    offer = take_data_where_ID_AND_somethig('*', 'job_offers', 'id', id_offer, 'status', 1)[0]
+    try: offer = take_data_where_ID_AND_somethig('*', 'job_offers', 'id', id_offer, 'status', 1)[0]
+    except: return []
 
     theme = {
             'id': offer[0],
