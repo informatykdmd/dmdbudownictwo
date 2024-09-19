@@ -209,7 +209,6 @@ def generator_jobs():
     return daneList
 
 def generator_job_offer(id_offer):
-    take_data_where_ID_AND_somethig
     offer = take_data_where_ID_AND_somethig('*', 'job_offers', 'id', id_offer, 'status', 1)[0]
 
     theme = {
@@ -510,6 +509,9 @@ def karieraOne():
         return redirect(url_for(f'kariera'))
     
     choiced = generator_job_offer(job_id_int)
+    if not len(choiced):
+        return redirect(url_for(f'kariera'))
+    
     def format_header(title):
         # Rozdziel tytuł na pierwsze słowo i resztę
         words = title.split(' ', 1)  # Rozdziela tylko na 2 części
