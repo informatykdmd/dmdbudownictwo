@@ -226,7 +226,7 @@ def generator_job_offer(id_offer):
             'contact_email': offer[7],
             'employment_type': offer[8],
             'salary': offer[9],
-            'start_date': offer[10],
+            'start_date': format_date(offer[10]),
             'data': format_date(offer[11]),
             'brand': offer[12],
             'status': offer[13]
