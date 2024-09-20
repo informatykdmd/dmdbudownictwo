@@ -92,7 +92,7 @@
                         	<p>{{choiced['description']}}</p>
                             <h3>Wymagania</h3>
                             <p>{{choiced['requirements_description']}}</p>
-                            {% if choiced['requirements'] %}
+                            {% if choiced['requirements'] != [''] %}
                                 <ul class="list-style-five"> 
                                     <!-- list separowana , -->
                                     {% for point in choiced['requirements'] %}
@@ -100,7 +100,7 @@
                                     {% endfor %}
                                 </ul>
                             {% endif %}
-                            {% if choiced['benefits'] %}
+                            {% if choiced['benefits'] != [''] %}
                                 <h3>Benefity</h3>
                                 <ul class="list-style-five"> 
                                     <!-- list separowana , -->
