@@ -525,7 +525,7 @@ def karieraOne():
             return f'<span class="theme_color">{words[0]}</span>'
         
     choiced['title_split'] = format_header(choiced['title'])
-
+    print(choiced)
     return render_template(
         f'kariera-one.html',
         pageTitle=pageTitle,
