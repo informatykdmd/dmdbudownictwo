@@ -1,0 +1,146 @@
+{% extends 'base.html' %}
+{% block MainSlider %}{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-4" style="margin-bottom: 2em;">
+            <h5>DMD BUDOWNICTWO</h5>
+            <a href="mailto:biuro@dmdbudownictwo.pl">biuro@dmdbudownictwo.pl</a>
+        </div>
+        <div class="col-md-4" style="margin-bottom: 2em;">
+            <h5>DMD DOMY</h5>
+            <a href="mailto:biuro@dmddomy.pl">biuro@dmddomy.pl</a>
+        </div>
+        <div class="col-md-4" style="margin-bottom: 2em;">
+            <h5>DMD ELITEHOME</h5>
+            <a href="mailto:biuro@dmdelitehome.pl">biuro@dmdelitehome.pl</a>
+        </div>
+        <div class="col-md-4" style="margin-bottom: 2em;">
+            <h5>DMD INSTALACJE</h5>
+            <a href="mailto:biuro@dmdinstalacje.pl">biuro@dmdinstalacje.pl</a>
+        </div>
+        <div class="col-md-4" style="margin-bottom: 2em;">
+            <h5>DMD INWESTYCJE</h5>
+            <a href="mailto:biuro@dmdinwestycje.pl">biuro@dmdinwestycje.pl</a>
+        </div>
+        <div class="col-md-4" style="margin-bottom: 2em;">
+            <h5>DMD DEVELOPMENT</h5>
+            <a href="mailto:biuro@dmddevelopment.pl">biuro@dmddevelopment.pl</a>
+        </div>
+        
+    </div>
+</div>
+    <!--Contact Section-->
+    <section class="contact-section">
+        <div class="auto-container">
+            
+            <h2><span class="theme_color">Pozostańmy</span> w kontakcie</h2>
+            <div class="text">
+                Możesz porozmawiać z naszym przedstawicielem online w każdej chwili. Prosimy o wypełnienie poniższego formularza kontaktowego. <br> Prosimy o cierpliwość, odpowiemy najszybciej jak to możliwe. Nasza infolinia jest dostępna 24/7.
+            </div>
+            <div class="row clearfix">
+                <div class="form-column col-lg-9 col-md-8 col-sm-12 col-xs-12">
+                    <div class="inner-column">
+                        
+                        <!--Contact Form-->
+                        <div class="contact-form style-two">
+                            <form class="contact-form form" id="ajax-contact" method="post">
+                                <div class="row clearfix">
+                                    <div class="form-group col-md-6 col-sm-6 co-xs-12">
+                                        <input type="text" id="name" name="name" value="" placeholder="Imię" required>
+                                    </div>
+                                    <div class="form-group col-md-6 col-sm-6 co-xs-12">
+                                        <input type="email" id="email" name="email" value="" placeholder="E-mail" required>
+                                    </div>
+                                    <div class="form-group col-md-12 col-sm-12 co-xs-12">
+                                        <input type="text" name="subject" id="subject" value="" placeholder="Temat zapytania" required>
+                                    </div>
+                                    <!-- <div class="form-group col-md-6 col-sm-6 co-xs-12">
+                                        <input type="text" name="phone" value="" placeholder="Telefon" required>
+                                    </div> -->
+                                    <div class="form-group col-md-12 col-sm-12 co-xs-12">
+                                        <textarea id="message" name="message" placeholder="Twoja Wiadomość"></textarea>
+                                    </div>
+                                    <div class="row clearfix" style="display: flex;">
+                                        <div style="margin-left: 20px;">
+                                            <input type="checkbox" role="switch" name="condition" id="condition" value="accepted" required/>
+                                        </div>
+                                        <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10">
+                                            <label for="condition">
+                                                Akceptuję politykę prywatoności DMD BUDOWNICTWO, niniejszym wyrażam zgodę na przetwarzanie moich 
+                                                danych osobowych zawartych w niniejszym formularzu w celach kontaktowych, zgodnie z obowiązującą 
+                                                polityką prywatności.
+                                            </label>
+                                        </div>
+                                        
+                                    </div>
+                                    <div class="form-group col-md-12 col-sm-12 co-xs-12">
+                                        <button type="submit" data-text="Wyślij Wiadomość" class="theme-btn btn-style-one">Wyślij Wiadomość</button>
+                                    </div>
+                                </div>
+                                <!-- <p class="form-message"></p> -->
+                                <div class="form-message" id="komunikat_z_serwera"></div>
+                            </form>
+                        </div>
+                        <!--End Contact Form-->
+                        
+                    </div>
+                </div>
+                <div class="info-column col-lg-3 col-md-4 col-sm-12 col-xs-12">
+                    
+                    <ul class="list-style-two">
+                        <li><span class="icon flaticon-home-1"></span><strong>ul. Dworkowa 51,</strong>05-082 Stare Babice, Polska</li>
+                        <li><span class="icon flaticon-envelope-1"></span><strong>Wyślij na E-mail</strong><a href="mailto:biuro@dmdbudownictwo.pl">biuro@dmdbudownictwo.pl</a></li>
+                        <li><span class="icon flaticon-technology-2"></span><strong>Masz pytania, zadzwoń</strong><a href="tel:+48736545454">+48 736 54 54 54</a></li>
+                        <li><span class="icon flaticon-clock-1"></span><strong>Pracujemy</strong>Pon-Pt: 9:00 - 17:00</li>
+                    </ul>
+                    
+                </div>
+            </div>
+        </div>
+    </section>
+    <!--End Contact Section-->
+{% endblock %}
+{% block bottom_scripts %}
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            document.getElementById('ajax-contact').addEventListener('submit', function(e) {
+                e.preventDefault(); // Zapobiegaj domyślnej akcji formularza
+                const formData = new FormData(this); // Użyj 'this', aby odnieść się do formularza
+                const jsonFormData = Object.fromEntries(formData.entries());
+
+                fetch('/send-mess-pl', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(jsonFormData) // Przekazuj dane z formularza
+                })
+                .then(response => response.json())
+                .then(data => {
+                    // console.log(data);
+
+                    const komunikatDiv = document.getElementById("komunikat_z_serwera");
+                    if (komunikatDiv) {
+                        komunikatDiv.innerHTML = data.message;
+                        // Ustawienie koloru komunikatu na podstawie wartości 'success'
+                        if(data.success) {
+                            komunikatDiv.style.color = "#30ff00"; // Sukces - zielony
+                            document.getElementById('ajax-contact').reset();
+                        } else {
+                            komunikatDiv.style.color = "#ff3535"; // Niepowodzenie - czerwony
+                        }
+                        setTimeout(function() {
+                            komunikatDiv.innerHTML = '';
+                        }, 5000);
+                    }
+                })
+                .catch((error) => {
+                    console.error('Error:', error);
+                });
+            });
+        });
+    </script>
+{% endblock %}
+

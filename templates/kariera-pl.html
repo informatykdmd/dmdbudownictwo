@@ -1,0 +1,155 @@
+{% extends 'base.html' %}
+{% block MainSlider %}
+    <!--Page Title-->
+    <section class="page-title" style="background-image:url(static/images/background/kariera.jpg)">
+        <div class="auto-container">
+            <div class="clearfix">
+                <div class="pull-left">
+                    <h2>Kariera w DMD</h2>
+                </div>
+                <div class="pull-right">
+                    <ul class="page-breadcrumb">
+                        <li><a href="/">DMD</a></li>
+                        <li>Kariera</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="contact-number"><a href="tel:+48736545454"><span class="icon flaticon-phone-call"></span>Zadzwoń: +48 736 54 54 54</a></div>
+        </div>
+    </section>
+    <!--End Page Title-->
+{% endblock %}
+
+{% block content %}
+    <!--Project Single Section-->
+    <section class="project-single-section">
+    	<div class="auto-container">
+        	<div class="inner-box">
+            	
+                <div class="row clearfix">
+                	<!--Info Column-->
+                	<div class="info-column col-md-4 col-sm-12 col-xs-12">
+                    
+                    	<div class="sec-title">
+                        	<h2><span class="theme_color">Dołącz</span> do nas</h2>
+                        </div>
+                        
+                        <div class="text">
+                            Nasza firma dynamicznie się rozwija, dlatego poszukujemy osób, które chcą tworzyć wyjątkowe 
+                            projekty. Stawiamy na profesjonalizm, innowacyjność i rozwój zawodowy, oferując 
+                            naszym pracownikom stabilne zatrudnienie oraz przyjazne warunki pracy. Sprawdź nasze aktualne 
+                            oferty i znajdź miejsce dla siebie w zespole DMD!
+                        </div>
+                        
+                        
+                        <!--Solution Box Two-->
+                        <div class="solution-box-two" style="background-image:url(static/images/background/patern-2.png)">
+                        	<div class="inner">
+                            	<div class="title">Szybki Kontakt</div>
+                            	<h2>Skontaktuj się z nami!</h2>
+                                <div class="text">
+                                    Masz pytania dotyczące pracy w DMD? Chętnie odpowiemy na wszystkie Twoje wątpliwości. 
+                                    Napisz do nas, a my pomożemy Ci dowiedzieć się więcej o dostępnych ofertach oraz 
+                                    możliwościach rozwoju w naszej firmie.
+                                </div>
+                                <a class="solution-btn theme-btn" href="/kontakt">Skontaktuj Się</a>
+                            </div>
+                        </div>
+                        
+                    </div>
+                    <!--Description Column-->
+                    <div class="description-column col-md-8 col-sm-12 col-xs-12">
+                    	<div class="sec-title">
+                        	<h2><span class="theme_color">Sprawdź </span>nasze oferty pracy</h2>
+                        </div>
+                        {% if jobs|length %}
+                        <div>
+                            <p class="white-text font-size-small">
+                                {{ job_count_message }}
+                            </p>  
+                            <div class="row">
+                                {% for job in jobs %}
+            
+                                <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                    <div class="news-block-three">
+                                        <div class="inner-box">
+                                            <div class="custom-link">
+                                                <a href="/kariera-one?job={{job['id']}}"> 
+                                                    {{job['title']}}
+                                                </a>
+                                            </div>
+                                            <div class="lower-content" style="padding-top:10px !important;">
+                                                <div class="text">
+                                                    <div>{{job['description']}}</div>
+                                                </div>
+                                                <div>
+                                                    <ul class="post-meta">
+                                                        <li><a href="javascript:void(0)"><span class="icon fa fa-user"></span> {{job['employment_type']}}</a></li>
+                                                        <li><a href="javascript:void(0)"><span class="icon fa fa-tags"></span> {{job['brand']}}</a></li>
+                                                        <li><a href="javascript:void(0)"><span class="icon fa fa-calendar"></span> {{job['data']}}</a></li>
+                                                    </ul>
+                                                </div>
+                                                
+                                                <a href="/kariera-one?job={{job['id']}}" class="theme-btn btn-style-six">Sprawdź szczegóły<span class="fa fa-angle-double-right"></span></a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                {% endfor %}
+                            </div>
+                            
+                            <!--Styled Pagination-->
+                            {% if pagination.total_pages > 1 %}
+                                <ul class="styled-pagination text-left">
+                                    {% if pagination.has_prev %}
+                                        <li class="prev">
+                                            <a href='{{ url_for(request.endpoint, page=pagination.page - 1) }}'>
+                                                <span class="fa fa-angle-double-left"></span>
+                                                 Prev
+                                            </a>
+                                        </li>
+                                    {% endif %}
+                                    {% for page in pagination.pages %}
+                                        {% if page %}
+                                            {% if page != pagination.page %}
+                                            <li>
+                                                <a href="{{ url_for(request.endpoint, page=page) }}">
+                                                    {{ page }}
+                                                </a>
+                                            </li>
+                                            {% else %}
+                                                <li><a href="#" class="active">{{ page }}</a></li>
+                                            {% endif %}
+                                        {% endif %}    
+                                    {% endfor %}
+                                    {% if pagination.has_next %}
+                                        <li class="next">
+                                            <a href='{{ url_for(request.endpoint, page=pagination.page + 1) }}'>
+                                                Next 
+                                                <span class="fa fa-angle-double-right"></span>
+                                            </a>
+                                        </li>
+                                    {% endif %}
+                                </ul>     
+                            {% endif %}           
+                            <!--End Styled Pagination-->
+                                
+                            
+                        </div>
+                        {% else %}
+                        <div>
+                            <!-- Tutaj możesz dodać np. tekst informujący o braku ofert -->
+                            <p style="font-size: 20px !important;">Obecnie nie mamy dostępnych ofert pracy.</p>
+                            <img src="{{ url_for('static', filename='images/resource/kariera-0.jpg') }}" alt="Brak dostępnych ofert pracy"/>
+                        </div>
+                        
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!--End Project Single Section-->
+
+{% endblock %}
+

@@ -1,0 +1,218 @@
+<!-- Main Header / Header Style Two-->
+<header class="main-header header-style-two">
+        
+    <!-- Header Top Two-->
+    <div class="header-top-two">
+        <div class="auto-container">
+            <div class="clearfix">
+                
+                <!--Top Left-->
+                <div class="top-left">
+                    <ul class="links clearfix">
+                        <li><a href="#"><span class="icon fa fa-home"></span>Dworkowa 51, Stare Babice, Poland</a></li>
+                        <li><a href="mailto:biuro@dmdbudownictwo.pl"><span class="icon fa fa-envelope"></span>biuro@dmdbudownictwo.pl</a></li>
+                    </ul>
+                </div>
+                
+                <!--Top Right-->
+                <div class="top-right clearfix">
+                    <ul class="clearfix">
+                        
+                        <!--Search Box-->
+                        <li class="search-box-outer">
+                            <div class="dropdown">
+                                <button class="search-box-btn dropdown-toggle" type="button" id="dropdownMenu3" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="fa fa-search"></span></button>
+                                <ul class="dropdown-menu pull-right search-panel" aria-labelledby="dropdownMenu3">
+                                    <li class="panel-outer">
+                                        <div class="form-container">
+                                            <form method="POST" action="{{ url_for('searchBlog') }}" enctype="multipart/form-data">
+                                                <div class="form-group">
+                                                    <input type="search" name="query" value="" placeholder="Przeszukaj blog" required>
+                                                    <button type="submit" class="search-btn"><span class="fa fa-search"></span></button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+                        
+                        <li><a href="tel:+48736545454" class="advisor"><span class="icon flaticon-phone-call"></span> CALL</a></li>
+                        
+                    </ul>                        
+                </div>
+                
+            </div>
+            
+        </div>
+    </div>
+    <!-- Header Top End -->
+    
+    <!-- Main Box -->
+    <div class="main-box">
+        <div class="auto-container">
+            <div class="outer-container clearfix">
+                <!--Logo Box-->
+                <div class="logo-box">
+                    <div class="logo"><a href="/"><img src="static/images/logo.png" alt=""></a></div>
+                </div>
+                
+                <!--Nav Outer-->
+                <div class="nav-outer clearfix">
+                
+                    <!-- Main Menu -->
+                    <nav class="main-menu">
+                        <div class="navbar-header">
+                            <!-- Toggle Button -->    	
+                            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                            </button>
+                        </div>
+                        
+                        <div class="navbar-collapse collapse clearfix">
+                            <ul class="navigation clearfix">
+                                {% if pageTitle == 'Home Page' %}
+                                    <li class="current"><a href="/">DMD</a></li>
+                                {% else %}
+                                    <li><a href="/">DMD</a></li>
+                                {% endif %}
+                                
+                                {% if pageTitle == 'About Us' %}
+                                    <li class="current"><a href="/o-nas">About Us</a></li>
+                                {% else %}
+                                    <li><a href="/o-nas">About Us</a></li>
+                                {% endif %}
+                        
+                                {% if pageTitle == 'Structure' %}
+                                    <li class="current"><a href="/struktura">Structure</a></li>
+                                {% else %}
+                                    <li><a href="/struktura">Structure</a></li>
+                                {% endif %}
+                        
+                                {% if pageTitle == 'How We Work' %}
+                                    <li class="current"><a href="/jak-pracujemy">How We Work</a></li>
+                                {% else %}
+                                    <li><a href="/jak-pracujemy">How We Work</a></li>
+                                {% endif %}
+                                
+                                {% if pageTitle == 'Projects' %}
+                                    <li class="current"><a href="/realizacje">Projects</a></li>
+                                {% else %}
+                                    <li><a href="/realizacje">Projects</a></li>
+                                {% endif %}
+                        
+                                {% if pageTitle == 'Career' %}
+                                    <li class="current"><a href="/kariera">Career</a></li>
+                                {% else %}
+                                    <li><a href="/kariera">Career</a></li>
+                                {% endif %}
+                                
+                                {% if pageTitle == 'Blog' %}
+                                    <li class="current"><a href="/blogs">Blog</a></li>
+                                {% else %}
+                                    <li><a href="/blogs">Blog</a></li>
+                                {% endif %}
+                        
+                                {% if pageTitle == 'Contact' %}
+                                    <li class="current"><a href="/kontakt">Contact</a></li>
+                                {% else %}
+                                    <li><a href="/kontakt">Contact</a></li>
+                                {% endif %}
+                                
+                            </ul>
+                        </div>
+                    </nav>
+                    <!-- Main Menu End-->
+                    
+                    
+                </div>
+                <!--Nav Outer End-->
+                
+            </div>    
+        </div>
+    </div>
+    
+    <!--Sticky Header-->
+    <div class="sticky-header">
+        <div class="auto-container clearfix">
+            <!--Logo-->
+            <div class="logo pull-left">
+                <a href="/" class="img-responsive"><img src="static/images/logo-small.png" alt="" title=""></a>
+            </div>
+            
+            <!--Right Col-->
+            <div class="right-col pull-right">
+                <!-- Main Menu -->
+                <nav class="main-menu">
+                    <div class="navbar-header">
+                        <!-- Toggle Button -->    	
+                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                    </div>
+                    
+                    <div class="navbar-collapse collapse clearfix">
+                        <ul class="navigation clearfix">
+                            {% if pageTitle == 'Home Page' %}
+                                <li class="current"><a href="/">DMD</a></li>
+                            {% else %}
+                                <li><a href="/">DMD</a></li>
+                            {% endif %}
+                            
+                            {% if pageTitle == 'About Us' %}
+                                <li class="current"><a href="/o-nas">About Us</a></li>
+                            {% else %}
+                                <li><a href="/o-nas">About Us</a></li>
+                            {% endif %}
+                    
+                            {% if pageTitle == 'Structure' %}
+                                <li class="current"><a href="/struktura">Structure</a></li>
+                            {% else %}
+                                <li><a href="/struktura">Structure</a></li>
+                            {% endif %}
+                    
+                            {% if pageTitle == 'How We Work' %}
+                                <li class="current"><a href="/jak-pracujemy">How We Work</a></li>
+                            {% else %}
+                                <li><a href="/jak-pracujemy">How We Work</a></li>
+                            {% endif %}
+                            
+                            {% if pageTitle == 'Projects' %}
+                                <li class="current"><a href="/realizacje">Projects</a></li>
+                            {% else %}
+                                <li><a href="/realizacje">Projects</a></li>
+                            {% endif %}
+                    
+                            {% if pageTitle == 'Career' %}
+                                <li class="current"><a href="/kariera">Career</a></li>
+                            {% else %}
+                                <li><a href="/kariera">Career</a></li>
+                            {% endif %}
+                            
+                            {% if pageTitle == 'Blog' %}
+                                <li class="current"><a href="/blogs">Blog</a></li>
+                            {% else %}
+                                <li><a href="/blogs">Blog</a></li>
+                            {% endif %}
+                    
+                            {% if pageTitle == 'Contact' %}
+                                <li class="current"><a href="/kontakt">Contact</a></li>
+                            {% else %}
+                                <li><a href="/kontakt">Contact</a></li>
+                            {% endif %}
+                            
+                        </ul>
+                    </div>
+                </nav><!-- Main Menu End-->
+            </div>
+            
+        </div>
+    </div>
+    <!--End Sticky Header-->
+
+</header>
+<!--End Main Header -->

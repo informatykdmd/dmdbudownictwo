@@ -345,6 +345,22 @@ def format_job_count(count):
         return f"Obecnie oferujemy {count} oferty pracy."
     else:
         return f"Obecnie oferujemy {count} ofert pracy."
+    
+def mainDataGeneratorDict(select_key: str, lang:str = 'pl'):
+
+    data = {
+        "BLOG-ALLPOSTS-PL": generator_daneDBList(lang),
+        "BLOG-ALLPOSTS-EN": generator_daneDBList(lang),
+        "BLOG-SHORT-PL": generator_daneDBList_short(lang),
+        "BLOG-SHORT-EN": generator_daneDBList_short(lang),
+        # "BLOG-FOOTER-PL": generator_daneDBList_3('pl'),
+        # "BLOG-FOOTER-EN": generator_daneDBList_3('en'),
+        "TEAM-ALL-PL": generator_teamDB(lang),
+        "TEAM-ALL-EN": generator_teamDB(lang),
+        "SUBS-ALL-PL": generator_subsDataDB()
+    }
+
+    return data.get(select_key, [])
 
 ############################
 ##      ######           ###
@@ -380,14 +396,59 @@ def smart_truncate(content, length=400):
         truncated_content = content[:length].rsplit(' ', 1)[0]
         return f"{truncated_content}..."
 
+@app.route('/pl')
+def langPl():
+    if session.get('lang') != 'pl':  # Sprawdzenie, czy nastąpiła zmiana języka
+        session['lang'] = 'pl'
+        # Wyczyść dane związane z językiem, aby wymusić ich ponowne załadowanie
+        session.pop('TEAM-ALL', None)
+        session.pop('BLOG-SHORT', None)
+
+    session['lang'] = 'pl'
+    if 'page' not in session:
+        return redirect(url_for(f'index'))
+    else:
+        if session['page'] == 'blogOne':
+            return redirect(url_for(f'blogs'))
+        elif session['page'] == 'karieraOne':
+            return redirect(url_for(f'kariera'))
+        else:
+            return redirect(url_for(f'{session["page"]}'))
+
+@app.route('/en')
+def langEn():
+    if session.get('lang') != 'en':  # Sprawdzenie, czy nastąpiła zmiana języka
+        session['lang'] = 'en'
+        # Wyczyść dane związane z językiem, aby wymusić ich ponowne załadowanie
+        session.pop('TEAM-ALL', None)
+        session.pop('BLOG-SHORT', None)
+
+    if 'page' not in session:
+        return redirect(url_for(f'index'))
+    else:
+        if session['page'] == 'blogOne':
+            return redirect(url_for(f'blogs'))
+        elif session['page'] == 'karieraOne':
+            return redirect(url_for(f'kariera'))
+        else:
+            return redirect(url_for(f'{session["page"]}'))
 
 @app.route('/')
 def index():
+    
     session['page'] = 'index'
-    pageTitle = 'Strona Główna'
+    if 'lang' not in session:
+        session['lang'] = 'pl'
+
+    selected_language = session['lang']
+
+    if selected_language == 'en':
+        pageTitle = 'Home Page'
+    else:
+        pageTitle = 'Strona Główna'
 
     if f'TEAM-ALL' not in session:
-        team_list = generator_teamDB()
+        team_list = generator_teamDB(selected_language)
         session[f'TEAM-ALL'] = team_list
     else:
         team_list = session[f'TEAM-ALL']
@@ -397,7 +458,7 @@ def index():
         if  i < 4: fourListTeam.append(member)
         
     if f'BLOG-SHORT' not in session:
-        blog_post = generator_daneDBList_short()
+        blog_post = generator_daneDBList_short(selected_language)
         session[f'BLOG-SHORT'] = blog_post
     else:
         blog_post = session[f'BLOG-SHORT']
@@ -407,7 +468,7 @@ def index():
         if  i < 3: blog_post_three.append(member)
 
     return render_template(
-        f'index.html',
+        f'index-{selected_language}.html',
         pageTitle=pageTitle,
         fourListTeam=fourListTeam, 
         blog_post_three=blog_post_three,
@@ -415,7 +476,7 @@ def index():
 
 @app.route('/o-nas')
 def oNas():
-    session['page'] = 'O nas'
+    session['page'] = 'oNnas'
     pageTitle = 'O nas'
 
     return render_template(
@@ -502,7 +563,7 @@ def kariera():
 
 @app.route('/kariera-one', methods=['GET'])
 def karieraOne():
-    session['page'] = 'kariera'
+    session['page'] = 'karieraOne'
     pageTitle = 'Kariera'
 
     if 'job' in request.args:

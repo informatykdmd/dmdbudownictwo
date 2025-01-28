@@ -1,0 +1,132 @@
+{% extends 'base.html' %}
+{% block MainSlider %}{% endblock %}
+
+{% block content %}
+<!--Sidebar Page Container-->
+<div class="sidebar-page-container">
+    <div class="container">
+        <div class="row clearfix">
+
+            <div class="sidebar-side col-lg-8 col-md-8 col-sm-12 col-xs-12">
+
+                <div class="row">
+                    {% for res in posts %}
+
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <div class="news-block-three">
+                            <div class="inner-box">
+                                <div class="image">
+                                    <a href="/blog-one?post={{res['id']}}"><img src="{{res['mainFoto']}}" alt=""></a>
+                                    <div class="post-date">{{res['data']}}</div>
+                                </div>
+                                <div class="lower-content">
+                                    <div>
+                                        <ul class="post-meta">
+                                            <li><a href="#"><span class="icon fa fa-user"></span> {{res['author']}}</a></li>
+                                            <li><a href="#"><span class="icon fa fa-tags"></span> {{res['category']}}</a></li>
+                                        </ul>
+                                    </div>
+                                    
+                                    <div class="text">
+                                        <div class="custom-link">
+                                            <a href="/blog-one?post={{res['id']}}"> 
+                                                {{res['title']}}
+                                            </a>
+                                        </div>
+                                        <div>{{res['highlight']|smart_truncate}}</div>
+                                    </div>
+                                    <a href="/blog-one?post={{res['id']}}" class="theme-btn btn-style-six">Czytaj więcej <span class="fa fa-angle-double-right"></span></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+                
+                <!--Styled Pagination-->
+                {% if pagination.total_pages > 1 %}
+                    <ul class="styled-pagination text-center">
+                        {% if pagination.has_prev %}
+                            <li class="prev">
+                                <a href='{{ url_for(request.endpoint, page=pagination.page - 1) }}'>
+                                    <span class="fa fa-angle-double-left"></span>
+                                     Prev
+                                </a>
+                            </li>
+                        {% endif %}
+                        {% for page in pagination.pages %}
+                            {% if page %}
+                                {% if page != pagination.page %}
+                                <li>
+                                    <a href="{{ url_for(request.endpoint, page=page) }}">
+                                        {{ page }}
+                                    </a>
+                                </li>
+                                {% else %}
+                                    <li><a href="#" class="active">{{ page }}</a></li>
+                                {% endif %}
+                            {% endif %}    
+                        {% endfor %}
+                        {% if pagination.has_next %}
+                            <li class="next">
+                                <a href='{{ url_for(request.endpoint, page=pagination.page + 1) }}'>
+                                    Next 
+                                    <span class="fa fa-angle-double-right"></span>
+                                </a>
+                            </li>
+                        {% endif %}
+                    </ul>     
+                {% endif %}           
+                <!--End Styled Pagination-->
+                    
+                
+            </div>
+            <!--Sidebar Side-->
+            <div class="sidebar-side col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                <aside class="sidebar default-sidebar">
+                    
+                    <!-- Search -->
+                    <div class="sidebar-widget search-box">
+                        <form method="POST" action="{{ url_for('searchBlog') }}" enctype="multipart/form-data">
+                            <div class="form-group">
+                                <input type="search" name="query" value="" placeholder="Przeszukaj blog" required>
+                                <button type="submit"><span class="icon fa fa-search"></span></button>
+                            </div>
+                        </form>
+                    </div>
+                    
+                    <!-- category -->
+                    <div class="sidebar-widget category-widget">
+                        <div class="sidebar-title">
+                            <h2><span class="theme_color">Najlepsze </span>Kategorie</h2>
+                        </div>
+                        <ul class="cat-list">
+                            {% for cat, count in cat_dict.items() %}
+                                {% if count > 1 %}
+                                    <li><a href="/find-by-category?category={{cat}}">{{cat}} ({{count}})</a></li>
+                                {% endif %}
+                            {% endfor %}
+                        </ul>
+                    </div>
+                    
+                    <!-- Popular Posts -->
+                    <div class="sidebar-widget popular-posts">
+                        <div class="sidebar-title"><h2>Zobacz również</h2></div>
+                        {% for rPost in recentPosts %}
+                        <article class="post">
+                            <figure class="post-thumb"><img src="{{rPost['contentFoto']}}" alt=""><a href="/blog-one?post={{rPost['id']}}" class="overlay-box"><span class="icon fa fa-link"></span></a></figure>
+                            <div class="text"><a href="/blog-one?post={{rPost['id']}}">{{rPost['title']}}</a></div>
+                            <div class="post-info">{{rPost['data']}}</div>
+                        </article>
+                        {% endfor %}                        
+                    </div>  
+                </aside>
+            </div>
+
+            
+        </div>
+    </div>
+</div>
+<!--End Sidebar Page Container-->
+{% endblock %}
+

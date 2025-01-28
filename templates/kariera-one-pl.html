@@ -1,0 +1,146 @@
+{% extends 'base.html' %}
+{% block MainSlider %}
+    <!--Page Title-->
+    <section class="page-title" style="background-image:url(static/images/background/kariera-one.jpg)">
+        <div class="auto-container">
+            <div class="clearfix">
+                <div class="pull-left">
+                    <h2>Kariera w DMD</h2>
+                </div>
+                <div class="pull-right">
+                    <ul class="page-breadcrumb">
+                        <li><a href="/">DMD</a></li>
+                        <li>Kariera</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="contact-number"><a href="tel:+48736545454"><span class="icon flaticon-phone-call"></span>Zadzwoń: +48 736 54 54 54</a></div>
+        </div>
+    </section>
+    <!--End Page Title-->
+{% endblock %}
+
+{% block content %}
+    <!--Project Single Section-->
+    <section class="project-single-section">
+    	<div class="auto-container">
+        	<div class="inner-box">
+            	
+                <div class="row clearfix">
+                	<!--Info Column-->
+                	<div class="info-column col-md-4 col-sm-12 col-xs-12">
+                    
+                    	<div class="sec-title">
+                        	<h2><span class="theme_color">Poznaj</span> stanowisko</h2>
+                        </div>
+                        
+                        <div class="text">
+                            Zapraszamy do zapoznania się ze szczegółami tej oferty pracy. Dowiedz się więcej 
+                            o wymaganiach, obowiązkach oraz korzyściach, jakie oferujemy dla tego stanowiska.
+                        </div>
+                        <ul class="info-list">
+                        	<li><span>Stanowisko:</span>{{choiced['title']}}</li>
+                        	<li><span>Forma zatrudnienia:</span>{{choiced['employment_type']}}</li>
+                            <li><span>Lokalizacja:</span>{{choiced['location']}}</li>
+                            <li><span>Wynagrodzenie:</span>{{choiced['salary']}}</li>
+                            <li><span>Ogłoszenie z:</span>{{choiced['data']}}</li>
+                            <li><span>Rozpoczęcie pracy:</span>{{choiced['start_date']}}</li>
+                            <li><span>Dział:</span>{{choiced['brand']}}</li>
+                        </ul>
+                        
+                        <!--Solution Box Two-->
+                        <div class="solution-box-two" style="background-image:url(static/images/background/patern-2.png)">
+                        	<div class="inner">
+                            	<div class="title">Zainteresowany</div>
+                            	<h2>Aplikuj na to stanowisko</h2>
+                                <div class="text">
+                                    <p>
+                                        Prosimy o przesyłanie swojego CV na poniższy adres email: 
+                                        <strong id="email">{{choiced['contact_email']}}</strong> 
+                                        <a href="javascript:void(0)" onclick="copyEmail()" class="copy-icon">
+                                            <i class="fa fa-copy"></i>
+                                        </a>
+                                        <span id="copy-message" class="tooltip-text">Email został skopiowany</span>
+                                    </p>
+                                    <p>
+                                        W wiadomości e-mail prosimy o zawarcie następujących informacji:
+                                    </p>
+                                    <ul>
+                                        <li>Pełne imię i nazwisko</li>
+                                        <li>Numer telefonu kontaktowego</li>
+                                        <li>Krótki opis doświadczenia zawodowego</li>
+                                        <li>Preferowana data rozpoczęcia pracy</li>
+                                        <li>Wymagany załącznik: aktualne CV w formacie .PDF</li>
+                                    </ul>
+                                    <p>Uprzejmie prosimy o dołączenie klauzuli o zgodzie na przetwarzanie danych osobowych.</p>
+
+                                </div>
+
+                                <a class="solution-btn theme-btn" href="mailto:{{choiced['contact_email']}}?subject=Aplikacja%20na%20stanowisko&body=Pełne%20imię%20i%20nazwisko:%0D%0ANumer%20telefonu%20kontaktowego:%0D%0AKrótki%20opis%20doświadczenia%20zawodowego:%0D%0APreferowana%20data%20rozpoczęcia%20pracy:%0D%0AWymagany%20załącznik:%20aktualne%20CV%20w%20formacie%20.PDF">Wyślij CV</a>
+
+                            </div>
+                        </div>
+                        
+                    </div>
+                    <!--Description Column-->
+                    <div class="description-column col-md-8 col-sm-12 col-xs-12">
+                    	<div class="sec-title">
+                            <h2>{{ choiced['title_split']|safe }}</h2>
+                        </div>
+                        <div class="text">
+                            <h3>Opis Stanowiska</h3>
+                        	<p>{{choiced['description']}}</p>
+                            <h3>Wymagania</h3>
+                            <p>{{choiced['requirements_description']}}</p>
+                            {% if choiced['requirements'] != [''] %}
+                                <ul class="list-style-five"> 
+                                    <!-- list separowana , -->
+                                    {% for point in choiced['requirements'] %}
+                                        <li>{{point}}</li>
+                                    {% endfor %}
+                                </ul>
+                            {% endif %}
+                            {% if choiced['benefits'] != [''] %}
+                                <h3>Benefity</h3>
+                                <ul class="list-style-five"> 
+                                    <!-- list separowana , -->
+                                    {% for point in choiced['benefits'] %}
+                                        <li>{{point}}</li>
+                                    {% endfor %}
+                                </ul>
+
+                            {% endif %}
+                            <div class="info-column">
+                                <a class="solution-btn theme-btn" href="mailto:{{choiced['contact_email']}}?subject=Aplikacja%20na%20stanowisko&body=Pełne%20imię%20i%20nazwisko:%0D%0ANumer%20telefonu%20kontaktowego:%0D%0AKrótki%20opis%20doświadczenia%20zawodowego:%0D%0APreferowana%20data%20rozpoczęcia%20pracy:%0D%0AWymagany%20załącznik:%20aktualne%20CV%20w%20formacie%20.PDF">
+                                    Wyślij CV
+                                </a>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!--End Project Single Section-->
+    <script>
+        function copyEmail() {
+            const email = document.getElementById('email').textContent;
+            navigator.clipboard.writeText(email).then(() => {
+                const tooltip = document.getElementById('copy-message');
+                tooltip.style.visibility = 'visible';  // Pokaż tooltip
+                tooltip.style.opacity = '1';  // Pokaż tooltip z animacją
+
+                // Ukryj tooltip po 3 sekundach
+                setTimeout(() => {
+                    tooltip.style.visibility = 'hidden';
+                    tooltip.style.opacity = '0';  // Zresetuj animację
+                }, 3000);
+            }).catch(err => {
+                console.error('Błąd podczas kopiowania: ', err);
+            });
+        }
+    </script>
+
+{% endblock %}
+
