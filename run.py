@@ -547,11 +547,20 @@ def struktura():
 
 @app.route('/jak-pracujemy')
 def jakPracujemy():
-    session['page'] = 'Jak Pracujemy'
-    pageTitle = 'Jak Pracujemy'
+    session['page'] = 'jakPracujemy'
 
+    if 'lang' not in session:
+        session['lang'] = 'pl'
+
+    selected_language = session['lang']
+
+    if selected_language == 'en':
+        pageTitle = 'How We Work'
+    else:
+        pageTitle = 'Jak Pracujemy'
+    
     return render_template(
-        f'pracujemy.html',
+        f'pracujemy-{selected_language}.html',
         pageTitle=pageTitle
         )
 
