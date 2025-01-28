@@ -448,6 +448,7 @@ def langEn():
     if 'page' not in session:
         return redirect(url_for(f'index'))
     else:
+        print(session["page"])
         if session['page'] == 'blogOne':
             return redirect(url_for(f'blogs'))
         elif session['page'] == 'karieraOne':
