@@ -377,7 +377,7 @@
    
 	.main-menu .collapse.in,
 	.main-menu .collapsing{
-	  	max-height:350px;
+	  	max-height:400px;
 		overflow:auto;
 		padding:0px 0px 0px;
 		border:none;
