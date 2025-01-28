@@ -256,7 +256,7 @@ def generator_job_offer(id_offer):
     return theme
 
 def generator_daneDBList_prev_next(main_id):
-    # Załóżmy, że msq.connect_to_database() zwraca listę tuple'i reprezentujących posty, np. [(1, 'Content1'), (2, 'Content2'), ...]
+    # msq.connect_to_database() zwraca listę tuple'i reprezentujących posty, np. [(1, 'Content1'), (2, 'Content2'), ...]
     took_allPost = msq.connect_to_database('SELECT ID FROM blog_posts ORDER BY ID DESC;')
     
     # Przekształcenie wyników z bazy danych do listy ID dla łatwiejszego wyszukiwania
@@ -499,10 +499,19 @@ def index():
 @app.route('/o-nas')
 def oNas():
     session['page'] = 'oNnas'
-    pageTitle = 'O nas'
+    
+    if 'lang' not in session:
+        session['lang'] = 'pl'
+
+    selected_language = session['lang']
+
+    if selected_language == 'en':
+        pageTitle = 'O nas'
+    else:
+        pageTitle = 'About Us'
 
     return render_template(
-        f'onas.html',
+        f'onas-{selected_language}.html',
         pageTitle=pageTitle
         )
 
