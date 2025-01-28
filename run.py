@@ -2,17 +2,32 @@ from flask import Flask, render_template, redirect, url_for, jsonify, session, r
 from flask_paginate import Pagination, get_page_args
 import mysqlDB as msq
 import secrets
-from datetime import datetime
+from datetime import datetime, timedelta
 from googletrans import Translator
 import random
 from flask_session import Session
-
+import redis
+from bin.config_utils import SESSION_FLASK_KEY
 from markupsafe import Markup
 
 app = Flask(__name__)
+
+# Klucz tajny do szyfrowania sesji
+app.config['SECRET_KEY'] = SESSION_FLASK_KEY
+
+# Ustawienia dla Flask-Session
+app.config['SESSION_TYPE'] = 'redis'  # Redis jako magazyn sesji
+app.config['SESSION_PERMANENT'] = True
+app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(minutes=10)
+app.config['SESSION_KEY_PREFIX'] = 'session:'  # Prefiks dla kluczy w Redis
+app.config['SESSION_REDIS'] = redis.StrictRedis(host='localhost', port=6379, db=0)
+
+# app.config['SECRET_KEY'] = secrets.token_hex(16)
+# app.config['SESSION_TYPE'] = 'filesystem'  # Możesz wybrać inny backend, np. 'redis', 'sqlalchemy', itp.
+
+# stronicowanie
 app.config['PER_PAGE'] = 6
-app.config['SECRET_KEY'] = secrets.token_hex(16)
-app.config['SESSION_TYPE'] = 'filesystem'  # Możesz wybrać inny backend, np. 'redis', 'sqlalchemy', itp.
+
 Session(app)
 
 def getLangText(text):
@@ -119,8 +134,11 @@ def generator_subsDataDB():
     return subsData
 
 def generator_daneDBList(lang='pl'):
+    limit = ''
+    if lang!='pl':
+        limit = 'LIMIT 5'
     daneList = []
-    took_allPost = msq.connect_to_database(f'SELECT * FROM blog_posts ORDER BY ID DESC;') # take_data_table('*', 'blog_posts')
+    took_allPost = msq.connect_to_database(f'SELECT * FROM blog_posts ORDER BY ID DESC {limit};') # take_data_table('*', 'blog_posts')
     for post in took_allPost:
         id = post[0]
         id_content = post[1]
@@ -162,8 +180,12 @@ def generator_daneDBList(lang='pl'):
     return daneList
 
 def generator_daneDBList_short(lang='pl'):
+    limit = ''
+    if lang!='pl':
+        limit = 'LIMIT 5'
+
     daneList = []
-    took_allPost = msq.connect_to_database(f'SELECT * FROM blog_posts ORDER BY ID DESC;') # take_data_table('*', 'blog_posts')
+    took_allPost = msq.connect_to_database(f'SELECT * FROM blog_posts ORDER BY ID DESC {limit};') # take_data_table('*', 'blog_posts')
     for post in took_allPost:
 
         id_content = post[1]
