@@ -506,9 +506,9 @@ def oNas():
     selected_language = session['lang']
 
     if selected_language == 'en':
-        pageTitle = 'O nas'
-    else:
         pageTitle = 'About Us'
+    else:
+        pageTitle = 'O nas'
 
     return render_template(
         f'onas-{selected_language}.html',
@@ -518,8 +518,17 @@ def oNas():
 @app.route('/struktura', methods=['GET'])
 def struktura():
     session['page'] = 'struktura'
-    pageTitle = 'Struktura'
 
+    if 'lang' not in session:
+        session['lang'] = 'pl'
+
+    selected_language = session['lang']
+
+    if selected_language == 'en':
+        pageTitle = 'Structure'
+    else:
+        pageTitle = 'Struktura'
+    
     if 'target' in request.args:
         if request.args['target'] in [
             'budownictwo', 'domy', 'elitehome', 
@@ -530,7 +539,7 @@ def struktura():
         targetPage = "struktura"
 
     return render_template(
-        f'{targetPage}.html',
+        f'{targetPage}-{selected_language}.html',
         pageTitle=pageTitle
         )
 
