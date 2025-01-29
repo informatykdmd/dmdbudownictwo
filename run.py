@@ -140,26 +140,39 @@ def generator_daneDBList(lang='pl'):
     query = f"""
         SELECT 
             bp.ID, 
-            c.ID as content_id, c.TITLE, c.CONTENT_MAIN, c.HIGHLIGHTS, c.HEADER_FOTO, 
-            c.CONTENT_FOTO, c.BULLETS, c.TAGS, c.CATEGORY, c.DATE_TIME,
-            a.NAME_AUTHOR, a.ABOUT_AUTHOR, a.AVATAR_AUTHOR, a.FACEBOOK, a.TWITER_X, a.INSTAGRAM,
+            c.ID as content_id, 
+            ANY_VALUE(c.TITLE) as TITLE, 
+            ANY_VALUE(c.CONTENT_MAIN) as CONTENT_MAIN, 
+            ANY_VALUE(c.HIGHLIGHTS) as HIGHLIGHTS, 
+            ANY_VALUE(c.HEADER_FOTO) as HEADER_FOTO, 
+            ANY_VALUE(c.CONTENT_FOTO) as CONTENT_FOTO, 
+            ANY_VALUE(c.BULLETS) as BULLETS, 
+            ANY_VALUE(c.TAGS) as TAGS, 
+            ANY_VALUE(c.CATEGORY) as CATEGORY, 
+            ANY_VALUE(c.DATE_TIME) as DATE_TIME,
+            ANY_VALUE(a.NAME_AUTHOR) as NAME_AUTHOR, 
+            ANY_VALUE(a.ABOUT_AUTHOR) as ABOUT_AUTHOR, 
+            ANY_VALUE(a.AVATAR_AUTHOR) as AVATAR_AUTHOR, 
+            ANY_VALUE(a.FACEBOOK) as FACEBOOK, 
+            ANY_VALUE(a.TWITER_X) as TWITER_X, 
+            ANY_VALUE(a.INSTAGRAM) as INSTAGRAM,
             COALESCE(
                 GROUP_CONCAT(
                     JSON_OBJECT(
                         'id', cm.ID, 
-                        'message', cm.COMMENT_CONNTENT,  -- Poprawiona nazwa z MESSAGE na COMMENT_CONNTENT
+                        'message', cm.COMMENT_CONNTENT,  
                         'user', nw.CLIENT_NAME, 
                         'e-mail', nw.CLIENT_EMAIL, 
                         'avatar', nw.AVATAR_USER,
                         'data-time', cm.DATE_TIME
                     )
-                ), ''
+                ), '[]'
             ) as comments
         FROM blog_posts bp
         JOIN contents c ON bp.CONTENT_ID = c.ID
-        JOIN authors a ON bp.AUTHOR_ID = a.ID  -- Poprawiona nazwa z ID_AUTHOR na AUTHOR_ID
+        JOIN authors a ON bp.AUTHOR_ID = a.ID  
         LEFT JOIN comments cm ON cm.BLOG_POST_ID = bp.ID
-        LEFT JOIN newsletter nw ON nw.ID = cm.AUTHOR_OF_COMMENT_ID  -- Poprawiona nazwa z USER_ID na AUTHOR_OF_COMMENT_ID
+        LEFT JOIN newsletter nw ON nw.ID = cm.AUTHOR_OF_COMMENT_ID
         GROUP BY bp.ID
         ORDER BY bp.ID DESC
         {limit};
@@ -282,12 +295,17 @@ def generator_daneDBList_short(lang='pl'):
     # Pobieramy wszystkie dane za jednym razem
     query = f"""
         SELECT 
-            c.ID, c.TITLE, c.HIGHLIGHTS, c.HEADER_FOTO, c.CATEGORY, c.DATE_TIME, 
+            c.ID, 
+            c.TITLE, 
+            c.HIGHLIGHTS, 
+            c.HEADER_FOTO, 
+            c.CATEGORY, 
+            c.DATE_TIME, 
             a.NAME_AUTHOR
         FROM blog_posts bp
-        JOIN contents c ON bp.CONTENT_ID = c.ID  -- Poprawione z ID_CONTENT na CONTENT_ID
-        JOIN authors a ON bp.AUTHOR_ID = a.ID  -- Poprawione z ID_AUTHOR na AUTHOR_ID
-        ORDER BY bp.ID DESC 
+        JOIN contents c ON bp.CONTENT_ID = c.ID  
+        JOIN authors a ON bp.AUTHOR_ID = a.ID  
+        ORDER BY bp.ID DESC
         {limit};
 
     """
