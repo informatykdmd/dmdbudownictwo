@@ -9,6 +9,7 @@ from flask_session import Session
 import redis
 from bin.config_utils import SESSION_FLASK_KEY
 from markupsafe import Markup
+import json
 
 app = Flask(__name__)
 
@@ -37,6 +38,28 @@ def getLangText(text):
     return translation.text
 
 def format_date(date_input, pl=True):
+    ang_pol = {
+        'January': 'styczeń', 'February': 'luty', 'March': 'marzec', 'April': 'kwiecień',
+        'May': 'maj', 'June': 'czerwiec', 'July': 'lipiec', 'August': 'sierpień',
+        'September': 'wrzesień', 'October': 'październik', 'November': 'listopad', 'December': 'grudzień'
+    }
+
+    if isinstance(date_input, str):
+        # Usuwamy mikrosekundy, jeśli są
+        date_input = date_input.split('.')[0]
+        date_object = datetime.strptime(date_input, '%Y-%m-%d %H:%M:%S')
+    else:
+        date_object = date_input  # Jeśli to już datetime, używamy go bez zmian
+
+    formatted_date = date_object.strftime('%d %B %Y')
+
+    if pl:
+        for en, pl in ang_pol.items():
+            formatted_date = formatted_date.replace(en, pl)
+
+    return formatted_date
+
+def format_date_old(date_input, pl=True):
     ang_pol = {
         'January': 'styczeń',
         'February': 'luty',
@@ -193,7 +216,7 @@ def generator_daneDBList(lang='pl'):
         comments_dict = {}
 
         if comments_json and comments_json.strip():  # Sprawdzamy, czy nie jest pusty
-            import json
+            
             try:
                 comments_list = json.loads(f'[{comments_json}]')  # Parsowanie JSON
                 for i, comment in enumerate(comments_list):
@@ -205,6 +228,7 @@ def generator_daneDBList(lang='pl'):
                         'avatar': comment['avatar'],
                         'data-time': format_date(comment['data-time']) if comment['data-time'] else "Brak daty",
                     }
+
             except json.JSONDecodeError:
                 comments_dict = {}  # Jeśli JSON jest błędny, ustaw pusty słownik
 
@@ -244,7 +268,7 @@ def generator_daneDBList(lang='pl'):
             'comments': comments_dict
         }
         daneList.append(theme)
-
+    print("\n\n\n\n--------------------------------------------\n", daneList)
     return daneList
 
 
