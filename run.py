@@ -391,7 +391,7 @@ def generator_daneDBList_short_old(lang='pl'):
         daneList.append(theme)
     return daneList
 
-def generator_jobs():
+def generator_jobs(lang='pl'):
     daneList = []
     
     try: took_allRecords = msq.connect_to_database(f'SELECT * FROM job_offers WHERE status=1 ORDER BY ID DESC;') 
@@ -401,42 +401,42 @@ def generator_jobs():
 
         theme = {
             'id': rec[0],
-            'title': rec[1],
-            'description': rec[2],
-            'requirements_description': rec[3],
-            'requirements': rec[4],
-            'benefits': rec[5],
-            'location': rec[6],
+            'title': rec[1] if lang=='pl' else getLangText(rec[1]),
+            'description': rec[2] if lang=='pl' else getLangText(rec[2]),
+            'requirements_description': rec[3] if lang=='pl' else getLangText(rec[3]),
+            'requirements': str(rec[4]).split('#splx#') if lang=='pl' else [getLangText(item) for item in str(rec[4]).split('#splx#')],
+            'benefits': str(rec[5]).split('#splx#') if lang=='pl' else [getLangText(item) for item in str(rec[5]).split('#splx#')],
+            'location': rec[6] if lang=='pl' else getLangText(rec[6]),
             'contact_email': rec[7],
-            'employment_type': rec[8],
-            'salary': rec[9],
-            'start_date': rec[10],
-            'data': format_date(rec[11]),
+            'employment_type': rec[8] if lang=='pl' else getLangText(rec[8]),
+            'salary': rec[9] if lang=='pl' else getLangText(rec[9]),
+            'start_date': format_date(rec[10]) if lang=='pl' else format_date(rec[10], False),
+            'data': format_date(rec[11]) if lang=='pl' else format_date(rec[11], False),
             'brand': rec[12],
             'status': rec[13]
         }
         daneList.append(theme)
     return daneList
 
-def generator_job_offer(id_offer):
-    try: offer = take_data_where_ID_AND_somethig('*', 'job_offers', 'id', id_offer, 'status', 1)[0]
+def generator_job_offer(id_offer, lang='pl'):
+    try: rec = take_data_where_ID_AND_somethig('*', 'job_offers', 'id', id_offer, 'status', 1)[0]
     except: return []
 
     theme = {
-            'id': offer[0],
-            'title': offer[1],
-            'description': offer[2],
-            'requirements_description': offer[3],
-            'requirements': str(offer[4]).split('#splx#'), # lista
-            'benefits': str(offer[5]).split('#splx#'), # lista
-            'location': offer[6],
-            'contact_email': offer[7],
-            'employment_type': offer[8],
-            'salary': offer[9],
-            'start_date': format_date(offer[10]),
-            'data': format_date(offer[11]),
-            'brand': offer[12],
-            'status': offer[13]
+            'id': rec[0],
+            'title': rec[1] if lang=='pl' else getLangText(rec[1]),
+            'description': rec[2] if lang=='pl' else getLangText(rec[2]),
+            'requirements_description': rec[3] if lang=='pl' else getLangText(rec[3]),
+            'requirements': str(rec[4]).split('#splx#') if lang=='pl' else [getLangText(item) for item in str(rec[4]).split('#splx#')],
+            'benefits': str(rec[5]).split('#splx#') if lang=='pl' else [getLangText(item) for item in str(rec[5]).split('#splx#')],
+            'location': rec[6] if lang=='pl' else getLangText(rec[6]),
+            'contact_email': rec[7],
+            'employment_type': rec[8] if lang=='pl' else getLangText(rec[8]),
+            'salary': rec[9] if lang=='pl' else getLangText(rec[9]),
+            'start_date': format_date(rec[10]) if lang=='pl' else format_date(rec[10], False),
+            'data': format_date(rec[11]) if lang=='pl' else format_date(rec[11], False),
+            'brand': rec[12],
+            'status': rec[13]
         }
     return theme
 
@@ -543,15 +543,21 @@ def generator_daneDBList_one_post_id(id_post, lang='pl'):
         daneList.append(theme)
     return daneList
 
-def format_job_count(count):
-    if count == 1:
-        return f"Obecnie oferujemy {count} ofertę pracy."
-    elif 2 <= count <= 4:
-        return f"Obecnie oferujemy {count} oferty pracy."
-    elif (count % 10 == 2 or count % 10 == 3 or count % 10 == 4) and not (12 <= count % 100 <= 14):
-        return f"Obecnie oferujemy {count} oferty pracy."
+def format_job_count(count, lang='pl'):
+    if lang=='pl':
+        if count == 1:
+            return f"Obecnie oferujemy {count} ofertę pracy."
+        elif 2 <= count <= 4:
+            return f"Obecnie oferujemy {count} oferty pracy."
+        elif (count % 10 == 2 or count % 10 == 3 or count % 10 == 4) and not (12 <= count % 100 <= 14):
+            return f"Obecnie oferujemy {count} oferty pracy."
+        else:
+            return f"Obecnie oferujemy {count} ofert pracy."
     else:
-        return f"Obecnie oferujemy {count} ofert pracy."
+        if count == 1:
+            return f"Currently, we offer {count} job opportunity."
+        else:
+            return f"Currently, we offer {count} job opportunities."
     
 def mainDataGeneratorDict(select_key: str, lang:str = 'pl'):
 
@@ -781,12 +787,23 @@ def kontakt():
 @app.route('/kariera')
 def kariera():
     session['page'] = 'kariera'
-    pageTitle = 'Kariera'
+    
+    if 'lang' not in session:
+        session['lang'] = 'pl'
 
-    jobs_took = generator_jobs()
+    selected_language = session['lang']
+
+    if selected_language == 'en':
+        pageTitle = 'Career'
+    else:
+        pageTitle = 'Kariera'
+
+
+
+    jobs_took = generator_jobs(selected_language)
 
     found = len(jobs_took)
-    job_count_message = format_job_count(found)
+    job_count_message = format_job_count(found, selected_language)
     
 
     # Ustawienia paginacji
@@ -798,7 +815,7 @@ def kariera():
     jobs = jobs_took[offset: offset + per_page]
 
     return render_template(
-        f'kariera.html',
+        f'kariera-{selected_language}.html',
         pageTitle=pageTitle,
         job_count_message=job_count_message,
         jobs=jobs,

@@ -1,20 +1,20 @@
-{% extends 'base.html' %}
+{% extends 'base-en.html' %}
 {% block MainSlider %}
     <!--Page Title-->
     <section class="page-title" style="background-image:url(static/images/background/kariera.jpg)">
         <div class="auto-container">
             <div class="clearfix">
                 <div class="pull-left">
-                    <h2>Kariera w DMD</h2>
+                    <h2>Career at DMD</h2>
                 </div>
                 <div class="pull-right">
                     <ul class="page-breadcrumb">
                         <li><a href="/">DMD</a></li>
-                        <li>Kariera</li>
+                        <li>Career</li>
                     </ul>
                 </div>
-            </div>
-            <div class="contact-number"><a href="tel:+48736545454"><span class="icon flaticon-phone-call"></span>Zadzwoń: +48 736 54 54 54</a></div>
+            </div>            
+            <div class="contact-number"><a href="tel:+48736545454"><span class="icon flaticon-phone-call"></span>Call: +48 736 54 54 54</a></div>
         </div>
     </section>
     <!--End Page Title-->
@@ -31,36 +31,35 @@
                 	<div class="info-column col-md-4 col-sm-12 col-xs-12">
                     
                     	<div class="sec-title">
-                        	<h2><span class="theme_color">Dołącz</span> do nas</h2>
+                            <h2><span class="theme_color">Join</span> Us</h2>
                         </div>
                         
                         <div class="text">
-                            Nasza firma dynamicznie się rozwija, dlatego poszukujemy osób, które chcą tworzyć wyjątkowe 
-                            projekty. Stawiamy na profesjonalizm, innowacyjność i rozwój zawodowy, oferując 
-                            naszym pracownikom stabilne zatrudnienie oraz przyjazne warunki pracy. Sprawdź nasze aktualne 
-                            oferty i znajdź miejsce dla siebie w zespole DMD!
+                            Our company is growing dynamically, and we are looking for passionate individuals eager to create 
+                            exceptional projects. We value professionalism, innovation, and career development, offering 
+                            stable employment and a friendly work environment. Check out our current job openings and find 
+                            your place in the DMD team!
                         </div>
-                        
                         
                         <!--Solution Box Two-->
                         <div class="solution-box-two" style="background-image:url(static/images/background/patern-2.png)">
-                        	<div class="inner">
-                            	<div class="title">Szybki Kontakt</div>
-                            	<h2>Skontaktuj się z nami!</h2>
+                            <div class="inner">
+                                <div class="title">Quick Contact</div>
+                                <h2>Get in Touch!</h2>
                                 <div class="text">
-                                    Masz pytania dotyczące pracy w DMD? Chętnie odpowiemy na wszystkie Twoje wątpliwości. 
-                                    Napisz do nas, a my pomożemy Ci dowiedzieć się więcej o dostępnych ofertach oraz 
-                                    możliwościach rozwoju w naszej firmie.
+                                    Do you have questions about working at DMD? We are happy to answer all your inquiries. 
+                                    Write to us, and we will help you learn more about available opportunities and career 
+                                    growth within our company.
                                 </div>
-                                <a class="solution-btn theme-btn" href="/kontakt">Skontaktuj Się</a>
+                                <a class="solution-btn theme-btn" href="/kontakt">Contact Us</a>
                             </div>
-                        </div>
+                        </div>                        
                         
                     </div>
                     <!--Description Column-->
                     <div class="description-column col-md-8 col-sm-12 col-xs-12">
                     	<div class="sec-title">
-                        	<h2><span class="theme_color">Sprawdź </span>nasze oferty pracy</h2>
+                        	<h2><span class="theme_color">Check</span> Our Job Offers</h2>
                         </div>
                         {% if jobs|length %}
                         <div>
@@ -90,7 +89,7 @@
                                                     </ul>
                                                 </div>
                                                 
-                                                <a href="/kariera-one?job={{job['id']}}" class="theme-btn btn-style-six">Sprawdź szczegóły<span class="fa fa-angle-double-right"></span></a>
+                                                <a href="/kariera-one?job={{job['id']}}" class="theme-btn btn-style-six">Check Details<span class="fa fa-angle-double-right"></span></a>
                                             </div>
                                         </div>
                                     </div>
@@ -139,8 +138,8 @@
                         {% else %}
                         <div>
                             <!-- Tutaj możesz dodać np. tekst informujący o braku ofert -->
-                            <p style="font-size: 20px !important;">Obecnie nie mamy dostępnych ofert pracy.</p>
-                            <img src="{{ url_for('static', filename='images/resource/kariera-0.jpg') }}" alt="Brak dostępnych ofert pracy"/>
+                            <p style="font-size: 20px !important;">Currently, we have no available job offers.</p>
+                            <img src="{{ url_for('static', filename='images/resource/kariera-0.jpg') }}" alt="No available job offers"/>
                         </div>
                         
                         {% endif %}
