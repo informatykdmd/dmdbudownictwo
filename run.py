@@ -134,6 +134,102 @@ def generator_subsDataDB():
     return subsData
 
 def generator_daneDBList(lang='pl'):
+    limit = 'LIMIT 5' if lang != 'pl' else ''
+
+    # Pobieramy wszystkie dane jednym zapytaniem
+    query = f"""
+        SELECT 
+            bp.ID, 
+            c.ID as content_id, c.TITLE, c.CONTENT_MAIN, c.HIGHLIGHTS, c.HEADER_FOTO, 
+            c.CONTENT_FOTO, c.BULLETS, c.TAGS, c.CATEGORY, c.DATE_TIME,
+            a.NAME_AUTHOR, a.ABOUT_AUTHOR, a.AVATAR_AUTHOR, a.FACEBOOK, a.TWITER_X, a.INSTAGRAM,
+            COALESCE(
+                GROUP_CONCAT(
+                    JSON_OBJECT(
+                        'id', cm.ID, 
+                        'message', cm.MESSAGE,
+                        'user', nw.CLIENT_NAME, 
+                        'e-mail', nw.CLIENT_EMAIL, 
+                        'avatar', nw.AVATAR_USER,
+                        'data-time', cm.DATE_TIME
+                    )
+                ), ''
+            ) as comments
+        FROM blog_posts bp
+        JOIN contents c ON bp.ID_CONTENT = c.ID
+        JOIN authors a ON bp.ID_AUTHOR = a.ID
+        LEFT JOIN comments cm ON cm.BLOG_POST_ID = bp.ID
+        LEFT JOIN newsletter nw ON nw.ID = cm.USER_ID
+        GROUP BY bp.ID
+        ORDER BY bp.ID DESC
+        {limit};
+    """
+
+    all_posts = msq.connect_to_database(query)
+    
+    daneList = []
+    for post in all_posts:
+        (
+            id, id_content, title, content_main, highlights, mainFoto, contentFoto, 
+            bullets, tags, category, date_time, author, author_about, author_avatar, 
+            author_facebook, author_twitter, author_instagram, comments_json
+        ) = post
+
+        # Parsowanie JSON z komentarzami (jeśli są)
+        comments_dict = {}
+        if comments_json:
+            import json
+            comments_list = json.loads(f'[{comments_json}]')  # Zamieniamy string JSON na listę
+            for i, comment in enumerate(comments_list):
+                comments_dict[i] = {
+                    'id': comment['id'],
+                    'message': comment['message'] if lang == 'pl' else getLangText(comment['message']),
+                    'user': comment['user'],
+                    'e-mail': comment['e-mail'],
+                    'avatar': comment['avatar'],
+                    'data-time': format_date(comment['data-time']) if lang == 'pl' else format_date(comment['data-time'], False),
+                }
+
+        # Przetwarzanie listy dodatkowej (bullets) i tagów
+        bullets_list = str(bullets).split('#splx#') if lang == 'pl' else str(getLangText(bullets)).replace('#SPLX#', '#splx#').split('#splx#')
+        tags_list = str(tags).split(', ') if lang == 'pl' else str(getLangText(tags)).split(', ')
+
+        # Tłumaczenie pól jeśli trzeba
+        if lang != 'pl':
+            title = getLangText(title)
+            content_main = getLangText(content_main)
+            highlights = getLangText(highlights)
+            category = getLangText(category)
+            author_about = getLangText(author_about)
+            date_time = format_date(date_time, False)
+        else:
+            date_time = format_date(date_time)
+
+        theme = {
+            'id': id_content,
+            'title': title,
+            'introduction': content_main,
+            'highlight': highlights,
+            'mainFoto': mainFoto,
+            'contentFoto': contentFoto,
+            'additionalList': bullets_list,
+            'tags': tags_list,
+            'category': category,
+            'data': date_time,
+            'author': author,
+            'author_about': author_about,
+            'author_avatar': author_avatar,
+            'author_facebook': author_facebook,
+            'author_twitter': author_twitter,
+            'author_instagram': author_instagram,
+            'comments': comments_dict
+        }
+        daneList.append(theme)
+
+    return daneList
+
+
+def generator_daneDBList_old(lang='pl'):
     limit = ''
     if lang!='pl':
         limit = 'LIMIT 5'
