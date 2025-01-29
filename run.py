@@ -311,6 +311,7 @@ def generator_daneDBList_short(lang='pl'):
     """
 
     all_posts = msq.connect_to_database(query)
+    print("\n\n\n-----------------------\ndane z bazy", all_posts)
 
     daneList = []
     for post in all_posts:
