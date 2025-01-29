@@ -203,7 +203,6 @@ def generator_daneDBList(lang='pl'):
     """
 
     all_posts = msq.connect_to_database(query)
-    print("\n\n\n\n--------------------------------------------\n", all_posts)
     daneList = []
     for post in all_posts:
         (
@@ -340,7 +339,7 @@ def generator_daneDBList_short(lang='pl'):
     """
 
     all_posts = msq.connect_to_database(query)
-    print("\n\n\n-----------------------\ndane z bazy", all_posts)
+
 
     daneList = []
     for post in all_posts:
@@ -753,10 +752,19 @@ def jakPracujemy():
 @app.route('/realizacje')
 def realizacje():
     session['page'] = 'realizacje'
-    pageTitle = 'Realizacje'
+    
+    if 'lang' not in session:
+        session['lang'] = 'pl'
+
+    selected_language = session['lang']
+
+    if selected_language == 'en':
+        pageTitle = 'Projects'
+    else:
+        pageTitle = 'Realizacje'
 
     return render_template(
-        f'realizacje.html',
+        f'realizacje-{selected_language}.html',
         pageTitle=pageTitle
         )
 
