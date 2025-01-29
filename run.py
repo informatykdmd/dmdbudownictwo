@@ -31,7 +31,23 @@ app.config['PER_PAGE'] = 6
 
 Session(app)
 
+translator = Translator()
+
 def getLangText(text):
+    if not text:  # Sprawdza, czy text jest pusty lub None
+        return ""
+
+    try:
+        translation = translator.translate(str(text), dest='en')
+        if translation and translation.text:
+            return translation.text
+        else:
+            return text  # Jeśli tłumaczenie zwróciło None, zwracamy oryginalny tekst
+    except Exception as e:
+        print(f"Error translating text: {text} - {e}")
+        return text  # W razie błędu zwracamy oryginalny tekst
+    
+def getLangText_old(text):
     """Funkcja do tłumaczenia tekstu z polskiego na angielski"""
     translator = Translator()
     translation = translator.translate(str(text), dest='en')
