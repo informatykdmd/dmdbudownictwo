@@ -203,7 +203,7 @@ def generator_daneDBList(lang='pl'):
     """
 
     all_posts = msq.connect_to_database(query)
-    
+    print("\n\n\n\n--------------------------------------------\n", all_posts)
     daneList = []
     for post in all_posts:
         (
@@ -268,7 +268,7 @@ def generator_daneDBList(lang='pl'):
             'comments': comments_dict
         }
         daneList.append(theme)
-    print("\n\n\n\n--------------------------------------------\n", daneList)
+    
     return daneList
 
 
