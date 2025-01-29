@@ -191,18 +191,23 @@ def generator_daneDBList(lang='pl'):
 
         # Parsowanie JSON z komentarzami (jeśli są)
         comments_dict = {}
-        if comments_json:
+
+        if comments_json and comments_json.strip():  # Sprawdzamy, czy nie jest pusty
             import json
-            comments_list = json.loads(f'[{comments_json}]')  # Zamieniamy string JSON na listę
-            for i, comment in enumerate(comments_list):
-                comments_dict[i] = {
-                    'id': comment['id'],
-                    'message': comment['message'] if lang == 'pl' else getLangText(comment['message']),
-                    'user': comment['user'],
-                    'e-mail': comment['e-mail'],
-                    'avatar': comment['avatar'],
-                    'data-time': format_date(comment['data-time']) if lang == 'pl' else format_date(comment['data-time'], False),
-                }
+            try:
+                comments_list = json.loads(f'[{comments_json}]')  # Parsowanie JSON
+                for i, comment in enumerate(comments_list):
+                    comments_dict[i] = {
+                        'id': comment['id'],
+                        'message': comment['message'] if lang == 'pl' else getLangText(comment['message']),
+                        'user': comment['user'],
+                        'e-mail': comment['e-mail'],
+                        'avatar': comment['avatar'],
+                        'data-time': format_date(comment['data-time']) if comment['data-time'] else "Brak daty",
+                    }
+            except json.JSONDecodeError:
+                comments_dict = {}  # Jeśli JSON jest błędny, ustaw pusty słownik
+
 
         # Przetwarzanie listy dodatkowej (bullets) i tagów
         bullets_list = str(bullets).split('#splx#') if lang == 'pl' else str(getLangText(bullets)).replace('#SPLX#', '#splx#').split('#splx#')
