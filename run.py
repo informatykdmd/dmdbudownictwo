@@ -147,7 +147,7 @@ def generator_daneDBList(lang='pl'):
                 GROUP_CONCAT(
                     JSON_OBJECT(
                         'id', cm.ID, 
-                        'message', cm.MESSAGE,
+                        'message', cm.COMMENT_CONNTENT,  -- Poprawiona nazwa z MESSAGE na COMMENT_CONNTENT
                         'user', nw.CLIENT_NAME, 
                         'e-mail', nw.CLIENT_EMAIL, 
                         'avatar', nw.AVATAR_USER,
@@ -156,13 +156,14 @@ def generator_daneDBList(lang='pl'):
                 ), ''
             ) as comments
         FROM blog_posts bp
-        JOIN contents c ON bp.ID_CONTENT = c.ID
-        JOIN authors a ON bp.ID_AUTHOR = a.ID
+        JOIN contents c ON bp.CONTENT_ID = c.ID
+        JOIN authors a ON bp.AUTHOR_ID = a.ID  -- Poprawiona nazwa z ID_AUTHOR na AUTHOR_ID
         LEFT JOIN comments cm ON cm.BLOG_POST_ID = bp.ID
-        LEFT JOIN newsletter nw ON nw.ID = cm.USER_ID
+        LEFT JOIN newsletter nw ON nw.ID = cm.AUTHOR_OF_COMMENT_ID  -- Poprawiona nazwa z USER_ID na AUTHOR_OF_COMMENT_ID
         GROUP BY bp.ID
         ORDER BY bp.ID DESC
         {limit};
+
     """
 
     all_posts = msq.connect_to_database(query)
@@ -284,9 +285,11 @@ def generator_daneDBList_short(lang='pl'):
             c.ID, c.TITLE, c.HIGHLIGHTS, c.HEADER_FOTO, c.CATEGORY, c.DATE_TIME, 
             a.NAME_AUTHOR
         FROM blog_posts bp
-        JOIN contents c ON bp.ID_CONTENT = c.ID
-        JOIN authors a ON bp.ID_AUTHOR = a.ID
-        ORDER BY bp.ID DESC {limit};
+        JOIN contents c ON bp.CONTENT_ID = c.ID  -- Poprawione z ID_CONTENT na CONTENT_ID
+        JOIN authors a ON bp.AUTHOR_ID = a.ID  -- Poprawione z ID_AUTHOR na AUTHOR_ID
+        ORDER BY bp.ID DESC 
+        {limit};
+
     """
 
     all_posts = msq.connect_to_database(query)
