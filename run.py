@@ -100,21 +100,21 @@ def generator_teamDB(lang='pl'):
     took_teamD = take_data_table('*', 'workers_team')
     teamData = []
     for data in took_teamD:
-        theme = {
-            'ID': int(data[0]),
-            'EMPLOYEE_PHOTO': data[1],
-            'EMPLOYEE_NAME': data[2],
-            'EMPLOYEE_ROLE': data[3] if lang=='pl' else getLangText(data[3]),
-            'EMPLOYEE_DEPARTMENT': data[4],
-            'PHONE':'' if data[5] is None else data[5],
-            'EMAIL': '' if data[6] is None else data[6],
-            'FACEBOOK': '' if data[7] is None else data[7],
-            'LINKEDIN': '' if data[8] is None else data[8],
-            'DATE_TIME': data[9],
-            'STATUS': int(data[10])
-        }
-        # dostosowane dla dmd inwestycje
+        # dostosowane dla dmd budownictwo
         if data[4] == 'dmd budownictwo':
+            theme = {
+                'ID': int(data[0]),
+                'EMPLOYEE_PHOTO': data[1],
+                'EMPLOYEE_NAME': data[2],
+                'EMPLOYEE_ROLE': data[3] if lang=='pl' else getLangText(data[3]),
+                'EMPLOYEE_DEPARTMENT': data[4],
+                'PHONE':'' if data[5] is None else data[5],
+                'EMAIL': '' if data[6] is None else data[6],
+                'FACEBOOK': '' if data[7] is None else data[7],
+                'LINKEDIN': '' if data[8] is None else data[8],
+                'DATE_TIME': data[9],
+                'STATUS': int(data[10])
+            }
             teamData.append(theme)
     return teamData
 
@@ -180,6 +180,45 @@ def generator_daneDBList(lang='pl'):
     return daneList
 
 def generator_daneDBList_short(lang='pl'):
+    limit = 'LIMIT 5' if lang != 'pl' else ''
+
+    # Pobieramy wszystkie dane za jednym razem
+    query = f"""
+        SELECT 
+            c.ID, c.TITLE, c.HIGHLIGHTS, c.HEADER_FOTO, c.CATEGORY, c.DATE_TIME, 
+            a.NAME_AUTHOR
+        FROM blog_posts bp
+        JOIN contents c ON bp.ID_CONTENT = c.ID
+        JOIN authors a ON bp.ID_AUTHOR = a.ID
+        ORDER BY bp.ID DESC {limit};
+    """
+
+    all_posts = msq.connect_to_database(query)
+
+    daneList = []
+    for post in all_posts:
+        id_content, title, highlights, mainFoto, category, date_time, author = post
+
+        # Tłumaczenie raz, a nie dla każdego pola osobno
+        if lang != 'pl':
+            title, highlights, category = map(getLangText, (title, highlights, category))
+            date_time = format_date(date_time, False)
+        else:
+            date_time = format_date(date_time)
+
+        daneList.append({
+            'id': id_content,
+            'title': title,
+            'highlight': highlights,
+            'mainFoto': mainFoto,
+            'category': category,
+            'data': date_time,
+            'author': author,
+        })
+
+    return daneList
+
+def generator_daneDBList_short_old(lang='pl'):
     limit = ''
     if lang!='pl':
         limit = 'LIMIT 5'
@@ -430,7 +469,7 @@ def langPl():
     if 'page' not in session:
         return redirect(url_for(f'index'))
     else:
-        print(session["page"])
+        # print(session["page"])
         if session['page'] == 'blogOne':
             return redirect(url_for(f'blogs'))
         elif session['page'] == 'karieraOne':
@@ -449,7 +488,7 @@ def langEn():
     if 'page' not in session:
         return redirect(url_for(f'index'))
     else:
-        print(session["page"])
+        # print(session["page"])
         if session['page'] == 'blogOne':
             return redirect(url_for(f'blogs'))
         elif session['page'] == 'karieraOne':
