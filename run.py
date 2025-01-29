@@ -842,7 +842,15 @@ def kariera():
 @app.route('/kariera-one', methods=['GET'])
 def karieraOne():
     session['page'] = 'karieraOne'
-    pageTitle = 'Kariera'
+    if 'lang' not in session:
+        session['lang'] = 'pl'
+
+    selected_language = session['lang']
+
+    if selected_language == 'en':
+        pageTitle = 'Career'
+    else:
+        pageTitle = 'Kariera'
 
     if 'job' in request.args:
         job_id = request.args.get('job')
@@ -851,7 +859,7 @@ def karieraOne():
     else:
         return redirect(url_for(f'kariera'))
     
-    choiced = generator_job_offer(job_id_int)
+    choiced = generator_job_offer(job_id_int, selected_language)
     if not len(choiced):
         return redirect(url_for(f'kariera'))
     
@@ -866,33 +874,33 @@ def karieraOne():
     choiced['title_split'] = format_header(choiced['title'])
     print(choiced)
     return render_template(
-        f'kariera-one.html',
+        f'kariera-one-{selected_language}.html',
         pageTitle=pageTitle,
         choiced=choiced
         )
 
-@app.route('/my-zespol')
-def myZespol():
-    session['page'] = 'myZespol'
-    pageTitle = 'Zespół'
+# @app.route('/my-zespol')
+# def myZespol():
+#     session['page'] = 'myZespol'
+#     pageTitle = 'Zespół'
 
 
-    if f'TEAM-ALL' not in session:
-        team_list = generator_teamDB()
-        session[f'TEAM-ALL'] = team_list
-    else:
-        team_list = session[f'TEAM-ALL']
+#     if f'TEAM-ALL' not in session:
+#         team_list = generator_teamDB()
+#         session[f'TEAM-ALL'] = team_list
+#     else:
+#         team_list = session[f'TEAM-ALL']
 
-    fullListTeam = []
-    for i, member in enumerate(team_list):
-       fullListTeam.append(member)
+#     fullListTeam = []
+#     for i, member in enumerate(team_list):
+#        fullListTeam.append(member)
     
-    return render_template(
-        f'myZespol.html',
-        pageTitle=pageTitle,
+#     return render_template(
+#         f'myZespol.html',
+#         pageTitle=pageTitle,
         
-        fullListTeam=fullListTeam
-        )
+#         fullListTeam=fullListTeam
+#         )
 
 @app.route('/blogs')
 def blogs():
