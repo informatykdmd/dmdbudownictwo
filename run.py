@@ -1106,6 +1106,17 @@ def blogs():
 @app.route('/blog-one', methods=['GET'])
 def blogOne():
     session['page'] = 'blogOne'
+
+    if 'lang' not in session:
+        session['lang'] = 'pl'
+
+    selected_language = session['lang']
+
+    if f'BLOG-CATEGORY' not in session:
+        cats = generator_daneDBList_category(selected_language)
+        session[f'BLOG-CATEGORY'] = cats
+    else:
+        cats = session[f'BLOG-CATEGORY']
     
     
     if 'post' in request.args:
@@ -1124,12 +1135,12 @@ def blogOne():
         'next': generator_daneDBList_prev_next(post_id_int)['next']
         }
 
-    cats = generator_daneDBList_category()
+
     cat_dict = cats[1]
     take_id_rec_pos = generator_daneDBList_RecentPosts(post_id_int)
     recentPosts = []
     for idp in take_id_rec_pos:
-        t_post = generator_daneDBList_one_post_id(idp)[0]
+        t_post = generator_daneDBList_one_post_id(idp, selected_language)[0]
         theme = {
             'id': t_post['id'],
             'title': t_post['title'],
@@ -1143,7 +1154,7 @@ def blogOne():
     
 
     return render_template(
-        f'blog.html',
+        f'blog-{selected_language}.html',
         pageTitle=pageTitle,
         choiced=choiced,
         pre_next=pre_next,

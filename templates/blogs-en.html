@@ -35,7 +35,7 @@
                                         </div>
                                         <div>{{res['highlight']|smart_truncate}}</div>
                                     </div>
-                                    <a href="/blog-one?post={{res['id']}}" class="theme-btn btn-style-six">Czytaj więcej <span class="fa fa-angle-double-right"></span></a>
+                                    <a href="/blog-one?post={{res['id']}}" class="theme-btn btn-style-six">Learn More <span class="fa fa-angle-double-right"></span></a>
                                 </div>
                             </div>
                         </div>
@@ -98,7 +98,8 @@
                     <!-- category -->
                     <div class="sidebar-widget category-widget">
                         <div class="sidebar-title">
-                            <h2><span class="theme_color">Najlepsze </span>Kategorie</h2>
+                            <h2><span class="theme_color">Top </span>Categories</h2>
+
                         </div>
                         <ul class="cat-list">
                             {% for cat, data in cat_dict.items() %}
@@ -111,7 +112,8 @@
                     
                     <!-- Popular Posts -->
                     <div class="sidebar-widget popular-posts">
-                        <div class="sidebar-title"><h2>Zobacz również</h2></div>
+                        <div class="sidebar-title"><h2>See Also</h2></div>
+
                         {% for rPost in recentPosts %}
                         <article class="post">
                             <figure class="post-thumb"><img src="{{rPost['contentFoto']}}" alt=""><a href="/blog-one?post={{rPost['id']}}" class="overlay-box"><span class="icon fa fa-link"></span></a></figure>

@@ -22,7 +22,7 @@
                             <div class="lower-content">
                                 <ul class="post-meta">
                                     <li><a href="#"><span class="icon fa fa-user"></span>{{choiced['author']}}</a></li>
-                                    <li><a href="#"><span class="icon fa fa-comment-o"></span>{{choiced['len']}}  Komentarzy </a></li>
+                                    <li><a href="#"><span class="icon fa fa-comment-o"></span>{{choiced['len']}}  Comments </a></li>
                                 </ul>
                                 <h3>{{choiced['title']}}</h3>
                                 <div class="text">
@@ -40,7 +40,7 @@
                                         </li>
                                         {% endfor %}
                                     </ul>
-                                    <h4 style="margin-top: 25px;">TAGI:</h4>
+                                    <h4 style="margin-top: 25px;">TAGS:</h4>
                                     <ul  class="social-icon-four">
                                         {% for tag in choiced['tags'] %}
                                         <li><a href="#">{{tag}}</a></li>
@@ -71,10 +71,10 @@
                                     <div class="pull-right posts">
                                         <ul>
                                             {% if pre_next['prev'] != None %}
-                                            <li class="prev"><a href="/blog-one?post={{pre_next['prev']}}"><span class="fa fa-angle-double-left"></span> Poprzedni</a></li>
+                                            <li class="prev"><a href="/blog-one?post={{pre_next['prev']}}"><span class="fa fa-angle-double-left"></span> Previous</a></li>
                                             {% endif %}
                                             {% if pre_next['next'] != None %}
-                                            <li><a href="/blog-one?post={{pre_next['next']}}">Następny <span class="fa fa-angle-double-right"></span></a></li>
+                                            <li><a href="/blog-one?post={{pre_next['next']}}">Next <span class="fa fa-angle-double-right"></span></a></li>
                                             {% endif %}
                                         </ul>
                                     </div>
@@ -86,7 +86,8 @@
                     <!--Comments Area-->
                     <div class="comments-area">
                         <div class="sec-title">
-                            <h2><span class="theme_color">O</span> Autorze</h2>
+                            <h2><span class="theme_color">About</span> the Author</h2>
+
                         </div>
                         <!--Comment Box-->
                         <div class="comment-box">
@@ -103,7 +104,7 @@
                         </div>
                         {% if choiced['len'] > 0 %}
                             <div class="sec-title">
-                                <h2><span class="theme_color">{{choiced['len']}}</span> Komentarzy</h2>
+                                <h2><span class="theme_color">{{choiced['len']}}</span> Comments</h2>
                             </div>
                             
                             {% for comm in choiced['comments'].values() %}
@@ -137,17 +138,18 @@
                     <!-- Comment Form -->
                     <div class="comment-form">
                         <div class="sec-title">
-                            <h2><span class="theme_color">Komentuj</span> post</h2>
+                            <h2><span class="theme_color">Comment</span> on the Post</h2>
+
                         </div>
                         <!--Comment Form-->
                         <form id="Comments">
                             <div class="row clearfix">
                                 <div class="col-md-6 col-sm-12 col-xs-12 form-group">
-                                    <input type="text" name="Name" placeholder="Imię" required>
+                                    <input type="text" name="Name" placeholder="Name" required>
                                 </div>
                                 
                                 <div class="col-md-6 col-sm-12 col-xs-12 form-group">
-                                    <input type="email" name="Email" placeholder="E-mail (nie zostanie opublikowany)" required>
+                                    <input type="email" name="Email" placeholder="Email (will not be published)" required>
                                 </div>
                                 
                                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 form-group">
@@ -156,7 +158,7 @@
                                 </div>
                                 
                                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 form-group">
-                                    <button class="theme-btn btn-style-one" type="submit" id="przycisk">Komentuj</button>
+                                    <button class="theme-btn btn-style-one" type="submit" id="przycisk">Comment</button>
                                 </div>
                                 <div style="margin-top: 20px;" id="komunikat_z_serwera"></div>
                             </div>
@@ -185,7 +187,7 @@
                     <!-- category -->
                     <div class="sidebar-widget category-widget">
                         <div class="sidebar-title">
-                            <h2><span class="theme_color">Najlepsze </span>Kategorie</h2>
+                            <h2><span class="theme_color">Top </span>Categories</h2>
                         </div>
                         <ul class="cat-list">
                             {% for cat, data in cat_dict.items() %}
@@ -198,7 +200,7 @@
                     
                     <!-- Popular Posts -->
                     <div class="sidebar-widget popular-posts">
-                        <div class="sidebar-title"><h2>Zobacz również</h2></div>
+                        <div class="sidebar-title"><h2>See Also</h2></div>
                         {% for rPost in recentPosts %}
                         <article class="post">
                             <figure class="post-thumb"><img src="{{rPost['contentFoto']}}" alt=""><a href="/blog-one?post={{rPost['id']}}" class="overlay-box"><span class="icon fa fa-link"></span></a></figure>
