@@ -500,7 +500,12 @@ def generator_daneDBList_category(lang='pl'):
     cat_count = {}
     for post in took_allPost:
         category = translated_categories[post[0]]  # Używamy już przetłumaczonych wartości
-        cat_count[category] = {"cat_count":cat_count.get(category, 0) + 1, 'org': post[0]}
+        
+        # Jeśli kategoria już istnieje, zwiększamy licznik
+        if category in cat_count:
+            cat_count[category]["cat_count"] += 1
+        else:
+            cat_count[category] = {"cat_count": 1, "org": post[0]}  # Inicjalizujemy kategorię
 
     # Tworzenie listy stringów z nazwami kategorii i ilością wystąpień
     cat_list = [f"{cat} ({count})" for cat, count in cat_count.items()]
