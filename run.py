@@ -1269,17 +1269,26 @@ def addComm():
 @app.route('/subpage', methods=['GET'])
 def subpage():
     session['page'] = 'subpage'
-    pageTitle = 'subpage'
 
-    if 'target' in request.args:
-        if request.args['target'] in ['polityka', 'zasady', 'pomoc']:
-            targetPage = request.args['target']
-        else: targetPage = "pomoc"
-    else:
-        targetPage = "pomoc"
+    if 'lang' not in session:
+        session['lang'] = 'pl'
+
+    selected_language = session['lang']
+
+    allowed_targets = ['polityka', 'zasady', 'pomoc']
+    translations = {
+        'en': {'polityka': 'Privacy Policy', 'zasady': 'Terms of Use', 'pomoc': 'Help'},
+        'pl': {'polityka': 'Polityka prywatności', 'zasady': 'Zasady użytkowania', 'pomoc': 'Pomoc'}
+    }
+
+    targetPage = request.args.get('target', 'pomoc')
+    if targetPage not in allowed_targets:
+        targetPage = 'pomoc'
+
+    pageTitle = translations.get(selected_language, translations['pl'])[targetPage]
 
     return render_template(
-        f'{targetPage}.html',
+        f'{targetPage}-{selected_language}.html',
         pageTitle=pageTitle
         )
 
