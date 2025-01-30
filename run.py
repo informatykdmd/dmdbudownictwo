@@ -508,7 +508,7 @@ def generator_daneDBList_category(lang='pl'):
             cat_count[category] = {"cat_count": 1, "org": post[0]}  # Inicjalizujemy kategorię
 
     # Tworzenie listy stringów z nazwami kategorii i ilością wystąpień
-    cat_list = [f"{cat} ({count})" for cat, count in cat_count.items()]
+    cat_list = [f"{cat} ({count.get("cat_count", 0)})" for cat, count in cat_count.items()]
 
     return cat_list, cat_count
 
