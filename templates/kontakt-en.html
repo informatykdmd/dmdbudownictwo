@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+{% extends 'base-en.html' %}
 {% block MainSlider %}{% endblock %}
 
 {% block content %}
@@ -35,10 +35,12 @@
     <section class="contact-section">
         <div class="auto-container">
             
-            <h2><span class="theme_color">Pozostańmy</span> w kontakcie</h2>
+            <h2><span class="theme_color">Stay</span> in Touch</h2>
             <div class="text">
-                Możesz porozmawiać z naszym przedstawicielem online w każdej chwili. Prosimy o wypełnienie poniższego formularza kontaktowego. <br> Prosimy o cierpliwość, odpowiemy najszybciej jak to możliwe. Nasza infolinia jest dostępna 24/7.
+                You can speak with our representative online at any time. Please fill out the contact form below. <br> 
+                We appreciate your patience—we will respond as soon as possible. Our hotline is available 24/7.
             </div>
+
             <div class="row clearfix">
                 <div class="form-column col-lg-9 col-md-8 col-sm-12 col-xs-12">
                     <div class="inner-column">
@@ -48,19 +50,19 @@
                             <form class="contact-form form" id="ajax-contact" method="post">
                                 <div class="row clearfix">
                                     <div class="form-group col-md-6 col-sm-6 co-xs-12">
-                                        <input type="text" id="name" name="name" value="" placeholder="Imię" required>
+                                        <input type="text" id="name" name="name" value="" placeholder="Name" required>
                                     </div>
                                     <div class="form-group col-md-6 col-sm-6 co-xs-12">
                                         <input type="email" id="email" name="email" value="" placeholder="E-mail" required>
                                     </div>
                                     <div class="form-group col-md-12 col-sm-12 co-xs-12">
-                                        <input type="text" name="subject" id="subject" value="" placeholder="Temat zapytania" required>
+                                        <input type="text" name="subject" id="subject" value="" placeholder="Subject" required>
                                     </div>
                                     <!-- <div class="form-group col-md-6 col-sm-6 co-xs-12">
                                         <input type="text" name="phone" value="" placeholder="Telefon" required>
                                     </div> -->
                                     <div class="form-group col-md-12 col-sm-12 co-xs-12">
-                                        <textarea id="message" name="message" placeholder="Twoja Wiadomość"></textarea>
+                                        <textarea id="message" name="message" placeholder="Your message"></textarea>
                                     </div>
                                     <div class="row clearfix" style="display: flex;">
                                         <div style="margin-left: 20px;">
@@ -68,15 +70,15 @@
                                         </div>
                                         <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10">
                                             <label for="condition">
-                                                Akceptuję politykę prywatoności DMD BUDOWNICTWO, niniejszym wyrażam zgodę na przetwarzanie moich 
-                                                danych osobowych zawartych w niniejszym formularzu w celach kontaktowych, zgodnie z obowiązującą 
-                                                polityką prywatności.
-                                            </label>
+                                                I accept the DMD BUDOWNICTWO privacy policy and hereby consent to the processing of my 
+                                                personal data provided in this form for contact purposes, in accordance with the applicable 
+                                                privacy policy.
+                                            </label>                                            
                                         </div>
                                         
                                     </div>
                                     <div class="form-group col-md-12 col-sm-12 co-xs-12">
-                                        <button type="submit" data-text="Wyślij Wiadomość" class="theme-btn btn-style-one">Wyślij Wiadomość</button>
+                                        <button type="submit" data-text="Send Message" class="theme-btn btn-style-one">Send Message</button>
                                     </div>
                                 </div>
                                 <!-- <p class="form-message"></p> -->
@@ -90,11 +92,12 @@
                 <div class="info-column col-lg-3 col-md-4 col-sm-12 col-xs-12">
                     
                     <ul class="list-style-two">
-                        <li><span class="icon flaticon-home-1"></span><strong>ul. Dworkowa 51,</strong>05-082 Stare Babice, Polska</li>
-                        <li><span class="icon flaticon-envelope-1"></span><strong>Wyślij na E-mail</strong><a href="mailto:biuro@dmdbudownictwo.pl">biuro@dmdbudownictwo.pl</a></li>
-                        <li><span class="icon flaticon-technology-2"></span><strong>Masz pytania, zadzwoń</strong><a href="tel:+48736545454">+48 736 54 54 54</a></li>
-                        <li><span class="icon flaticon-clock-1"></span><strong>Pracujemy</strong>Pon-Pt: 9:00 - 17:00</li>
+                        <li><span class="icon flaticon-home-1"></span><strong>ul. Dworkowa 51,</strong> 05-082 Stare Babice, Poland</li>
+                        <li><span class="icon flaticon-envelope-1"></span><strong>Send an Email</strong><a href="mailto:biuro@dmdbudownictwo.pl">biuro@dmdbudownictwo.pl</a></li>
+                        <li><span class="icon flaticon-technology-2"></span><strong>Have questions? Call us</strong><a href="tel:+48736545454">+48 736 54 54 54</a></li>
+                        <li><span class="icon flaticon-clock-1"></span><strong>Working Hours</strong>Mon-Fri: 9:00 AM - 5:00 PM</li>
                     </ul>
+                    
                     
                 </div>
             </div>
@@ -143,4 +146,7 @@
         });
     </script>
 {% endblock %}
+
+
+
 

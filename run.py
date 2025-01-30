@@ -632,6 +632,8 @@ def langPl():
         # Wyczyść dane związane z językiem, aby wymusić ich ponowne załadowanie
         session.pop('TEAM-ALL', None)
         session.pop('BLOG-SHORT', None)
+        session.pop('CAREER-ALL', None)
+        
 
     session['lang'] = 'pl'
     if 'page' not in session:
@@ -652,6 +654,7 @@ def langEn():
         # Wyczyść dane związane z językiem, aby wymusić ich ponowne załadowanie
         session.pop('TEAM-ALL', None)
         session.pop('BLOG-SHORT', None)
+        session.pop('CAREER-ALL', None)
 
     if 'page' not in session:
         return redirect(url_for(f'index'))
@@ -793,10 +796,18 @@ def realizacje():
 @app.route('/kontakt')
 def kontakt():
     session['page'] = 'kontakt'
-    pageTitle = 'kontakt'
+    if 'lang' not in session:
+        session['lang'] = 'pl'
+
+    selected_language = session['lang']
+
+    if selected_language == 'en':
+        pageTitle = 'Contact'
+    else:
+        pageTitle = 'Kontakt'
 
     return render_template(
-        f'kontakt.html',
+        f'kontakt-{selected_language}.html',
         pageTitle=pageTitle
         )
 
@@ -814,9 +825,12 @@ def kariera():
     else:
         pageTitle = 'Kariera'
 
+    if f'CAREER-ALL' not in session:
+        jobs_took = generator_jobs(selected_language)
+        session[f'CAREER-ALL'] = jobs_took
+    else:
+        jobs_took = session[f'CAREER-ALL']
 
-
-    jobs_took = generator_jobs(selected_language)
 
     found = len(jobs_took)
     job_count_message = format_job_count(found, selected_language)
