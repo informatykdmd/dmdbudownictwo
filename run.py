@@ -235,14 +235,15 @@ def generator_daneDBList(lang='pl'):
             try:
                 comments_list = json.loads(f'[{comments_json}]')  # Parsowanie JSON
                 for i, comment in enumerate(comments_list):
-                    comments_dict[i] = {
-                        'id': comment['id'],
-                        'message': comment['message'] if lang == 'pl' else getLangText(comment['message']),
-                        'user': comment['user'],
-                        'e-mail': comment['e-mail'],
-                        'avatar': comment['avatar'],
-                        'data-time': format_date(comment['data-time']) if comment['data-time'] else "Brak daty",
-                    }
+                    if comment['message'] is not None and comment['user'] is not None:
+                        comments_dict[i] = {
+                            'id': comment['id'],
+                            'message': comment['message'] if lang == 'pl' else getLangText(comment['message']),
+                            'user': comment['user'],
+                            'e-mail': comment['e-mail'],
+                            'avatar': comment['avatar'],
+                            'data-time': format_date(comment['data-time']) if comment['data-time'] else "Brak daty",
+                        }
 
             except json.JSONDecodeError:
                 comments_dict = {}  # Jeśli JSON jest błędny, ustaw pusty słownik
@@ -592,14 +593,15 @@ def generator_daneDBList_one_post_id(id_post, lang='pl'):
         try:
             comments_list = json.loads(f'[{comments_json}]')
             for i, comment in enumerate(comments_list):
-                comments_dict[i] = {
-                    'id': comment['id'],
-                    'message': comment['message'] if lang == 'pl' else getLangText(comment['message']),
-                    'user': comment['user'],
-                    'e-mail': comment['e-mail'],
-                    'avatar': comment['avatar'],
-                    'data-time': format_date(comment['data-time']) if comment['data-time'] else "Brak daty",
-                }
+                if comment['message'] is not None and comment['user'] is not None:
+                    comments_dict[i] = {
+                        'id': comment['id'],
+                        'message': comment['message'] if lang == 'pl' else getLangText(comment['message']),
+                        'user': comment['user'],
+                        'e-mail': comment['e-mail'],
+                        'avatar': comment['avatar'],
+                        'data-time': format_date(comment['data-time']) if comment['data-time'] else "Brak daty",
+                    }
         except json.JSONDecodeError:
             comments_dict = {}
 
@@ -1060,7 +1062,7 @@ def blogs():
         cats = session[f'BLOG-CATEGORY']
     
     if f'BLOG-ALL' not in session:
-        blog_post = generator_daneDBList(selected_language)
+        blog_post = generator_daneDBList_short(selected_language)
         session[f'BLOG-ALL'] = blog_post
     else:
         blog_post = session[f'BLOG-ALL']
