@@ -753,7 +753,8 @@ def langPl():
         session.pop('TEAM-ALL', None)
         session.pop('BLOG-SHORT', None)
         session.pop('CAREER-ALL', None)
-        
+        session.pop('BLOG-CATEGORY', None)
+        session.pop('BLOG-ALL', None)
 
     session['lang'] = 'pl'
     if 'page' not in session:
@@ -775,6 +776,8 @@ def langEn():
         session.pop('TEAM-ALL', None)
         session.pop('BLOG-SHORT', None)
         session.pop('CAREER-ALL', None)
+        session.pop('BLOG-CATEGORY', None)
+        session.pop('BLOG-ALL', None)
 
     if 'page' not in session:
         return redirect(url_for(f'index'))
