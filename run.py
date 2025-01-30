@@ -173,7 +173,7 @@ def generator_subsDataDB():
     return subsData
 
 def generator_daneDBList(lang='pl'):
-    limit = 'LIMIT 5' if lang != 'pl' else ''
+    limit = 'LIMIT 6' if lang != 'pl' else ''
 
     # Pobieramy wszystkie dane jednym zapytaniem
     query = f"""
