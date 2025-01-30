@@ -33,12 +33,12 @@ Session(app)
 
 translator = Translator()
 
-def getLangText(text):
+def getLangText(text, dest='en'):
     if not text:  # Sprawdza, czy text jest pusty lub None
         return ""
 
     try:
-        translation = translator.translate(str(text), dest='en')
+        translation = translator.translate(str(text), dest=dest)
         if translation and translation.text:
             return translation.text
         else:
@@ -46,6 +46,7 @@ def getLangText(text):
     except Exception as e:
         print(f"Error translating text: {text} - {e}")
         return text  # W razie błędu zwracamy oryginalny tekst
+
     
 def getLangText_old(text):
     """Funkcja do tłumaczenia tekstu z polskiego na angielski"""
@@ -1061,11 +1062,11 @@ def blogs():
     else:
         cats = session[f'BLOG-CATEGORY']
     
-    if f'BLOG-ALL' not in session:
+    if f'BLOG-SHORT' not in session:
         blog_post = generator_daneDBList_short(selected_language)
-        session[f'BLOG-ALL'] = blog_post
+        session[f'BLOG-SHORT'] = blog_post
     else:
-        blog_post = session[f'BLOG-ALL']
+        blog_post = session[f'BLOG-SHORT']
 
     pageTitle = 'Blog'
 
@@ -1173,6 +1174,11 @@ def page_not_found(e):
 
 @app.route('/find-by-category', methods=['GET'])
 def findByCategory():
+    session['page'] = 'findByCategory'
+    if 'lang' not in session:
+        session['lang'] = 'pl'
+
+    selected_language = session['lang']
 
     query = request.args.get('category')
     if not query:
@@ -1186,12 +1192,15 @@ def findByCategory():
                 """
     params = (f'%{query}%', )
     results = msq.safe_connect_to_database(sqlQuery, params)
-    pageTitle = f'Wyniki wyszukiwania dla categorii {query}'
+    if selected_language == 'pl':
+        pageTitle = f'Wyniki wyszukiwania dla kategorii {query}'
+    else:
+        pageTitle = f'Search results for category {query}'
 
     searchResults = []
     for find_id in results:
         post_id = int(find_id[0])
-        t_post = generator_daneDBList_one_post_id(post_id)[0]
+        t_post = generator_daneDBList_one_post_id(post_id, selected_language)[0]
         theme = {
             'id': t_post['id'],
             'title': t_post['title'],
@@ -1215,7 +1224,7 @@ def findByCategory():
 
 
     return render_template(
-        "searchBlog.html",
+        f"searchBlog-{selected_language}.html",
         pageTitle=pageTitle,
         posts=posts,
         found=found,
@@ -1225,13 +1234,22 @@ def findByCategory():
 
 @app.route('/search-post-blog', methods=['GET', 'POST']) #, methods=['GET', 'POST']
 def searchBlog():
+    session['page'] = 'searchBlog'
+    if 'lang' not in session:
+        session['lang'] = 'pl'
+
+    selected_language = session['lang']
+
     if request.method == "POST":
         query = request.form["query"]
-        if query == '':
+        if not query:
             print('Błąd requesta')
             return redirect(url_for('index'))
-        
+        if selected_language != "pl":
+            query_en = query
+            query = getLangText(query_en, dest='pl')
         session['last_search'] = query
+
     elif 'last_search' in session:
         query = session['last_search']
     else:
@@ -1248,12 +1266,16 @@ def searchBlog():
                 """
     params = (f'%{query}%', f'%{query}%', f'%{query}%', f'%{query}%')
     results = msq.safe_connect_to_database(sqlQuery, params)
-    pageTitle = f'Wyniki wyszukiwania dla {query}'
+    if selected_language == 'pl':
+        pageTitle = f'Wyniki wyszukiwania dla kategorii {query}'
+    else:
+        pageTitle = f'Search results for category {query_en}'
+    # pageTitle = f'Wyniki wyszukiwania dla {query}'
 
     searchResults = []
     for find_id in results:
         post_id = int(find_id[0])
-        t_post = generator_daneDBList_one_post_id(post_id)[0]
+        t_post = generator_daneDBList_one_post_id(post_id, selected_language)[0]
         theme = {
             'id': t_post['id'],
             'title': t_post['title'],
@@ -1277,7 +1299,7 @@ def searchBlog():
 
 
     return render_template(
-        "searchBlog.html",
+        f"searchBlog-{selected_language}.html",
         pageTitle=pageTitle,
         posts=posts,
         found=found,
