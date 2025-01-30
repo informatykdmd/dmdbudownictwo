@@ -1195,7 +1195,7 @@ def findByCategory():
     if selected_language == 'pl':
         pageTitle = f'Wyniki wyszukiwania dla kategorii {query}'
     else:
-        pageTitle = f'Search results for category {query}'
+        pageTitle = f'Search results'
 
     searchResults = []
     for find_id in results:
