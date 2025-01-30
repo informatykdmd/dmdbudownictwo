@@ -483,24 +483,29 @@ def generator_daneDBList_prev_next(main_id):
     
     return pre_next
 
-def generator_daneDBList_cetegory():
+def generator_daneDBList_category(lang='pl'):
     # Pobranie kategorii z bazy danych
     took_allPost = msq.connect_to_database('SELECT CATEGORY FROM contents ORDER BY ID DESC;')
-    
-    # Zliczanie wystąpień każdej kategorii
+
+    # Tworzenie listy unikalnych kategorii
+    unique_categories = set(post[0] for post in took_allPost)
+
+    # Przetłumaczenie unikalnych kategorii tylko raz
+    if lang != 'pl':
+        translated_categories = {cat: getLangText(cat) for cat in unique_categories}
+    else:
+        translated_categories = {cat: cat for cat in unique_categories}
+
+    # Zliczanie wystąpień przetłumaczonych kategorii
     cat_count = {}
     for post in took_allPost:
-        category = post[0]
-        if category in cat_count:
-            cat_count[category] += 1
-        else:
-            cat_count[category] = 1
+        category = translated_categories[post[0]]  # Używamy już przetłumaczonych wartości
+        cat_count[category] = cat_count.get(category, 0) + 1
 
     # Tworzenie listy stringów z nazwami kategorii i ilością wystąpień
     cat_list = [f"{cat} ({count})" for cat, count in cat_count.items()]
-    cat_dict = cat_count
-    
-    return cat_list, cat_dict
+
+    return cat_list, cat_count
 
 def generator_daneDBList_RecentPosts(main_id, amount = 3):
     # Pobieranie ID wszystkich postów oprócz main_id
@@ -516,7 +521,122 @@ def generator_daneDBList_RecentPosts(main_id, amount = 3):
 
     return posts
 
+import json
+
 def generator_daneDBList_one_post_id(id_post, lang='pl'):
+    # Pobranie wszystkich danych jednym zapytaniem SQL
+    query = f"""
+        SELECT 
+            bp.ID, 
+            c.ID as content_id, 
+            ANY_VALUE(c.TITLE) as TITLE, 
+            ANY_VALUE(c.CONTENT_MAIN) as CONTENT_MAIN, 
+            ANY_VALUE(c.HIGHLIGHTS) as HIGHLIGHTS, 
+            ANY_VALUE(c.HEADER_FOTO) as HEADER_FOTO, 
+            ANY_VALUE(c.CONTENT_FOTO) as CONTENT_FOTO, 
+            ANY_VALUE(c.BULLETS) as BULLETS, 
+            ANY_VALUE(c.TAGS) as TAGS, 
+            ANY_VALUE(c.CATEGORY) as CATEGORY, 
+            ANY_VALUE(c.DATE_TIME) as DATE_TIME,
+            ANY_VALUE(a.NAME_AUTHOR) as NAME_AUTHOR, 
+            ANY_VALUE(a.ABOUT_AUTHOR) as ABOUT_AUTHOR, 
+            ANY_VALUE(a.AVATAR_AUTHOR) as AVATAR_AUTHOR, 
+            ANY_VALUE(a.FACEBOOK) as FACEBOOK, 
+            ANY_VALUE(a.TWITER_X) as TWITER_X, 
+            ANY_VALUE(a.INSTAGRAM) as INSTAGRAM,
+            COALESCE(
+                GROUP_CONCAT(
+                    JSON_OBJECT(
+                        'id', cm.ID, 
+                        'message', cm.COMMENT_CONNTENT,  
+                        'user', nw.CLIENT_NAME, 
+                        'e-mail', nw.CLIENT_EMAIL, 
+                        'avatar', nw.AVATAR_USER,
+                        'data-time', cm.DATE_TIME
+                    )
+                ), '[]'
+            ) as comments
+        FROM blog_posts bp
+        JOIN contents c ON bp.CONTENT_ID = c.ID
+        JOIN authors a ON bp.AUTHOR_ID = a.ID  
+        LEFT JOIN comments cm ON cm.BLOG_POST_ID = bp.ID
+        LEFT JOIN newsletter nw ON nw.ID = cm.AUTHOR_OF_COMMENT_ID
+        WHERE bp.ID = {id_post}
+        GROUP BY bp.ID
+        ORDER BY bp.ID DESC
+        LIMIT 1;
+    """
+
+    result = msq.connect_to_database(query)
+
+    if not result:
+        return []
+
+    post = result[0]
+    
+    (
+        id, id_content, title, content_main, highlights, mainFoto, contentFoto, 
+        bullets, tags, category, date_time, author, author_about, author_avatar, 
+        author_facebook, author_twitter, author_instagram, comments_json
+    ) = post
+
+    # Parsowanie JSON z komentarzami (jeśli są)
+    comments_dict = {}
+
+    if comments_json and comments_json.strip():
+        try:
+            comments_list = json.loads(f'[{comments_json}]')
+            for i, comment in enumerate(comments_list):
+                comments_dict[i] = {
+                    'id': comment['id'],
+                    'message': comment['message'] if lang == 'pl' else getLangText(comment['message']),
+                    'user': comment['user'],
+                    'e-mail': comment['e-mail'],
+                    'avatar': comment['avatar'],
+                    'data-time': format_date(comment['data-time']) if comment['data-time'] else "Brak daty",
+                }
+        except json.JSONDecodeError:
+            comments_dict = {}
+
+    # Przetwarzanie listy dodatkowej (bullets) i tagów
+    bullets_list = str(bullets).split('#splx#') if lang == 'pl' else str(getLangText(bullets)).replace('#SPLX#', '#splx#').split('#splx#')
+    tags_list = str(tags).split(', ') if lang == 'pl' else str(getLangText(tags)).split(', ')
+
+    # Tłumaczenie pól jeśli trzeba
+    if lang != 'pl':
+        title = getLangText(title)
+        content_main = getLangText(content_main)
+        highlights = getLangText(highlights)
+        category = getLangText(category)
+        author_about = getLangText(author_about)
+        date_time = format_date(date_time, False)
+    else:
+        date_time = format_date(date_time)
+
+    theme = {
+        'id': id_content,
+        'title': title,
+        'introduction': content_main,
+        'highlight': highlights,
+        'mainFoto': mainFoto,
+        'contentFoto': contentFoto,
+        'additionalList': bullets_list,
+        'tags': tags_list,
+        'category': category,
+        'data': date_time,
+        'author': author,
+        'author_about': author_about,
+        'author_avatar': author_avatar,
+        'author_facebook': author_facebook,
+        'author_twitter': author_twitter,
+        'author_instagram': author_instagram,
+        'comments': comments_dict
+    }
+
+    return [theme]
+
+
+def generator_daneDBList_one_post_id_old(id_post, lang='pl'):
     daneList = []
     took_allPost = msq.connect_to_database(f'SELECT * FROM blog_posts WHERE ID={id_post};') # take_data_table('*', 'blog_posts')
     for post in took_allPost:
@@ -919,9 +1039,27 @@ def karieraOne():
 @app.route('/blogs')
 def blogs():
     session['page'] = 'blogs'
+
+    if 'lang' not in session:
+        session['lang'] = 'pl'
+
+    selected_language = session['lang']
+
+    if f'BLOG-CATEGORY' not in session:
+        cats = generator_daneDBList_category(selected_language)
+        session[f'BLOG-CATEGORY'] = cats
+    else:
+        cats = session[f'BLOG-CATEGORY']
+    
+    if f'BLOG-ALL' not in session:
+        blog_post = generator_daneDBList(selected_language)
+        session[f'BLOG-ALL'] = blog_post
+    else:
+        blog_post = session[f'BLOG-ALL']
+
     pageTitle = 'Blog'
 
-    blog_post = generator_daneDBList()
+    # blog_post = generator_daneDBList()
 
     # Ustawienia paginacji
     page, per_page, offset = get_page_args(page_parameter='page', per_page_parameter='per_page')
@@ -931,12 +1069,12 @@ def blogs():
     # Pobierz tylko odpowiednią ilość postów na aktualnej stronie
     posts = blog_post[offset: offset + per_page]
 
-    cats = generator_daneDBList_cetegory()
+    # cats = generator_daneDBList_category()
     cat_dict = cats[1]
     take_id_rec_pos = generator_daneDBList_RecentPosts(0)
     recentPosts = []
     for idp in take_id_rec_pos:
-        t_post = generator_daneDBList_one_post_id(idp)[0]
+        t_post = generator_daneDBList_one_post_id(idp, selected_language)[0]
         theme = {
             'id': t_post['id'],
             'title': t_post['title'],
@@ -949,7 +1087,7 @@ def blogs():
         recentPosts.append(theme)
 
     return render_template(
-        f'blogs.html',
+        f'blogs-{selected_language}.html',
         pageTitle=pageTitle,
         cat_dict=cat_dict,
         recentPosts=recentPosts,
@@ -978,7 +1116,7 @@ def blogOne():
         'next': generator_daneDBList_prev_next(post_id_int)['next']
         }
 
-    cats = generator_daneDBList_cetegory()
+    cats = generator_daneDBList_category()
     cat_dict = cats[1]
     take_id_rec_pos = generator_daneDBList_RecentPosts(post_id_int)
     recentPosts = []
