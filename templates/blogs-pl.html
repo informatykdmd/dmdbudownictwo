@@ -101,9 +101,9 @@
                             <h2><span class="theme_color">Najlepsze </span>Kategorie</h2>
                         </div>
                         <ul class="cat-list">
-                            {% for cat, count in cat_dict.items() %}
-                                {% if count > 1 %}
-                                    <li><a href="/find-by-category?category={{cat}}">{{cat}} ({{count}})</a></li>
+                            {% for cat, data in cat_dict.items() %}
+                                {% if data.cat_count > 1 %}
+                                    <li><a href="/find-by-category?category={{data.org}}">{{cat}} ({{data.cat_count}})</a></li>
                                 {% endif %}
                             {% endfor %}
                         </ul>
