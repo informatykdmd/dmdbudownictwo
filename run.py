@@ -1126,7 +1126,7 @@ def blogOne():
     else:
         return redirect(url_for(f'blogs'))
     
-    choiced = generator_daneDBList_one_post_id(post_id_int)[0]
+    choiced = generator_daneDBList_one_post_id(post_id_int, selected_language)[0]
     choiced['len'] = len(choiced['comments'])
     pageTitle = choiced['title']
 
