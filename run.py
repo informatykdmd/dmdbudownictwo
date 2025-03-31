@@ -1474,8 +1474,8 @@ def subpage():
         )
 
 @app.route('/konkurs-quiz-2025')
-def jaregulaminQuiz():
-    session['page'] = 'quiz-2025'
+def regulaminQuiz():
+    session['page'] = 'regulaminQuiz'
 
     if 'lang' not in session:
         session['lang'] = 'pl'
