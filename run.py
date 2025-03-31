@@ -1473,7 +1473,24 @@ def subpage():
         pageTitle=pageTitle
         )
 
+@app.route('/konkurs-quiz-2025')
+def jaregulaminQuiz():
+    session['page'] = 'quiz-2025'
 
+    if 'lang' not in session:
+        session['lang'] = 'pl'
+
+    selected_language = session['lang']
+
+    if selected_language == 'en':
+        pageTitle = 'Quiz 2025'
+    else:
+        pageTitle = 'Quiz 2025'
+    
+    return render_template(
+        f'konkurs-quiz-{selected_language}.html',
+        pageTitle=pageTitle
+        )
 
 if __name__ == '__main__':
     # app.run(debug=True, port=5050)
