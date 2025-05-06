@@ -528,8 +528,6 @@ def generator_daneDBList_RecentPosts(main_id, amount = 3):
 
     return posts
 
-import json
-
 def generator_daneDBList_one_post_id(id_post, lang='pl'):
     # Pobranie wszystkich danych jednym zapytaniem SQL
     query = f"""
@@ -740,9 +738,9 @@ def mainDataGeneratorDict(select_key: str, lang:str = 'pl'):
 ##      ######           ###
 ############################
 
-# @app.route('/.well-known/pki-validation/certum.txt')
-# def download_file():
-#     return send_from_directory(app.root_path, 'certum.txt')
+@app.route('/.well-known/pki-validation/certum.txt')
+def download_file():
+    return send_from_directory(app.root_path, 'certum.txt')
 
 @app.template_filter('smart_truncate')
 def smart_truncate(content, length=400):
