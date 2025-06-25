@@ -728,7 +728,7 @@ logging.basicConfig(filename=logFileName, level=logging.INFO,
 # Funkcja do logowania informacji o zapytaniu
 def log_request():
     ip_address = request.remote_addr
-    date_time = datetime.datetime.now()
+    date_time = datetime.now()
     endpoint = request.endpoint or request.path  # fallback jeśli brak endpointu
     method = request.method
 
