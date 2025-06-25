@@ -10,6 +10,7 @@ import redis
 from bin.config_utils import SESSION_FLASK_KEY
 from markupsafe import Markup
 import json
+import logging
 
 app = Flask(__name__)
 
@@ -716,6 +717,26 @@ def mainDataGeneratorDict(select_key: str, lang:str = 'pl'):
     }
 
     return data.get(select_key, [])
+
+
+logFileName = '/home/johndoe/app/dmdbudownictwo/logs/access.log'  # 🔁 ZMIENIAJ dla każdej aplikacji
+
+# Konfiguracja loggera
+logging.basicConfig(filename=logFileName, level=logging.INFO,
+                    format='%(asctime)s - %(message)s', filemode='a')
+
+# Funkcja do logowania informacji o zapytaniu
+def log_request():
+    ip_address = request.remote_addr
+    date_time = datetime.datetime.now()
+    endpoint = request.endpoint or request.path  # fallback jeśli brak endpointu
+    method = request.method
+
+    logging.info(f'IP: {ip_address}, Time: {date_time}, Endpoint: {endpoint}, Method: {method}')
+
+@app.before_request
+def before_request_logging():
+    log_request()
 
 ############################
 ##      ######           ###
