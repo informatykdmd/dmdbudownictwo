@@ -437,6 +437,32 @@ def generator_jobs(lang='pl'):
         daneList.append(theme)
     return daneList
 
+def generator_realized(lang='pl'):
+    daneList = []
+    
+    try: took_allRecords = msq.connect_to_database(
+        f"""
+            SELECT *
+            FROM realizacje_budownictwo
+            ORDER BY r_finish DESC;
+        """
+        ) 
+    except: return []
+    for rec in took_allRecords:
+
+        theme = {
+            'id': rec[0],
+            'kategoria': rec[1] if lang=='pl' else getLangText(rec[1]),
+            'zdjecie': rec[2],
+            'tytul_ogloszenia': rec[3] if lang=='pl' else getLangText(rec[3]),
+            'opis': rec[4] if lang=='pl' else getLangText(rec[4]),
+            'r_start': rec[5],
+            'r_finish': rec[6],
+            'data_aktualizacji': rec[7]
+        }
+        daneList.append(theme)
+    return daneList
+
 def generator_job_offer(id_offer, lang='pl'):
     try: rec = take_data_where_ID_AND_somethig('*', 'job_offers', 'id', id_offer, 'status', 1)[0]
     except: return []
@@ -719,7 +745,7 @@ def mainDataGeneratorDict(select_key: str, lang:str = 'pl'):
     return data.get(select_key, [])
 
 
-logFileName = '/home/johndoe/app/dmdbudownictwo/logs/access.log'  # 🔁 ZMIENIAJ dla każdej aplikacji
+logFileName = '/home/johndoe/app/dmdbudownictwo/logs/access.log'  # 🔁
 
 # Konfiguracja loggera
 logging.basicConfig(filename=logFileName, level=logging.INFO,
@@ -759,9 +785,9 @@ def before_request_logging():
 ##      ######           ###
 ############################
 
-@app.route('/.well-known/pki-validation/certum.txt')
-def download_file():
-    return send_from_directory(app.root_path, 'certum.txt')
+# @app.route('/.well-known/pki-validation/certum.txt')
+# def download_file():
+#     return send_from_directory(app.root_path, 'certum.txt')
 
 @app.template_filter('smart_truncate')
 def smart_truncate(content, length=400):
@@ -782,6 +808,7 @@ def langPl():
         session.pop('CAREER-ALL', None)
         session.pop('BLOG-CATEGORY', None)
         session.pop('BLOG-ALL', None)
+        session.pop('PROJECTS-ALL', None)
 
     session['lang'] = 'pl'
     if 'page' not in session:
@@ -805,6 +832,7 @@ def langEn():
         session.pop('CAREER-ALL', None)
         session.pop('BLOG-CATEGORY', None)
         session.pop('BLOG-ALL', None)
+        session.pop('PROJECTS-ALL', None)
 
     if 'page' not in session:
         return redirect(url_for(f'index'))
@@ -938,8 +966,15 @@ def realizacje():
     else:
         pageTitle = 'Realizacje'
 
+    if f'PROJECTS-ALL' not in session:
+        projects = generator_realized(selected_language)
+        session[f'PROJECTS-ALL'] = projects
+    else:
+        projects = session[f'PROJECTS-ALL']
+
     return render_template(
         f'realizacje-{selected_language}.html',
+        projects=projects,
         pageTitle=pageTitle
         )
 

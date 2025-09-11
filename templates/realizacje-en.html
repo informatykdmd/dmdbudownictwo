@@ -30,26 +30,28 @@
             </div>
             <div class="three-item-carousel owl-carousel owl-theme">
                 
-                <!--Services Block-->
-                <div class="services-block">
-                    <div class="inner-box">
-                        <div class="image">
-                            <img src="static/images/resource/hala-pruszkow.jpg" alt="">
-                        </div>
-                        <div class="lower-content">
-                            <div class="upper-box">
-                                <div class="icon-box">
-                                    <span class="icon flaticon-drawing"></span>
+                {% for pro in projekts %}
+                    <!--Services Block-->
+                    <div class="services-block">
+                        <div class="inner-box">
+                            <div class="image">
+                                <img src="{{pro.zdjecie}}" alt="{{pro.tytul_ogloszenia}}">
+                            </div>
+                            <div class="lower-content">
+                                <div class="upper-box">
+                                    <div class="icon-box">
+                                        <span class="icon flaticon-drawing"></span>
+                                    </div>
+                                    <h3><a href="javascript:void(0)">{{pro.tytul_ogloszenia}}</a></h3>
                                 </div>
-                                <h3><a href="#">Hall in Pruszków</a></h3>
+                                <div class="text">
+                                    {{pro.opis}}
+                                </div>
+
                             </div>
-                            <div class="text">
-                                The hall in Pruszków, built in 2017, is a logistics center with office space, ideal for companies and warehouses.
-                            </div>
-                            
                         </div>
                     </div>
-                </div>
+                {% endfor %}
 
                 <!--Services Block-->
                 <div class="services-block">
