@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="pl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Spotkanie szkolne — ankieta</title>
+  <style>
+    body { font-family: system-ui, Arial, sans-serif; max-width: 860px; margin: 24px auto; padding: 0 16px; }
+    h1 { margin-bottom: 6px; }
+    .box { border: 1px solid #ddd; border-radius: 8px; padding: 16px; margin: 12px 0; }
+    fieldset { border: none; margin: 0; padding: 0; }
+    legend { font-weight: 600; margin: 12px 0 8px; }
+    label { display: block; margin: 8px 0; }
+    input[type="text"] { width: 70%; padding: 10px; border: 1px solid #ccc; border-radius: 6px; }
+    .row { display: grid; gap: 12px; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
+    button { padding: 12px 18px; border: none; border-radius: 6px; cursor: pointer; }
+    .primary { background: #2b6cb0; color: #fff; }
+    .muted { color: #666; font-size: 0.92rem; }
+    .success { background: #ecfdf5; border: 1px solid #10b981; color: #065f46; padding: 10px 12px; border-radius: 6px; display: none; margin-top: 12px; }
+    .error { background: #fef2f2; border: 1px solid #ef4444; color: #991b1b; padding: 10px 12px; border-radius: 6px; display: none; margin-top: 12px; }
+  </style>
+</head>
+<body>
+  <h1>Spotkanie szkolne — ankieta</h1>
+  <p class="muted">Zaznacz wszystkie opcje, które Ci pasują. Imię i nazwisko są wymagane.</p>
+
+  <form id="ankietaForm" class="box">
+    <label>
+      Imię i nazwisko *
+      <input type="text" name="imie_nazwisko" required placeholder="np. Jan Kowalski" />
+    </label>
+
+    <fieldset>
+      <legend>Wybierz termin (tygodnie)</legend>
+      <div class="row">
+        <label><input type="checkbox" name="terminy" value="Wrzesień — tydzień 3" /> 3 tydzień września</label>
+        <label><input type="checkbox" name="terminy" value="Wrzesień — tydzień 4" /> 4 tydzień września</label>
+        <label><input type="checkbox" name="terminy" value="Październik — tydzień 1" /> 1 tydzień października</label>
+        <label><input type="checkbox" name="terminy" value="Październik — tydzień 2" /> 2 tydzień października</label>
+        <label><input type="checkbox" name="terminy" value="Październik — tydzień 3" /> 3 tydzień października</label>
+        <label><input type="checkbox" name="terminy" value="Październik — tydzień 4" /> 4 tydzień października</label>
+        <label><input type="checkbox" name="terminy" value="Listopad — tydzień 2" /> 2 tydzień listopada</label>
+        <label><input type="checkbox" name="terminy" value="Listopad — tydzień 3" /> 3 tydzień listopada</label>
+      </div>
+    </fieldset>
+
+    <fieldset>
+        <legend>Godziny spotkania</legend>
+        <div class="row">
+            <label><input type="radio" name="godzina" value="Piątek 19:00" required /> Piątek 19:00</label>
+            <label><input type="radio" name="godzina" value="Sobota 18:00" /> Sobota 18:00</label>
+        </div>
+    </fieldset>
+
+    <fieldset>
+      <legend>Miejsce spotkania</legend>
+      <div class="row">
+        <label><input type="checkbox" name="miejsca" value="Stare Babice — Liverno" /> Stare Babice — Liverno</label>
+        <label><input type="checkbox" name="miejsca" value="Mościska — Campo" /> Mościska — Campo</label>
+      </div>
+      <label style="margin-top:8px;">
+        Zaproponuj swoje miejsce
+        <input type="text" name="miejsce_inne" placeholder="np. Warszawa — kawiarnia XYZ" />
+      </label>
+    </fieldset>
+
+    <div style="margin-top:16px; display:flex; gap:8px;">
+      <button class="primary" type="submit">Wyślij</button>
+      <button type="reset">Wyczyść</button>
+    </div>
+
+    <div id="ok" class="success">Dziękujemy! Twoje odpowiedzi zostały zapisane.</div>
+    <div id="err" class="error">Ups, nie udało się zapisać. Spróbuj ponownie za chwilę.</div>
+  </form>
+
+  <script>
+    const form = document.getElementById('ankietaForm');
+    const ok = document.getElementById('ok');
+    const err = document.getElementById('err');
+
+    // helper do checkboxów
+    const getChecked = (name) =>
+        Array.from(form.querySelectorAll(`input[name="${name}"]:checked`)).map(i => i.value);
+
+    form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        ok.style.display = 'none';
+        err.style.display = 'none';
+
+        const godzinaEl = form.querySelector('input[name="godzina"]:checked');
+        const godzina = godzinaEl ? godzinaEl.value : null;
+
+        const payload = {
+        imie_nazwisko: form.imie_nazwisko.value.trim(),
+        terminy: getChecked('terminy'),
+        godziny: godzina ? [godzina] : [],   // zgodność z backendem (tablica)
+        miejsca: getChecked('miejsca'),
+        miejsce_inne: form.miejsce_inne.value.trim()
+        };
+
+        if (!payload.imie_nazwisko) {
+        err.textContent = 'Podaj imię i nazwisko.';
+        err.style.display = 'block';
+        return;
+        }
+        if (!godzina) {
+        err.textContent = 'Wybierz godzinę spotkania.';
+        err.style.display = 'block';
+        return;
+        }
+
+        // (opcjonalnie) zablokuj przycisk na czas wysyłki
+        const submitBtn = form.querySelector('button[type="submit"]');
+        submitBtn?.setAttribute('disabled', 'true');
+
+        try {
+        const res = await fetch('/api/ankieta/spotkanie-szkolne', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload),
+            cache: 'no-store'
+        });
+        if (!res.ok) throw new Error('Bad status: ' + res.status);
+        const { ok: isOk } = await res.json();
+        if (isOk) {
+            form.reset();
+            ok.style.display = 'block';
+        } else {
+            err.style.display = 'block';
+        }
+        } catch (e2) {
+        err.style.display = 'block';
+        } finally {
+        submitBtn?.removeAttribute('disabled');
+        }
+    });
+</script>
+
+</body>
+</html>
