@@ -1547,80 +1547,80 @@ def subpage():
 #         )
 
 # ================== ANKIETA SZKOLNA ==================
-# from zoneinfo import ZoneInfo
-# import os, json, fcntl
+from zoneinfo import ZoneInfo
+import os, json, fcntl
 
-# DATA_DIR = os.path.join(os.path.dirname(__file__), 'data')
-# os.makedirs(DATA_DIR, exist_ok=True)
-# DATA_FILE = os.path.join(DATA_DIR, 'spotkanie-szkolne.jsonl')
+DATA_DIR = os.path.join(os.path.dirname(__file__), 'data')
+os.makedirs(DATA_DIR, exist_ok=True)
+DATA_FILE = os.path.join(DATA_DIR, 'spotkanie-szkolne.jsonl')
 
-# def client_ip():
-#     # uwzględnij reverse proxy
-#     fwd = request.headers.get('X-Forwarded-For', '')
-#     if fwd:
-#         return fwd.split(',')[0].strip()
-#     return request.remote_addr
+def client_ip():
+    # uwzględnij reverse proxy
+    fwd = request.headers.get('X-Forwarded-For', '')
+    if fwd:
+        return fwd.split(',')[0].strip()
+    return request.remote_addr
 
-# def append_jsonl(path: str, obj: dict):
-#     with open(path, 'a', encoding='utf-8') as f:
-#         # lock na czas dopisania
-#         fcntl.flock(f.fileno(), fcntl.LOCK_EX)
-#         f.write(json.dumps(obj, ensure_ascii=False) + '\n')
-#         f.flush()
-#         os.fsync(f.fileno())
-#         fcntl.flock(f.fileno(), fcntl.LOCK_UN)
+def append_jsonl(path: str, obj: dict):
+    with open(path, 'a', encoding='utf-8') as f:
+        # lock na czas dopisania
+        fcntl.flock(f.fileno(), fcntl.LOCK_EX)
+        f.write(json.dumps(obj, ensure_ascii=False) + '\n')
+        f.flush()
+        os.fsync(f.fileno())
+        fcntl.flock(f.fileno(), fcntl.LOCK_UN)
 
-# @app.post('/api/ankieta/spotkanie-szkolne')
-# def ankieta_spotkanie():
-#     # przyjmij JSON lub form-data
-#     if request.is_json:
-#         payload = request.get_json(silent=True) or {}
-#     else:
-#         # mapuj z pól formularza
-#         form = request.form
-#         payload = {
-#             "imie_nazwisko": form.get('imie_nazwisko', '').strip(),
-#             "terminy": request.form.getlist('terminy'),
-#             "godziny": request.form.getlist('godziny'),
-#             "miejsca": request.form.getlist('miejsca'),
-#             "miejsce_inne": form.get('miejsce_inne', '').strip()
-#         }
+@app.post('/api/ankieta/spotkanie-szkolne')
+def ankieta_spotkanie():
+    # przyjmij JSON lub form-data
+    if request.is_json:
+        payload = request.get_json(silent=True) or {}
+    else:
+        # mapuj z pól formularza
+        form = request.form
+        payload = {
+            "imie_nazwisko": form.get('imie_nazwisko', '').strip(),
+            "terminy": request.form.getlist('terminy'),
+            "godziny": request.form.getlist('godziny'),
+            "miejsca": request.form.getlist('miejsca'),
+            "miejsce_inne": form.get('miejsce_inne', '').strip()
+        }
 
-#     name = (payload.get('imie_nazwisko') or '').strip()
-#     if not name:
-#         return jsonify({"ok": False, "error": "missing_name"}), 400
+    name = (payload.get('imie_nazwisko') or '').strip()
+    if not name:
+        return jsonify({"ok": False, "error": "missing_name"}), 400
 
-#     terminy = payload.get('terminy') or []
-#     godziny = payload.get('godziny') or []
-#     miejsca = payload.get('miejsca') or []
-#     miejsce_inne = (payload.get('miejsce_inne') or '').strip()
-#     if miejsce_inne:
-#         miejsca = list(miejsca) + [miejsce_inne]
+    terminy = payload.get('terminy') or []
+    godziny = payload.get('godziny') or []
+    miejsca = payload.get('miejsca') or []
+    miejsce_inne = (payload.get('miejsce_inne') or '').strip()
+    if miejsce_inne:
+        miejsca = list(miejsca) + [miejsce_inne]
 
-#     entry = {
-#         "submitted_at": datetime.now(ZoneInfo("Europe/Warsaw")).isoformat(),
-#         "imie_nazwisko": name,
-#         "terminy": terminy,
-#         "godziny": godziny,
-#         "miejsca": miejsca,
-#         "client": {
-#             "ip": client_ip(),
-#             "user_agent": request.headers.get('User-Agent', '')
-#         }
-#     }
+    entry = {
+        "submitted_at": datetime.now(ZoneInfo("Europe/Warsaw")).isoformat(),
+        "imie_nazwisko": name,
+        "terminy": terminy,
+        "godziny": godziny,
+        "miejsca": miejsca,
+        "client": {
+            "ip": client_ip(),
+            "user_agent": request.headers.get('User-Agent', '')
+        }
+    }
 
-#     try:
-#         append_jsonl(DATA_FILE, entry)
-#         resp = jsonify({"ok": True})
-#         resp.headers['Cache-Control'] = 'no-store'
-#         return resp, 200
-#     except Exception as e:
-#         # do logów można dodać print(e) / logger
-#         return jsonify({"ok": False, "error": "write_failed"}), 500
+    try:
+        append_jsonl(DATA_FILE, entry)
+        resp = jsonify({"ok": True})
+        resp.headers['Cache-Control'] = 'no-store'
+        return resp, 200
+    except Exception as e:
+        # do logów można dodać print(e) / logger
+        return jsonify({"ok": False, "error": "write_failed"}), 500
 
-# @app.route('/ankieta-szkolna')
-# def ankieta_szkolna():
-#     return render_template(f'ankieta.html')
+@app.route('/ankieta-szkolna')
+def ankieta_szkolna():
+    return render_template(f'ankieta.html')
 
 if __name__ == '__main__':
     # app.run(debug=True, port=5050)
