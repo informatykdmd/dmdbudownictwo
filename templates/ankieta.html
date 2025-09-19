@@ -93,11 +93,11 @@
         const godzina = godzinaEl ? godzinaEl.value : null;
 
         const payload = {
-        imie_nazwisko: form.imie_nazwisko.value.trim(),
-        terminy: getChecked('terminy'),
-        godziny: godzina ? [godzina] : [],   // zgodność z backendem (tablica)
-        miejsca: getChecked('miejsca'),
-        miejsce_inne: form.miejsce_inne.value.trim()
+          imie_nazwisko: form.imie_nazwisko.value.trim(),
+          terminy: getChecked('terminy'),
+          godziny: godzina ? [godzina] : [],   // zgodność z backendem (tablica)
+          miejsca: getChecked('miejsca'),
+          // miejsce_inne: form.miejsce_inne.value.trim()
         };
 
         if (!payload.imie_nazwisko) {
