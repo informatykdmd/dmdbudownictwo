@@ -12,6 +12,7 @@ from bin.wrapper_mistral import MistralChatManager
 from markupsafe import Markup
 import json
 import logging
+import requests
 
 app = Flask(__name__)
 
@@ -35,7 +36,32 @@ Session(app)
 
 # translator = Translator()
 
-def getLangText(text, dest='en'):
+def getLangText(text, source="pl", target="en"):
+    if not text:
+        return text
+
+    payload = {
+        "text": str(text),
+        "source": source,
+        "target": target,
+        "format": "text"
+    }
+
+    try:
+        r = requests.post(
+            "http://127.0.0.1:5055/translate",
+            json=payload,
+            timeout=20
+        )
+        r.raise_for_status()
+        data = r.json()
+        return data.get("translated", text)
+    except Exception as e:
+        # fail-safe: zwracamy oryginał, nie wysadzamy systemu
+        print(f"[TRANSLATOR ERROR] {e}")
+        return text
+
+def getLangText_old2(text, dest='en'):
     if not text:  # Sprawdza, czy text jest pusty lub None
         return ""
 
