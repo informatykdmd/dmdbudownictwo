@@ -52,7 +52,7 @@ def getLangText(text, dest="en", source="pl"):
         )
         r.raise_for_status()
         print(r.json())
-        return r.json().get("translated", text)
+        return r.json().get("text", text)
     except Exception as e:
         print(f"Exception Error: {e}")
         return text
