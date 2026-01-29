@@ -7,7 +7,8 @@ from googletrans import Translator
 import random
 from flask_session import Session
 import redis
-from bin.config_utils import SESSION_FLASK_KEY
+from bin.config_utils import SESSION_FLASK_KEY, MISTRAL_API_KEY
+from bin.wrapper_mistral import MistralChatManager
 from markupsafe import Markup
 import json
 import logging
@@ -39,9 +40,13 @@ def getLangText(text, dest='en'):
         return ""
 
     try:
-        translation = translator.translate(str(text), dest=dest)
-        if translation and translation.text:
-            return translation.text
+        mgr = MistralChatManager(MISTRAL_API_KEY)
+        out = mgr.translate(text, target_lang='en')
+        if out:
+            return out
+        # translation = translator.translate(str(text), dest=dest)
+        # if translation and translation.text:
+        #     return translation.text
         else:
             return text  # Jeśli tłumaczenie zwróciło None, zwracamy oryginalny tekst
     except Exception as e:
