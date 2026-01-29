@@ -888,6 +888,8 @@ def index():
 
     if f'TEAM-ALL' not in session:
         team_list = generator_teamDB(selected_language)
+        print(selected_language)
+        print(team_list)
         session[f'TEAM-ALL'] = team_list
     else:
         team_list = session[f'TEAM-ALL']
