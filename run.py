@@ -36,14 +36,34 @@ Session(app)
 
 # translator = Translator()
 
-def getLangText(text, source="pl", target="en"):
+def getLangText(text, dest="en", source="pl"):
+
+    if not text:
+        return text
+
+    payload = {"text": str(text), "source": source, "target": dest, "format": "text"}
+
+    try:
+        r = requests.post(
+            "http://127.0.0.1:5055/translate",
+            json=payload,
+            timeout=(2, 8)  # connect=2s, read=8s
+        )
+        r.raise_for_status()
+        data = r.json()
+        return data.get("translated", text)
+    except Exception as e:
+        # krytyczne: NIGDY nie wywalaj requestu strony przez translator
+        return text
+
+
     if not text:
         return text
 
     payload = {
         "text": str(text),
         "source": source,
-        "target": target,
+        "target": dest,
         "format": "text"
     }
 
