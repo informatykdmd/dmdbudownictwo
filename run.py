@@ -3,7 +3,7 @@ from flask_paginate import Pagination, get_page_args
 import mysqlDB as msq
 import secrets
 from datetime import datetime, timedelta
-from googletrans import Translator
+# from googletrans import Translator
 import random
 from flask_session import Session
 import redis
@@ -33,7 +33,7 @@ app.config['PER_PAGE'] = 6
 
 Session(app)
 
-translator = Translator()
+# translator = Translator()
 
 def getLangText(text, dest='en'):
     if not text:  # Sprawdza, czy text jest pusty lub None
@@ -56,9 +56,9 @@ def getLangText(text, dest='en'):
     
 def getLangText_old(text):
     """Funkcja do tłumaczenia tekstu z polskiego na angielski"""
-    translator = Translator()
-    translation = translator.translate(str(text), dest='en')
-    return translation.text
+    # translator = Translator()
+    # translation = translator.translate(str(text), dest='en')
+    # return translation.text
 
 def format_date(date_input, pl=True):
     ang_pol = {
