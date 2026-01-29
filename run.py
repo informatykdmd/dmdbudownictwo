@@ -37,12 +37,10 @@ Session(app)
 # translator = Translator()
 
 def getLangText(text, dest="en", source="pl"):
-
     if not text:
         return text
-   
     # bezpiecznik: nie tłumacz "ścian"
-    if len(text) > 4000:
+    if len(text) > 8000:
         return text
     try:
         r = requests.post(
@@ -51,7 +49,6 @@ def getLangText(text, dest="en", source="pl"):
             timeout=(2, 8),
         )
         r.raise_for_status()
-        print(r.json())
         return r.json().get("text", text)
     except Exception as e:
         print(f"Exception Error: {e}")
@@ -890,8 +887,7 @@ def index():
 
     if f'TEAM-ALL' not in session:
         team_list = generator_teamDB(selected_language)
-        print(selected_language)
-        print(team_list)
+        
         session[f'TEAM-ALL'] = team_list
     else:
         team_list = session[f'TEAM-ALL']
