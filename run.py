@@ -51,7 +51,7 @@ def getLangText(text, dest="en", source="pl"):
             timeout=(2, 8),
         )
         r.raise_for_status()
-        print(r.json().get("translated", text))
+        print(r.json())
         return r.json().get("translated", text)
     except Exception as e:
         print(f"Exception Error: {e}")
