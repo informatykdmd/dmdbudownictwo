@@ -33,7 +33,6 @@ app.config['PER_PAGE'] = 6
 
 Session(app)
 
-# translator = Translator()
 
 def getLangText(text, dest="en", source="pl"):
     if not text:
@@ -54,12 +53,6 @@ def getLangText(text, dest="en", source="pl"):
         return text
 
 
-    
-def getLangText_old(text):
-    """Funkcja do tłumaczenia tekstu z polskiego na angielski"""
-    # translator = Translator()
-    # translation = translator.translate(str(text), dest='en')
-    # return translation.text
 
 def format_date(date_input, pl=True):
     ang_pol = {

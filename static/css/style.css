@@ -8283,3 +8283,32 @@ img{
     border-style: solid;
     border-color: #9b9b9b transparent transparent transparent;
 }
+
+/* Orły - DMD Budownictwo */
+.orly-bud-img{
+  width: 100%;
+  max-width: 420px;
+  height: auto;
+  display: block;
+}
+
+/* na mobile: wyśrodkuj obraz i tekst */
+@media (max-width: 991px){
+  .image-column .inner-column{
+    text-align: center;
+    margin-bottom: 25px;
+  }
+  .orly-bud-img{
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 360px;
+  }
+  .content-column .inner-column{
+    text-align: center;
+  }
+  .content-column .inner-column .text{
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 720px;
+  }
+}
