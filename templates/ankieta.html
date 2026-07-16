@@ -5,9 +5,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Zaproszenie na 50. urodziny Dariusza</title>
   <style>
-    body { font-family: system-ui, Arial, sans-serif; max-width: 860px; margin: 24px auto; padding: 0 16px; color: #222; }
-    h1 { margin-bottom: 8px; }
-    .box { border: 1px solid #ddd; border-radius: 10px; padding: 20px; margin: 20px 0; }
+    body { font-family: system-ui, Arial, sans-serif; max-width: 1240px; margin: 32px auto; padding: 0 24px; color: #222; }
+    h1 { margin: 0 0 24px; }
+    .layout { display: grid; grid-template-columns: minmax(0, 0.85fr) minmax(420px, 1.15fr); gap: 32px; align-items: start; }
+    .invitation-image { display: block; width: 100%; height: auto; border-radius: 12px; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.16); }
+    .intro { margin: 0 0 16px; line-height: 1.6; }
+    .box { border: 1px solid #ddd; border-radius: 10px; padding: 24px; margin: 0; }
     fieldset { border: 0; margin: 20px 0 0; padding: 0; }
     legend { font-weight: 600; margin-bottom: 8px; }
     label { display: block; margin: 9px 0; }
@@ -21,13 +24,26 @@
     .message { padding: 10px 12px; border-radius: 6px; display: none; margin-top: 12px; }
     .success { background: #ecfdf5; border: 1px solid #10b981; color: #065f46; }
     .error { background: #fef2f2; border: 1px solid #ef4444; color: #991b1b; }
+
+    @media (max-width: 780px) {
+      body { margin: 20px auto; padding: 0 16px; }
+      h1 { font-size: 1.75rem; margin-bottom: 18px; }
+      .layout { grid-template-columns: 1fr; gap: 22px; }
+      .box { padding: 18px; }
+    }
   </style>
 </head>
 <body>
   <h1>Zaproszenie na 50. urodziny Dariusza — potwierdzenie obecności</h1>
-  <p>Pięćdziesiątka już go dogania, więc czas zebrać ekipę i odpowiednio uczcić ten moment! Wypełnij krótką ankietę, żebyśmy mogli dobrze przygotować imprezę.</p>
+  <main class="layout">
+    <div class="image-column">
+      <img class="invitation-image" src="{{ url_for('static', filename='images/50tka.png') }}" alt="Zaproszenie na 50. urodziny Dariusza" />
+    </div>
 
-  <form id="ankietaForm" class="box">
+    <section class="form-column">
+      <p class="intro">Pięćdziesiątka już go dogania, więc czas zebrać ekipę i odpowiednio uczcić ten moment! Wypełnij krótką ankietę, żebyśmy mogli dobrze przygotować imprezę.</p>
+
+      <form id="ankietaForm" class="box">
     <label for="imie_nazwisko">Imię i nazwisko *</label>
     <input id="imie_nazwisko" type="text" name="imie_nazwisko" required autocomplete="name" maxlength="150" />
 
@@ -63,7 +79,9 @@
 
     <div id="ok" class="message success" role="status">Dziękujemy! Twoja odpowiedź została zapisana. Do zobaczenia na imprezie!</div>
     <div id="err" class="message error" role="alert">Ups, nie udało się zapisać odpowiedzi. Spróbuj ponownie za chwilę.</div>
-  </form>
+      </form>
+    </section>
+  </main>
 
   <script>
     const form = document.getElementById('ankietaForm');
