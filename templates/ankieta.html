@@ -2,77 +2,67 @@
 <html lang="pl">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Spotkanie szkolne — ankieta</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Zaproszenie na 50. urodziny Dariusza</title>
   <style>
-    body { font-family: system-ui, Arial, sans-serif; max-width: 860px; margin: 24px auto; padding: 0 16px; }
-    h1 { margin-bottom: 6px; }
-    .box { border: 1px solid #ddd; border-radius: 8px; padding: 16px; margin: 12px 0; }
-    fieldset { border: none; margin: 0; padding: 0; }
-    legend { font-weight: 600; margin: 12px 0 8px; }
-    label { display: block; margin: 8px 0; }
-    input[type="text"] { width: 70%; padding: 10px; border: 1px solid #ccc; border-radius: 6px; }
-    .row { display: grid; gap: 12px; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
-    button { padding: 12px 18px; border: none; border-radius: 6px; cursor: pointer; }
-    .primary { background: #2b6cb0; color: #fff; }
-    .muted { color: #666; font-size: 0.92rem; }
-    .success { background: #ecfdf5; border: 1px solid #10b981; color: #065f46; padding: 10px 12px; border-radius: 6px; display: none; margin-top: 12px; }
-    .error { background: #fef2f2; border: 1px solid #ef4444; color: #991b1b; padding: 10px 12px; border-radius: 6px; display: none; margin-top: 12px; }
+    body { font-family: system-ui, Arial, sans-serif; max-width: 860px; margin: 24px auto; padding: 0 16px; color: #222; }
+    h1 { margin-bottom: 8px; }
+    .box { border: 1px solid #ddd; border-radius: 10px; padding: 20px; margin: 20px 0; }
+    fieldset { border: 0; margin: 20px 0 0; padding: 0; }
+    legend { font-weight: 600; margin-bottom: 8px; }
+    label { display: block; margin: 9px 0; }
+    input[type="text"], textarea { box-sizing: border-box; width: 100%; padding: 10px; border: 1px solid #bbb; border-radius: 6px; font: inherit; }
+    textarea { min-height: 120px; resize: vertical; }
+    .muted { color: #666; font-size: 0.94rem; }
+    .actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 20px; }
+    button { padding: 12px 18px; border: 0; border-radius: 6px; cursor: pointer; font: inherit; }
+    button:disabled { cursor: wait; opacity: 0.65; }
+    .primary { background: #8b1e3f; color: #fff; }
+    .message { padding: 10px 12px; border-radius: 6px; display: none; margin-top: 12px; }
+    .success { background: #ecfdf5; border: 1px solid #10b981; color: #065f46; }
+    .error { background: #fef2f2; border: 1px solid #ef4444; color: #991b1b; }
   </style>
 </head>
 <body>
-  <h1>Spotkanie szkolne — ankieta</h1>
-  <p class="muted">Zaznacz wszystkie opcje, które Ci pasują. Imię i nazwisko są wymagane.</p>
+  <h1>Zaproszenie na 50. urodziny Dariusza — potwierdzenie obecności</h1>
+  <p>Pięćdziesiątka już go dogania, więc czas zebrać ekipę i odpowiednio uczcić ten moment! Wypełnij krótką ankietę, żebyśmy mogli dobrze przygotować imprezę.</p>
 
   <form id="ankietaForm" class="box">
-    <label>
-      Imię i nazwisko *
-      <input type="text" name="imie_nazwisko" required placeholder="np. Jan Kowalski" />
-    </label>
+    <label for="imie_nazwisko">Imię i nazwisko *</label>
+    <input id="imie_nazwisko" type="text" name="imie_nazwisko" required autocomplete="name" maxlength="150" />
 
     <fieldset>
-      <legend>Wybierz termin (tygodnie)</legend>
-      <div class="row">
-        <!-- <label><input type="checkbox" name="terminy" value="Wrzesień — tydzień 3" disabled/> 3 tydzień września</label>
-        <label><input type="checkbox" name="terminy" value="Wrzesień — tydzień 4" disabled/> 4 tydzień września</label>
-        <label><input type="checkbox" name="terminy" value="Październik — tydzień 1" disabled/> 1 tydzień października</label>
-        <label><input type="checkbox" name="terminy" value="Październik — tydzień 2" disabled/> 2 tydzień października</label> -->
-        <label><input type="checkbox" name="terminy" value="Październik — tydzień 3" /> 3 tydzień października</label>
-        <label><input type="checkbox" name="terminy" value="Październik — tydzień 4" /> 4 tydzień października</label>
-        <label><input type="checkbox" name="terminy" value="Listopad — tydzień 1" /> 1 tydzień listopada</label>
-        <label><input type="checkbox" name="terminy" value="Listopad — tydzień 2" /> 2 tydzień listopada</label>
-        <label><input type="checkbox" name="terminy" value="Listopad — tydzień 3" /> 3 tydzień listopada</label>
-        <label><input type="checkbox" name="terminy" value="Listopad — tydzień 4" /> 4 tydzień listopada</label>
-      </div>
+      <legend>Czy będziesz z nami?</legend>
+      <label><input type="radio" name="obecnosc" value="tak" required /> Tak, będę!</label>
+      <label><input type="radio" name="obecnosc" value="nie" /> Niestety nie dam rady</label>
     </fieldset>
 
     <fieldset>
-        <legend>Godziny spotkania</legend>
-        <div class="row">
-            <label><input type="radio" name="godzina" value="Piątek 19:00" required /> Piątek 19:00</label>
-            <label><input type="radio" name="godzina" value="Sobota 18:00" /> Sobota 18:00</label>
-        </div>
+      <legend>Czy przyjdziesz z osobą towarzyszącą?</legend>
+      <label><input type="radio" name="osoba_towarzyszaca" value="tak" required /> Tak</label>
+      <label><input type="radio" name="osoba_towarzyszaca" value="nie" /> Nie</label>
+      <label><input type="radio" name="osoba_towarzyszaca" value="nie_wiem" /> Jeszcze nie wiem</label>
     </fieldset>
 
     <fieldset>
-      <legend>Miejsce spotkania</legend>
-      <div class="row">
-        <!-- <label><input type="checkbox" name="miejsca" value="Stare Babice — Liverno" disabled /> Stare Babice — Liverno</label> -->
-        <label><input type="checkbox" name="miejsca" value="Mościska — Campo" checked disabled/> Mościska — Campo</label>
-      </div>
-      <!-- <label style="margin-top:8px;">
-        Zaproponuj swoje miejsce
-        <input type="text" name="miejsce_inne" placeholder="np. Warszawa — kawiarnia XYZ" disabled/>
-      </label> -->
+      <legend>Czy potrzebujesz miejsca parkingowego?</legend>
+      <label><input type="radio" name="parking" value="tak" required /> Tak</label>
+      <label><input type="radio" name="parking" value="nie" /> Nie</label>
+      <p class="muted">Na miejscu dostępny będzie parking z możliwością pozostawienia samochodu i odbioru go następnego dnia.</p>
     </fieldset>
 
-    <div style="margin-top:16px; display:flex; gap:8px;">
-      <button class="primary" type="submit">Wyślij</button>
+    <label for="dodatkowe_informacje"><strong>Dodatkowe informacje</strong></label>
+    <textarea id="dodatkowe_informacje" name="dodatkowe_informacje" maxlength="2000" placeholder="Napisz tutaj, czy masz specjalne wymagania żywieniowe, alergie albo coś ważnego, o czym powinniśmy wiedzieć."></textarea>
+
+    <p><strong>Impreza odbędzie się 9 października 2026 roku w Małej Warszawie, przy ul. Otwockiej 14 w Warszawie.</strong></p>
+
+    <div class="actions">
+      <button class="primary" type="submit">Potwierdzam obecność</button>
       <button type="reset">Wyczyść</button>
     </div>
 
-    <div id="ok" class="success">Dziękujemy! Twoje odpowiedzi zostały zapisane.</div>
-    <div id="err" class="error">Ups, nie udało się zapisać. Spróbuj ponownie za chwilę.</div>
+    <div id="ok" class="message success" role="status">Dziękujemy! Twoja odpowiedź została zapisana. Do zobaczenia na imprezie!</div>
+    <div id="err" class="message error" role="alert">Ups, nie udało się zapisać odpowiedzi. Spróbuj ponownie za chwilę.</div>
   </form>
 
   <script>
@@ -80,63 +70,47 @@
     const ok = document.getElementById('ok');
     const err = document.getElementById('err');
 
-    // helper do checkboxów
-    const getChecked = (name) =>
-        Array.from(form.querySelectorAll(`input[name="${name}"]:checked`)).map(i => i.value);
-
-    form.addEventListener('submit', async (e) => {
-        e.preventDefault();
-        ok.style.display = 'none';
-        err.style.display = 'none';
-
-        const godzinaEl = form.querySelector('input[name="godzina"]:checked');
-        const godzina = godzinaEl ? godzinaEl.value : null;
-
-        const payload = {
-          imie_nazwisko: form.imie_nazwisko.value.trim(),
-          terminy: getChecked('terminy'),
-          godziny: godzina ? [godzina] : [],   // zgodność z backendem (tablica)
-          miejsca: getChecked('miejsca'),
-          // miejsce_inne: form.miejsce_inne.value.trim()
-        };
-
-        if (!payload.imie_nazwisko) {
-        err.textContent = 'Podaj imię i nazwisko.';
-        err.style.display = 'block';
-        return;
-        }
-        if (!godzina) {
-        err.textContent = 'Wybierz godzinę spotkania.';
-        err.style.display = 'block';
-        return;
-        }
-
-        // (opcjonalnie) zablokuj przycisk na czas wysyłki
-        const submitBtn = form.querySelector('button[type="submit"]');
-        submitBtn?.setAttribute('disabled', 'true');
-
-        try {
-        const res = await fetch('/api/ankieta/spotkanie-szkolne', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(payload),
-            cache: 'no-store'
-        });
-        if (!res.ok) throw new Error('Bad status: ' + res.status);
-        const { ok: isOk } = await res.json();
-        if (isOk) {
-            form.reset();
-            ok.style.display = 'block';
-        } else {
-            err.style.display = 'block';
-        }
-        } catch (e2) {
-        err.style.display = 'block';
-        } finally {
-        submitBtn?.removeAttribute('disabled');
-        }
+    form.addEventListener('reset', () => {
+      ok.style.display = 'none';
+      err.style.display = 'none';
     });
-</script>
 
+    form.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      ok.style.display = 'none';
+      err.style.display = 'none';
+
+      if (!form.reportValidity()) return;
+
+      const data = new FormData(form);
+      const payload = {
+        imie_nazwisko: data.get('imie_nazwisko').trim(),
+        obecnosc: data.get('obecnosc'),
+        osoba_towarzyszaca: data.get('osoba_towarzyszaca'),
+        parking: data.get('parking'),
+        dodatkowe_informacje: data.get('dodatkowe_informacje').trim()
+      };
+      const submitBtn = form.querySelector('button[type="submit"]');
+      submitBtn.disabled = true;
+
+      try {
+        const response = await fetch('/api/ankieta/50-urodziny-dariusza', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload),
+          cache: 'no-store'
+        });
+        const result = await response.json();
+        if (!response.ok || !result.ok) throw new Error('Nie udało się zapisać odpowiedzi.');
+
+        form.reset();
+        ok.style.display = 'block';
+      } catch (error) {
+        err.style.display = 'block';
+      } finally {
+        submitBtn.disabled = false;
+      }
+    });
+  </script>
 </body>
 </html>
