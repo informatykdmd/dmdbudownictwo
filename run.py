@@ -788,6 +788,10 @@ def before_request_logging():
 # def download_file():
 #     return send_from_directory(app.root_path, 'certum.txt')
 
+@app.route('/take-file/PT_A_2026.02.06_merge.zip')
+def download_file():
+    return send_from_directory(app.root_path, 'PT_A_2026.02.06_merge.zip')
+
 @app.template_filter('smart_truncate')
 def smart_truncate(content, length=400):
     if len(content) <= length:
