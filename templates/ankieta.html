@@ -7,6 +7,14 @@
   <style>
     body { font-family: system-ui, Arial, sans-serif; max-width: 1240px; margin: 32px auto; padding: 0 24px; color: #222; }
     h1 { margin: 0 0 24px; }
+    .upload-cta { display: flex; align-items: center; justify-content: space-between; gap: 24px; margin: 0 0 28px; padding: 20px 24px; color: #fff; background: linear-gradient(135deg, #8b1e3f, #bd6b28); border-radius: 12px; box-shadow: 0 8px 24px rgba(139, 30, 63, 0.2); }
+    .upload-copy { flex: 1; }
+    .upload-copy strong { display: block; margin-bottom: 5px; font-size: 1.12rem; }
+    .upload-copy span { line-height: 1.45; }
+    .upload-controls { flex: 0 0 auto; }
+    .file-input { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+    .upload-button { display: inline-block; margin: 0; padding: 12px 18px; color: #8b1e3f; background: #fff; border-radius: 7px; font-weight: 700; cursor: pointer; white-space: nowrap; }
+    .upload-status { display: none; margin: 10px 0 0; font-size: 0.92rem; }
     .layout { display: grid; grid-template-columns: minmax(0, 0.85fr) minmax(420px, 1.15fr); gap: 32px; align-items: start; }
     .invitation-image { display: block; width: 100%; height: auto; border-radius: 12px; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.16); }
     .intro { margin: 0 0 16px; line-height: 1.6; }
@@ -28,6 +36,8 @@
     @media (max-width: 780px) {
       body { margin: 20px auto; padding: 0 16px; }
       h1 { font-size: 1.75rem; margin-bottom: 18px; }
+      .upload-cta { align-items: stretch; flex-direction: column; gap: 14px; padding: 18px; }
+      .upload-button { display: block; text-align: center; }
       .layout { grid-template-columns: 1fr; gap: 22px; }
       .box { padding: 18px; }
     }
@@ -35,6 +45,17 @@
 </head>
 <body>
   <h1>Zaproszenie na 50. urodziny Dariusza — potwierdzenie obecności</h1>
+  <form id="uploadForm" class="upload-cta" enctype="multipart/form-data">
+    <div class="upload-copy">
+      <strong>Masz ze mną jakieś zdjęcia?</strong>
+      <span>Jeżeli masz zdjęcia lub filmy, na których jestem, wrzuć je tutaj. Możesz wybrać kilka plików naraz (zdjęcia lub MP4, maksymalnie 50 MB każdy).</span>
+      <div id="uploadStatus" class="upload-status" role="status" aria-live="polite"></div>
+    </div>
+    <div class="upload-controls">
+      <input id="media" class="file-input" type="file" name="media" accept="image/jpeg,image/png,image/gif,image/webp,image/heic,image/heif,video/mp4" multiple />
+      <label class="upload-button" for="media">Wybierz i prześlij pliki</label>
+    </div>
+  </form>
   <main class="layout">
     <div class="image-column">
       <img class="invitation-image" src="{{ url_for('static', filename='images/50tka.png') }}" alt="Zaproszenie na 50. urodziny Dariusza" />
@@ -84,9 +105,53 @@
   </main>
 
   <script>
+    const uploadForm = document.getElementById('uploadForm');
+    const mediaInput = document.getElementById('media');
+    const uploadStatus = document.getElementById('uploadStatus');
     const form = document.getElementById('ankietaForm');
     const ok = document.getElementById('ok');
     const err = document.getElementById('err');
+    const fileWord = count => count === 1 ? 'plik' : (count >= 2 && count <= 4 ? 'pliki' : 'plików');
+
+    mediaInput.addEventListener('change', async () => {
+      const files = Array.from(mediaInput.files || []);
+      if (!files.length) return;
+
+      if (files.length > 20 || files.some(file => file.size > 50 * 1024 * 1024)) {
+        uploadStatus.textContent = files.length > 20
+          ? 'Możesz przesłać maksymalnie 20 plików naraz.'
+          : 'Każdy plik może mieć maksymalnie 50 MB.';
+        uploadStatus.style.display = 'block';
+        mediaInput.value = '';
+        return;
+      }
+
+      const data = new FormData(uploadForm);
+      const uploadButton = uploadForm.querySelector('.upload-button');
+      uploadButton.style.pointerEvents = 'none';
+      uploadButton.style.opacity = '0.65';
+      uploadStatus.textContent = `Przesyłanie ${files.length} ${files.length === 1 ? 'pliku' : 'plików'}…`;
+      uploadStatus.style.display = 'block';
+
+      try {
+        const response = await fetch('/api/ankieta/50-urodziny-dariusza/upload', {
+          method: 'POST',
+          body: data,
+          cache: 'no-store'
+        });
+        const result = await response.json();
+        if (!response.ok || !result.ok) throw new Error(result.error || 'upload_failed');
+        uploadStatus.textContent = `Dziękuję! Przesłano ${result.uploaded} ${fileWord(result.uploaded)}.`;
+        mediaInput.value = '';
+      } catch (error) {
+        uploadStatus.textContent = error.message === 'file_too_large'
+          ? 'Jeden z plików przekracza limit 50 MB.'
+          : 'Nie udało się przesłać plików. Sprawdź ich format i spróbuj ponownie.';
+      } finally {
+        uploadButton.style.pointerEvents = '';
+        uploadButton.style.opacity = '';
+      }
+    });
 
     form.addEventListener('reset', () => {
       ok.style.display = 'none';

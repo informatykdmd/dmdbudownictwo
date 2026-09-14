@@ -1587,7 +1587,7 @@ def subpage():
 
 # ================== 50. URODZINY DARIUSZA ==================
 from zoneinfo import ZoneInfo
-import os, json, threading
+import os, json, threading, uuid
 
 try:
     import fcntl
@@ -1598,6 +1598,21 @@ DATA_DIR = os.path.join(os.path.dirname(__file__), 'data')
 os.makedirs(DATA_DIR, exist_ok=True)
 DATA_FILE = os.path.join(DATA_DIR, '50-urodziny-dariusza.jsonl')
 DATA_FILE_LOCK = threading.Lock()
+UPLOAD_DIR = os.path.join(os.path.dirname(__file__), 'uploads', '50-urodziny-dariusza')
+UPLOAD_LOG_FILE = os.path.join(DATA_DIR, '50-urodziny-dariusza-uploady.jsonl')
+MAX_UPLOAD_FILE_SIZE = 50 * 1024 * 1024
+MAX_UPLOAD_FILES = 20
+ALLOWED_UPLOADS = {
+    '.jpg': {'image/jpeg'},
+    '.jpeg': {'image/jpeg'},
+    '.png': {'image/png'},
+    '.gif': {'image/gif'},
+    '.webp': {'image/webp'},
+    '.heic': {'image/heic', 'image/heif'},
+    '.heif': {'image/heic', 'image/heif'},
+    '.mp4': {'video/mp4'},
+}
+os.makedirs(UPLOAD_DIR, exist_ok=True)
 
 def client_ip():
     # uwzględnij reverse proxy
@@ -1618,6 +1633,104 @@ def append_jsonl(path: str, obj: dict):
             finally:
                 if fcntl:
                     fcntl.flock(f.fileno(), fcntl.LOCK_UN)
+
+def upload_signature_is_valid(extension: str, header: bytes) -> bool:
+    if extension in {'.jpg', '.jpeg'}:
+        return header.startswith(b'\xff\xd8\xff')
+    if extension == '.png':
+        return header.startswith(b'\x89PNG\r\n\x1a\n')
+    if extension == '.gif':
+        return header.startswith((b'GIF87a', b'GIF89a'))
+    if extension == '.webp':
+        return header.startswith(b'RIFF') and header[8:12] == b'WEBP'
+    if extension in {'.heic', '.heif'}:
+        return header[4:8] == b'ftyp' and header[8:12] in {
+            b'heic', b'heix', b'hevc', b'hevx', b'heim', b'heis', b'mif1', b'msf1'
+        }
+    if extension == '.mp4':
+        return header[4:8] == b'ftyp'
+    return False
+
+def save_uploaded_media(file_storage):
+    original_name = os.path.basename(file_storage.filename or '')
+    extension = os.path.splitext(original_name)[1].lower()
+    if extension not in ALLOWED_UPLOADS:
+        raise ValueError('invalid_file_type')
+    if file_storage.mimetype not in ALLOWED_UPLOADS[extension]:
+        raise ValueError('invalid_file_type')
+
+    header = file_storage.stream.read(32)
+    file_storage.stream.seek(0)
+    if not upload_signature_is_valid(extension, header):
+        raise ValueError('invalid_file_type')
+
+    stored_name = f'{uuid.uuid4().hex}{extension}'
+    final_path = os.path.join(UPLOAD_DIR, stored_name)
+    temporary_path = final_path + '.part'
+    total_size = 0
+
+    try:
+        with open(temporary_path, 'xb') as output:
+            while True:
+                chunk = file_storage.stream.read(1024 * 1024)
+                if not chunk:
+                    break
+                total_size += len(chunk)
+                if total_size > MAX_UPLOAD_FILE_SIZE:
+                    raise ValueError('file_too_large')
+                output.write(chunk)
+        if total_size == 0:
+            raise ValueError('empty_file')
+        os.replace(temporary_path, final_path)
+    except Exception:
+        if os.path.exists(temporary_path):
+            os.remove(temporary_path)
+        raise
+
+    return {
+        'original_name': original_name[:255],
+        'stored_name': stored_name,
+        'mime_type': file_storage.mimetype,
+        'size': total_size,
+    }
+
+@app.post('/api/ankieta/50-urodziny-dariusza/upload')
+def upload_50_urodziny_dariusza():
+    files = [item for item in request.files.getlist('media') if item.filename]
+    if not files:
+        return jsonify({'ok': False, 'error': 'missing_files'}), 400
+    if len(files) > MAX_UPLOAD_FILES:
+        return jsonify({'ok': False, 'error': 'too_many_files'}), 400
+
+    saved_files = []
+    try:
+        for uploaded_file in files:
+            saved_files.append(save_uploaded_media(uploaded_file))
+
+        append_jsonl(UPLOAD_LOG_FILE, {
+            'submitted_at': datetime.now(ZoneInfo('Europe/Warsaw')).isoformat(),
+            'files': saved_files,
+            'client': {
+                'ip': client_ip(),
+                'user_agent': request.headers.get('User-Agent', '')
+            }
+        })
+        response = jsonify({'ok': True, 'uploaded': len(saved_files)})
+        response.headers['Cache-Control'] = 'no-store'
+        return response, 200
+    except ValueError as error:
+        for saved_file in saved_files:
+            saved_path = os.path.join(UPLOAD_DIR, saved_file['stored_name'])
+            if os.path.exists(saved_path):
+                os.remove(saved_path)
+        status = 413 if str(error) == 'file_too_large' else 400
+        return jsonify({'ok': False, 'error': str(error)}), status
+    except Exception:
+        for saved_file in saved_files:
+            saved_path = os.path.join(UPLOAD_DIR, saved_file['stored_name'])
+            if os.path.exists(saved_path):
+                os.remove(saved_path)
+        return jsonify({'ok': False, 'error': 'upload_failed'}), 500
 
 @app.post('/api/ankieta/50-urodziny-dariusza')
 def ankieta_50_urodziny_dariusza():
