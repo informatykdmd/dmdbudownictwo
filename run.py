@@ -1761,7 +1761,7 @@ def ankieta_50_urodziny_dariusza():
 
     if obecnosc not in {'tak', 'nie'}:
         return jsonify({"ok": False, "error": "invalid_attendance"}), 400
-    if osoba_towarzyszaca not in {'tak', 'nie', 'nie_wiem'}:
+    if osoba_towarzyszaca not in {'tak', 'nie'}:
         return jsonify({"ok": False, "error": "invalid_companion"}), 400
     if parking not in {'tak', 'nie'}:
         return jsonify({"ok": False, "error": "invalid_parking"}), 400
