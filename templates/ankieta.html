@@ -6,7 +6,11 @@
   <title>Zaproszenie na 50. urodziny Dariusza</title>
   <style>
     body { font-family: system-ui, Arial, sans-serif; max-width: 1240px; margin: 32px auto; padding: 0 24px; color: #222; }
-    h1 { margin: 0 0 24px; }
+    .party-heading { position: relative; margin: 0 0 26px; padding: 22px 28px 24px 90px; overflow: hidden; color: #fff; background: linear-gradient(115deg, #211916 0%, #482122 58%, #8b1e3f 100%); border-radius: 14px; box-shadow: 0 10px 28px rgba(61, 25, 27, 0.22); line-height: 1; }
+    .party-heading::after { content: "✦  ·  ✦"; position: absolute; top: 17px; right: 24px; color: #e7b64b; font-size: 0.9rem; letter-spacing: 6px; opacity: 0.85; }
+    .party-heading__number { position: absolute; left: 22px; top: 50%; transform: translateY(-50%) rotate(-7deg); color: #e7b64b; font-size: 3.6rem; font-weight: 900; letter-spacing: -5px; text-shadow: 2px 3px 0 rgba(0, 0, 0, 0.35); }
+    .party-heading__main { display: block; padding-right: 100px; font-size: clamp(1.55rem, 3vw, 2.45rem); font-weight: 900; letter-spacing: 0.015em; text-transform: uppercase; }
+    .party-heading__sub { display: block; margin-top: 9px; color: #f6dfad; font-family: "Segoe Print", "Bradley Hand", cursive; font-size: clamp(1rem, 1.8vw, 1.35rem); font-weight: 600; line-height: 1.3; transform: rotate(-0.6deg); }
     .upload-cta { display: flex; align-items: center; justify-content: space-between; gap: 24px; margin: 0 0 28px; padding: 20px 24px; color: #fff; background: linear-gradient(135deg, #8b1e3f, #bd6b28); border-radius: 12px; box-shadow: 0 8px 24px rgba(139, 30, 63, 0.2); }
     .upload-copy { flex: 1; }
     .upload-copy strong { display: block; margin-bottom: 5px; font-size: 1.12rem; }
@@ -35,7 +39,11 @@
 
     @media (max-width: 780px) {
       body { margin: 20px auto; padding: 0 16px; }
-      h1 { font-size: 1.75rem; margin-bottom: 18px; }
+      .party-heading { margin-bottom: 18px; padding: 20px 18px 20px 72px; }
+      .party-heading::after { display: none; }
+      .party-heading__number { left: 15px; font-size: 3rem; }
+      .party-heading__main { padding-right: 0; font-size: 1.35rem; line-height: 1.08; }
+      .party-heading__sub { margin-top: 7px; font-size: 0.96rem; }
       .upload-cta { align-items: stretch; flex-direction: column; gap: 14px; padding: 18px; }
       .upload-button { display: block; text-align: center; }
       .layout { grid-template-columns: 1fr; gap: 22px; }
@@ -44,7 +52,11 @@
   </style>
 </head>
 <body>
-  <h1>Zaproszenie na 50. urodziny Dariusza — potwierdzenie obecności</h1>
+  <h1 class="party-heading">
+    <span class="party-heading__number">50</span>
+    <span class="party-heading__main">Urodziny Dariusza</span>
+    <span class="party-heading__sub">Wpadasz świętować? Potwierdź obecność!</span>
+  </h1>
   <form id="uploadForm" class="upload-cta" enctype="multipart/form-data">
     <div class="upload-copy">
       <strong>Masz ze mną jakieś zdjęcia?</strong>
